@@ -360,6 +360,12 @@ function validateIndexedDBOpenable() {
     }
   });
 }
+function areCookiesEnabled() {
+  if (typeof navigator === "undefined" || !navigator.cookieEnabled) {
+    return false;
+  }
+  return true;
+}
 var ERROR_NAME = "FirebaseError";
 var FirebaseError = class _FirebaseError extends Error {
   constructor(code, message, customData) {
@@ -443,8 +449,8 @@ var Component = class {
    * @param instanceFactory Service factory responsible for creating the public interface
    * @param type whether the service provided by the component is public or private
    */
-  constructor(name4, instanceFactory, type) {
-    this.name = name4;
+  constructor(name5, instanceFactory, type) {
+    this.name = name5;
     this.instanceFactory = instanceFactory;
     this.type = type;
     this.multipleInstances = false;
@@ -471,8 +477,8 @@ var Component = class {
 };
 var DEFAULT_ENTRY_NAME = "[DEFAULT]";
 var Provider = class {
-  constructor(name4, container) {
-    this.name = name4;
+  constructor(name5, container) {
+    this.name = name5;
     this.container = container;
     this.component = null;
     this.instances = /* @__PURE__ */ new Map();
@@ -675,8 +681,8 @@ function isComponentEager(component) {
   return component.instantiationMode === "EAGER";
 }
 var ComponentContainer = class {
-  constructor(name4) {
-    this.name = name4;
+  constructor(name5) {
+    this.name = name5;
     this.providers = /* @__PURE__ */ new Map();
   }
   /**
@@ -709,12 +715,12 @@ var ComponentContainer = class {
    * Firebase SDKs providing services should extend NameServiceMapping interface to register
    * themselves.
    */
-  getProvider(name4) {
-    if (this.providers.has(name4)) {
-      return this.providers.get(name4);
+  getProvider(name5) {
+    if (this.providers.has(name5)) {
+      return this.providers.get(name5);
     }
-    const provider = new Provider(name4, this);
-    this.providers.set(name4, provider);
+    const provider = new Provider(name5, this);
+    this.providers.set(name5, provider);
     return provider;
   }
   getProviders() {
@@ -768,8 +774,8 @@ var Logger = class {
    *
    * @param name The name that the logs will be associated with
    */
-  constructor(name4) {
-    this.name = name4;
+  constructor(name5) {
+    this.name = name5;
     this._logLevel = defaultLogLevel;
     this._logHandler = defaultLogHandler;
     this._userLogHandler = null;
@@ -972,8 +978,8 @@ function wrap(value) {
 var unwrap = (value) => reverseTransformCache.get(value);
 
 // node_modules/idb/build/index.js
-function openDB(name4, version3, { blocked, upgrade, blocking, terminated } = {}) {
-  const request = indexedDB.open(name4, version3);
+function openDB(name5, version4, { blocked, upgrade, blocking, terminated } = {}) {
+  const request = indexedDB.open(name5, version4);
   const openPromise = wrap(request);
   if (upgrade) {
     request.addEventListener("upgradeneeded", (event) => {
@@ -998,8 +1004,8 @@ function openDB(name4, version3, { blocked, upgrade, blocking, terminated } = {}
   });
   return openPromise;
 }
-function deleteDB(name4, { blocked } = {}) {
-  const request = indexedDB.deleteDatabase(name4);
+function deleteDB(name5, { blocked } = {}) {
+  const request = indexedDB.deleteDatabase(name5);
   if (blocked) {
     request.addEventListener("blocked", (event) => blocked(
       // Casting due to https://github.com/microsoft/TypeScript-DOM-lib-generator/pull/1405
@@ -1155,12 +1161,12 @@ function _registerComponent(component) {
   }
   return true;
 }
-function _getProvider(app2, name4) {
+function _getProvider(app2, name5) {
   const heartbeatController = app2.container.getProvider("heartbeat").getImmediate({ optional: true });
   if (heartbeatController) {
     void heartbeatController.triggerHeartbeat();
   }
-  return app2.container.getProvider(name4);
+  return app2.container.getProvider(name5);
 }
 var ERRORS = {
   [
@@ -1278,18 +1284,18 @@ var FirebaseAppImpl = class {
 function initializeApp(_options, rawConfig = {}) {
   let options = _options;
   if (typeof rawConfig !== "object") {
-    const name5 = rawConfig;
-    rawConfig = { name: name5 };
+    const name6 = rawConfig;
+    rawConfig = { name: name6 };
   }
   const config = {
     name: DEFAULT_ENTRY_NAME2,
     automaticDataCollectionEnabled: true,
     ...rawConfig
   };
-  const name4 = config.name;
-  if (typeof name4 !== "string" || !name4) {
+  const name5 = config.name;
+  if (typeof name5 !== "string" || !name5) {
     throw ERROR_FACTORY.create("bad-app-name", {
-      appName: String(name4)
+      appName: String(name5)
     });
   }
   options || (options = getDefaultAppConfig());
@@ -1299,42 +1305,42 @@ function initializeApp(_options, rawConfig = {}) {
       /* AppError.NO_OPTIONS */
     );
   }
-  const existingApp = _apps.get(name4);
+  const existingApp = _apps.get(name5);
   if (existingApp) {
     if (deepEqual(options, existingApp.options) && deepEqual(config, existingApp.config)) {
       return existingApp;
     } else {
-      throw ERROR_FACTORY.create("duplicate-app", { appName: name4 });
+      throw ERROR_FACTORY.create("duplicate-app", { appName: name5 });
     }
   }
-  const container = new ComponentContainer(name4);
+  const container = new ComponentContainer(name5);
   for (const component of _components.values()) {
     container.addComponent(component);
   }
   const newApp = new FirebaseAppImpl(options, config, container);
-  _apps.set(name4, newApp);
+  _apps.set(name5, newApp);
   return newApp;
 }
-function getApp(name4 = DEFAULT_ENTRY_NAME2) {
-  const app2 = _apps.get(name4);
-  if (!app2 && name4 === DEFAULT_ENTRY_NAME2 && getDefaultAppConfig()) {
+function getApp(name5 = DEFAULT_ENTRY_NAME2) {
+  const app2 = _apps.get(name5);
+  if (!app2 && name5 === DEFAULT_ENTRY_NAME2 && getDefaultAppConfig()) {
     return initializeApp();
   }
   if (!app2) {
-    throw ERROR_FACTORY.create("no-app", { appName: name4 });
+    throw ERROR_FACTORY.create("no-app", { appName: name5 });
   }
   return app2;
 }
-function registerVersion(libraryKeyOrName, version3, variant) {
+function registerVersion(libraryKeyOrName, version4, variant) {
   let library = PLATFORM_LOG_STRING[libraryKeyOrName] ?? libraryKeyOrName;
   if (variant) {
     library += `-${variant}`;
   }
   const libraryMismatch = library.match(/\s|\//);
-  const versionMismatch = version3.match(/\s|\//);
+  const versionMismatch = version4.match(/\s|\//);
   if (libraryMismatch || versionMismatch) {
     const warning = [
-      `Unable to register library "${library}" with version "${version3}":`
+      `Unable to register library "${library}" with version "${version4}":`
     ];
     if (libraryMismatch) {
       warning.push(`library name "${library}" contains illegal characters (whitespace or "/")`);
@@ -1343,14 +1349,14 @@ function registerVersion(libraryKeyOrName, version3, variant) {
       warning.push("and");
     }
     if (versionMismatch) {
-      warning.push(`version name "${version3}" contains illegal characters (whitespace or "/")`);
+      warning.push(`version name "${version4}" contains illegal characters (whitespace or "/")`);
     }
     logger.warn(warning.join(" "));
     return;
   }
   _registerComponent(new Component(
     `${library}-version`,
-    () => ({ library, version: version3 }),
+    () => ({ library, version: version4 }),
     "VERSION"
     /* ComponentType.VERSION */
   ));
@@ -2228,13 +2234,16 @@ registerInstallations();
 registerVersion(name3, version2);
 registerVersion(name3, version2, "esm2020");
 
-// node_modules/@firebase/messaging/dist/esm/index.sw.esm.js
+// node_modules/@firebase/messaging/dist/esm/index.esm.js
+var DEFAULT_SW_PATH = "/firebase-messaging-sw.js";
+var DEFAULT_SW_SCOPE = "/firebase-cloud-messaging-push-scope";
 var DEFAULT_VAPID_KEY = "BDOU99-h67HcA6JeFXHbSNMu7e2yNNu3RzoMj8TM4W88jITfq7ZmPvIM1Iv-4_l2LxQcYwhqby2xGpWwzjfAnG4";
 var ENDPOINT = "https://fcmregistrations.googleapis.com/v1";
-var FCM_MSG = "FCM_MSG";
 var CONSOLE_CAMPAIGN_ID = "google.c.a.c_id";
-var SDK_PLATFORM_WEB = 3;
-var EVENT_MESSAGE_DELIVERED = 1;
+var CONSOLE_CAMPAIGN_NAME = "google.c.a.c_l";
+var CONSOLE_CAMPAIGN_TIME = "google.c.a.ts";
+var CONSOLE_CAMPAIGN_ANALYTICS_ENABLED = "google.c.a.e";
+var DEFAULT_REGISTRATION_TIMEOUT = 1e4;
 var MessageType$1;
 (function(MessageType2) {
   MessageType2[MessageType2["DATA_MESSAGE"] = 1] = "DATA_MESSAGE";
@@ -2382,13 +2391,6 @@ async function dbSet(firebaseDependencies, tokenDetails) {
   await tx.objectStore(OBJECT_STORE_NAME2).put(tokenDetails, key);
   await tx.done;
   return tokenDetails;
-}
-async function dbRemove(firebaseDependencies) {
-  const key = getKey2(firebaseDependencies);
-  const db = await getDbPromise3();
-  const tx = db.transaction(OBJECT_STORE_NAME2, "readwrite");
-  await tx.objectStore(OBJECT_STORE_NAME2).delete(key);
-  await tx.done;
 }
 function getKey2({ appConfig }) {
   return appConfig.appId;
@@ -2606,18 +2608,6 @@ async function getTokenInternal(messaging2) {
     return tokenDetails.token;
   }
 }
-async function deleteTokenInternal(messaging2) {
-  const tokenDetails = await dbGet(messaging2.firebaseDependencies);
-  if (tokenDetails) {
-    await requestDeleteToken(messaging2.firebaseDependencies, tokenDetails.token);
-    await dbRemove(messaging2.firebaseDependencies);
-  }
-  const pushSubscription = await messaging2.swRegistration.pushManager.getSubscription();
-  if (pushSubscription) {
-    return pushSubscription.unsubscribe();
-  }
-  return true;
-}
 async function updateToken(messaging2, tokenDetails) {
   try {
     const updatedToken = await requestUpdateToken(messaging2.firebaseDependencies, tokenDetails);
@@ -2719,62 +2709,7 @@ function propagateFcmOptions(payload, messagePayloadInternal) {
 function isConsoleMessage(data) {
   return typeof data === "object" && !!data && CONSOLE_CAMPAIGN_ID in data;
 }
-function sleep2(ms) {
-  return new Promise((resolve) => {
-    setTimeout(resolve, ms);
-  });
-}
 _mergeStrings("AzSCbw63g1R0nCw85jG8", "Iaya3yLKwmgvh7cF0q4");
-async function stageLog(messaging2, internalPayload) {
-  const fcmEvent = createFcmEvent(internalPayload, await messaging2.firebaseDependencies.installations.getId());
-  createAndEnqueueLogEvent(messaging2, fcmEvent, internalPayload.productId);
-}
-function createFcmEvent(internalPayload, fid) {
-  const fcmEvent = {};
-  if (!!internalPayload.from) {
-    fcmEvent.project_number = internalPayload.from;
-  }
-  if (!!internalPayload.fcmMessageId) {
-    fcmEvent.message_id = internalPayload.fcmMessageId;
-  }
-  fcmEvent.instance_id = fid;
-  if (!!internalPayload.notification) {
-    fcmEvent.message_type = MessageType$1.DISPLAY_NOTIFICATION.toString();
-  } else {
-    fcmEvent.message_type = MessageType$1.DATA_MESSAGE.toString();
-  }
-  fcmEvent.sdk_platform = SDK_PLATFORM_WEB.toString();
-  fcmEvent.package_name = self.origin.replace(/(^\w+:|^)\/\//, "");
-  if (!!internalPayload.collapse_key) {
-    fcmEvent.collapse_key = internalPayload.collapse_key;
-  }
-  fcmEvent.event = EVENT_MESSAGE_DELIVERED.toString();
-  if (!!internalPayload.fcmOptions?.analytics_label) {
-    fcmEvent.analytics_label = internalPayload.fcmOptions?.analytics_label;
-  }
-  return fcmEvent;
-}
-function createAndEnqueueLogEvent(messaging2, fcmEvent, productId) {
-  const logEvent = {};
-  logEvent.event_time_ms = Math.floor(Date.now()).toString();
-  logEvent.source_extension_json_proto3 = JSON.stringify({
-    messaging_client_event: fcmEvent
-  });
-  if (!!productId) {
-    logEvent.compliance_data = buildComplianceData(productId);
-  }
-  messaging2.logEvents.push(logEvent);
-}
-function buildComplianceData(productId) {
-  const complianceData = {
-    privacy_context: {
-      prequest: {
-        origin_associated_product_id: productId
-      }
-    }
-  };
-  return complianceData;
-}
 function _mergeStrings(s1, s2) {
   const resultArray = [];
   for (let i = 0; i < s1.length; i++) {
@@ -2784,147 +2719,6 @@ function _mergeStrings(s1, s2) {
     }
   }
   return resultArray.join("");
-}
-async function onSubChange(event, messaging2) {
-  const { newSubscription } = event;
-  if (!newSubscription) {
-    await deleteTokenInternal(messaging2);
-    return;
-  }
-  const tokenDetails = await dbGet(messaging2.firebaseDependencies);
-  await deleteTokenInternal(messaging2);
-  messaging2.vapidKey = tokenDetails?.subscriptionOptions?.vapidKey ?? DEFAULT_VAPID_KEY;
-  await getTokenInternal(messaging2);
-}
-async function onPush(event, messaging2) {
-  const internalPayload = getMessagePayloadInternal(event);
-  if (!internalPayload) {
-    return;
-  }
-  if (messaging2.deliveryMetricsExportedToBigQueryEnabled) {
-    await stageLog(messaging2, internalPayload);
-  }
-  const clientList = await getClientList();
-  if (hasVisibleClients(clientList)) {
-    return sendMessagePayloadInternalToWindows(clientList, internalPayload);
-  }
-  if (!!internalPayload.notification) {
-    await showNotification(wrapInternalPayload(internalPayload));
-  }
-  if (!messaging2) {
-    return;
-  }
-  if (!!messaging2.onBackgroundMessageHandler) {
-    const payload = externalizePayload(internalPayload);
-    if (typeof messaging2.onBackgroundMessageHandler === "function") {
-      await messaging2.onBackgroundMessageHandler(payload);
-    } else {
-      messaging2.onBackgroundMessageHandler.next(payload);
-    }
-  }
-}
-async function onNotificationClick(event) {
-  const internalPayload = event.notification?.data?.[FCM_MSG];
-  if (!internalPayload) {
-    return;
-  } else if (event.action) {
-    return;
-  }
-  event.stopImmediatePropagation();
-  event.notification.close();
-  const link = getLink(internalPayload);
-  if (!link) {
-    return;
-  }
-  const url = new URL(link, self.location.href);
-  const originUrl = new URL(self.location.origin);
-  if (url.host !== originUrl.host) {
-    return;
-  }
-  let client = await getWindowClient(url);
-  if (!client) {
-    client = await self.clients.openWindow(link);
-    await sleep2(3e3);
-  } else {
-    client = await client.focus();
-  }
-  if (!client) {
-    return;
-  }
-  internalPayload.messageType = MessageType.NOTIFICATION_CLICKED;
-  internalPayload.isFirebaseMessaging = true;
-  return client.postMessage(internalPayload);
-}
-function wrapInternalPayload(internalPayload) {
-  const wrappedInternalPayload = {
-    ...internalPayload.notification
-  };
-  wrappedInternalPayload.data = {
-    [FCM_MSG]: internalPayload
-  };
-  return wrappedInternalPayload;
-}
-function getMessagePayloadInternal({ data }) {
-  if (!data) {
-    return null;
-  }
-  try {
-    return data.json();
-  } catch (err) {
-    return null;
-  }
-}
-async function getWindowClient(url) {
-  const clientList = await getClientList();
-  for (const client of clientList) {
-    const clientUrl = new URL(client.url, self.location.href);
-    if (url.host === clientUrl.host) {
-      return client;
-    }
-  }
-  return null;
-}
-function hasVisibleClients(clientList) {
-  return clientList.some((client) => client.visibilityState === "visible" && // Ignore chrome-extension clients as that matches the background pages of extensions, which
-  // are always considered visible for some reason.
-  !client.url.startsWith("chrome-extension://"));
-}
-function sendMessagePayloadInternalToWindows(clientList, internalPayload) {
-  internalPayload.isFirebaseMessaging = true;
-  internalPayload.messageType = MessageType.PUSH_RECEIVED;
-  for (const client of clientList) {
-    client.postMessage(internalPayload);
-  }
-}
-function getClientList() {
-  return self.clients.matchAll({
-    type: "window",
-    includeUncontrolled: true
-    // TS doesn't know that "type: 'window'" means it'll return WindowClient[]
-  });
-}
-function showNotification(notificationPayloadInternal) {
-  const { actions } = notificationPayloadInternal;
-  const { maxActions } = Notification;
-  if (actions && maxActions && actions.length > maxActions) {
-    console.warn(`This browser only supports ${maxActions} actions. The remaining actions will not be displayed.`);
-  }
-  return self.registration.showNotification(
-    /* title= */
-    notificationPayloadInternal.title ?? "",
-    notificationPayloadInternal
-  );
-}
-function getLink(payload) {
-  const link = payload.fcmOptions?.link ?? payload.notification?.click_action;
-  if (link) {
-    return link;
-  }
-  if (isConsoleMessage(payload.data)) {
-    return self.location.origin;
-  } else {
-    return null;
-  }
 }
 function extractAppConfig2(app2) {
   if (!app2 || !app2.options) {
@@ -2977,44 +2771,162 @@ var MessagingService = class {
     return Promise.resolve();
   }
 };
-var SwMessagingFactory = (container) => {
+async function registerDefaultSw(messaging2) {
+  try {
+    messaging2.swRegistration = await navigator.serviceWorker.register(DEFAULT_SW_PATH, {
+      scope: DEFAULT_SW_SCOPE
+    });
+    messaging2.swRegistration.update().catch(() => {
+    });
+    await waitForRegistrationActive(messaging2.swRegistration);
+  } catch (e) {
+    throw ERROR_FACTORY3.create("failed-service-worker-registration", {
+      browserErrorMessage: e?.message
+    });
+  }
+}
+async function waitForRegistrationActive(registration) {
+  return new Promise((resolve, reject) => {
+    const rejectTimeout = setTimeout(() => reject(new Error(`Service worker not registered after ${DEFAULT_REGISTRATION_TIMEOUT} ms`)), DEFAULT_REGISTRATION_TIMEOUT);
+    const incomingSw = registration.installing || registration.waiting;
+    if (registration.active) {
+      clearTimeout(rejectTimeout);
+      resolve();
+    } else if (incomingSw) {
+      incomingSw.onstatechange = (ev) => {
+        if (ev.target?.state === "activated") {
+          incomingSw.onstatechange = null;
+          clearTimeout(rejectTimeout);
+          resolve();
+        }
+      };
+    } else {
+      clearTimeout(rejectTimeout);
+      reject(new Error("No incoming service worker found."));
+    }
+  });
+}
+async function updateSwReg(messaging2, swRegistration) {
+  if (!swRegistration && !messaging2.swRegistration) {
+    await registerDefaultSw(messaging2);
+  }
+  if (!swRegistration && !!messaging2.swRegistration) {
+    return;
+  }
+  if (!(swRegistration instanceof ServiceWorkerRegistration)) {
+    throw ERROR_FACTORY3.create(
+      "invalid-sw-registration"
+      /* ErrorCode.INVALID_SW_REGISTRATION */
+    );
+  }
+  messaging2.swRegistration = swRegistration;
+}
+async function updateVapidKey(messaging2, vapidKey) {
+  if (!!vapidKey) {
+    messaging2.vapidKey = vapidKey;
+  } else if (!messaging2.vapidKey) {
+    messaging2.vapidKey = DEFAULT_VAPID_KEY;
+  }
+}
+async function getToken$1(messaging2, options) {
+  if (!navigator) {
+    throw ERROR_FACTORY3.create(
+      "only-available-in-window"
+      /* ErrorCode.AVAILABLE_IN_WINDOW */
+    );
+  }
+  if (Notification.permission === "default") {
+    await Notification.requestPermission();
+  }
+  if (Notification.permission !== "granted") {
+    throw ERROR_FACTORY3.create(
+      "permission-blocked"
+      /* ErrorCode.PERMISSION_BLOCKED */
+    );
+  }
+  await updateVapidKey(messaging2, options?.vapidKey);
+  await updateSwReg(messaging2, options?.serviceWorkerRegistration);
+  return getTokenInternal(messaging2);
+}
+async function logToScion(messaging2, messageType, data) {
+  const eventType = getEventType(messageType);
+  const analytics = await messaging2.firebaseDependencies.analyticsProvider.get();
+  analytics.logEvent(eventType, {
+    /* eslint-disable camelcase */
+    message_id: data[CONSOLE_CAMPAIGN_ID],
+    message_name: data[CONSOLE_CAMPAIGN_NAME],
+    message_time: data[CONSOLE_CAMPAIGN_TIME],
+    message_device_time: Math.floor(Date.now() / 1e3)
+    /* eslint-enable camelcase */
+  });
+}
+function getEventType(messageType) {
+  switch (messageType) {
+    case MessageType.NOTIFICATION_CLICKED:
+      return "notification_open";
+    case MessageType.PUSH_RECEIVED:
+      return "notification_foreground";
+    default:
+      throw new Error();
+  }
+}
+async function messageEventListener(messaging2, event) {
+  const internalPayload = event.data;
+  if (!internalPayload.isFirebaseMessaging) {
+    return;
+  }
+  if (messaging2.onMessageHandler && internalPayload.messageType === MessageType.PUSH_RECEIVED) {
+    if (typeof messaging2.onMessageHandler === "function") {
+      messaging2.onMessageHandler(externalizePayload(internalPayload));
+    } else {
+      messaging2.onMessageHandler.next(externalizePayload(internalPayload));
+    }
+  }
+  const dataPayload = internalPayload.data;
+  if (isConsoleMessage(dataPayload) && dataPayload[CONSOLE_CAMPAIGN_ANALYTICS_ENABLED] === "1") {
+    await logToScion(messaging2, internalPayload.messageType, dataPayload);
+  }
+}
+var name4 = "@firebase/messaging";
+var version3 = "0.12.23";
+var WindowMessagingFactory = (container) => {
   const messaging2 = new MessagingService(container.getProvider("app").getImmediate(), container.getProvider("installations-internal").getImmediate(), container.getProvider("analytics-internal"));
-  self.addEventListener("push", (e) => {
-    e.waitUntil(onPush(e, messaging2));
-  });
-  self.addEventListener("pushsubscriptionchange", (e) => {
-    e.waitUntil(onSubChange(e, messaging2));
-  });
-  self.addEventListener("notificationclick", (e) => {
-    e.waitUntil(onNotificationClick(e));
-  });
+  navigator.serviceWorker.addEventListener("message", (e) => messageEventListener(messaging2, e));
   return messaging2;
 };
-function registerMessagingInSw() {
+var WindowMessagingInternalFactory = (container) => {
+  const messaging2 = container.getProvider("messaging").getImmediate();
+  const messagingInternal = {
+    getToken: (options) => getToken$1(messaging2, options)
+  };
+  return messagingInternal;
+};
+function registerMessagingInWindow() {
   _registerComponent(new Component(
-    "messaging-sw",
-    SwMessagingFactory,
+    "messaging",
+    WindowMessagingFactory,
     "PUBLIC"
     /* ComponentType.PUBLIC */
   ));
+  _registerComponent(new Component(
+    "messaging-internal",
+    WindowMessagingInternalFactory,
+    "PRIVATE"
+    /* ComponentType.PRIVATE */
+  ));
+  registerVersion(name4, version3);
+  registerVersion(name4, version3, "esm2020");
 }
-async function isSwSupported() {
-  return isIndexedDBAvailable() && await validateIndexedDBOpenable() && "PushManager" in self && "Notification" in self && ServiceWorkerRegistration.prototype.hasOwnProperty("showNotification") && PushSubscription.prototype.hasOwnProperty("getKey");
-}
-function onBackgroundMessage$1(messaging2, nextOrObserver) {
-  if (self.document !== void 0) {
-    throw ERROR_FACTORY3.create(
-      "only-available-in-sw"
-      /* ErrorCode.AVAILABLE_IN_SW */
-    );
+async function isWindowSupported() {
+  try {
+    await validateIndexedDBOpenable();
+  } catch (e) {
+    return false;
   }
-  messaging2.onBackgroundMessageHandler = nextOrObserver;
-  return () => {
-    messaging2.onBackgroundMessageHandler = null;
-  };
+  return typeof window !== "undefined" && isIndexedDBAvailable() && areCookiesEnabled() && "serviceWorker" in navigator && "PushManager" in window && "Notification" in window && "fetch" in window && ServiceWorkerRegistration.prototype.hasOwnProperty("showNotification") && PushSubscription.prototype.hasOwnProperty("getKey");
 }
-function getMessagingInSw(app2 = getApp()) {
-  isSwSupported().then((isSupported) => {
+function getMessagingInWindow(app2 = getApp()) {
+  isWindowSupported().then((isSupported) => {
     if (!isSupported) {
       throw ERROR_FACTORY3.create(
         "unsupported-browser"
@@ -3027,15 +2939,29 @@ function getMessagingInSw(app2 = getApp()) {
       /* ErrorCode.INDEXED_DB_UNSUPPORTED */
     );
   });
-  return _getProvider(getModularInstance(app2), "messaging-sw").getImmediate();
+  return _getProvider(getModularInstance(app2), "messaging").getImmediate();
 }
-function onBackgroundMessage(messaging2, nextOrObserver) {
+async function getToken2(messaging2, options) {
   messaging2 = getModularInstance(messaging2);
-  return onBackgroundMessage$1(messaging2, nextOrObserver);
+  return getToken$1(messaging2, options);
 }
-registerMessagingInSw();
+registerMessagingInWindow();
 
-// background.js
+// popup.js
+var loginScreen = document.getElementById("login-screen");
+var registerScreen = document.getElementById("register-screen");
+var messagesScreen = document.getElementById("messages-screen");
+var loginForm = document.getElementById("login-form");
+var registerForm = document.getElementById("register-form");
+var showRegisterBtn = document.getElementById("show-register-btn");
+var backToLoginBtn = document.getElementById("back-to-login-btn");
+var registerError = document.getElementById("register-error");
+var logoutBtn = document.getElementById("logout-btn");
+var tabButtons = document.querySelectorAll(".tab-btn");
+var newMessagesTab = document.getElementById("new-tab");
+var allMessagesTab = document.getElementById("all-tab");
+var newMessagesList = document.getElementById("new-messages-list");
+var allMessagesList = document.getElementById("all-messages-list");
 var firebaseConfig = {
   apiKey: "AIzaSyDv0e1JvUbtNqfT1fa0q0bsSWwhaSfkSRA",
   authDomain: "linksync-10854.firebaseapp.com",
@@ -3046,10 +2972,145 @@ var firebaseConfig = {
   measurementId: "G-H6Q1ZGTJ6V"
 };
 var app = initializeApp(firebaseConfig);
-var messaging = getMessagingInSw(app);
-console.log("Background script loaded.");
-onBackgroundMessage(messaging, (payload) => {
-  console.log("Message received. ", payload);
+var messaging = getMessagingInWindow(app);
+window.chrome.storage.local.get(["isLoggedIn"], (result) => {
+  if (result.isLoggedIn) {
+    showMessagesScreen();
+  }
+});
+loginForm.addEventListener("submit", (e) => {
+  e.preventDefault();
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  if (username && password) {
+    window.chrome.storage.local.get(["registeredUser"], (userResult) => {
+      if (userResult.registeredUser && userResult.registeredUser.username === username && userResult.registeredUser.password === password) {
+        window.chrome.storage.local.set({ isLoggedIn: true, username }, () => {
+          showMessagesScreen();
+        });
+      } else {
+        alert("Invalid username or password");
+      }
+    });
+  }
+});
+logoutBtn.addEventListener("click", () => {
+  window.chrome.storage.local.set({ isLoggedIn: false }, () => {
+    showLoginScreen();
+  });
+});
+tabButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    const tabName = button.dataset.tab;
+    tabButtons.forEach((btn) => btn.classList.remove("active"));
+    button.classList.add("active");
+    if (tabName === "new") {
+      newMessagesTab.classList.remove("hidden");
+      allMessagesTab.classList.add("hidden");
+    } else {
+      newMessagesTab.classList.add("hidden");
+      allMessagesTab.classList.remove("hidden");
+    }
+  });
+});
+function showLoginScreen() {
+  loginScreen.classList.remove("hidden");
+  registerScreen.classList.add("hidden");
+  messagesScreen.classList.add("hidden");
+  loginForm.reset();
+  registerError.classList.add("hidden");
+}
+function showRegisterScreen() {
+  loginScreen.classList.add("hidden");
+  registerScreen.classList.remove("hidden");
+  messagesScreen.classList.add("hidden");
+  registerForm.reset();
+  registerError.classList.add("hidden");
+}
+function showMessagesScreen() {
+  loginScreen.classList.add("hidden");
+  registerScreen.classList.add("hidden");
+  messagesScreen.classList.remove("hidden");
+  renderMessages();
+}
+function renderMessages() {
+  chrome.storage.local.get({ items: [] }, (result) => {
+    const allMessages = result.items;
+    const newMessages = allMessages;
+    if (newMessages.length === 0) {
+      newMessagesList.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">\u{1F4ED}</div>
+          <div class="empty-state-text">No new items</div>
+        </div>
+      `;
+    } else {
+      newMessagesList.innerHTML = newMessages.map((msg) => createMessageHTML(msg)).join("");
+    }
+    allMessagesList.innerHTML = allMessages.map((msg) => createMessageHTML(msg)).join("");
+  });
+}
+function createMessageHTML(item) {
+  const preview = item.type === "text" ? item.textPayload : `Media item: [${item.type}]`;
+  const time = new Date(item.timestamp).toLocaleString();
+  return `
+    <div class="message-item">
+      <div class="message-header">
+        <span class="message-sender">
+          New Item
+          <span class="badge-new">NEW</span>
+        </span>
+        <span class="message-time">${time}</span>
+      </div>
+      <div class="message-subject">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</div>
+      <div class="message-preview">${preview}</div>
+    </div>
+  `;
+}
+registerForm.addEventListener("submit", async (e) => {
+  console.log("Register form submitted");
+  e.preventDefault();
+  const username = document.getElementById("reg-username").value;
+  const password = document.getElementById("reg-password").value;
+  const confirmPassword = document.getElementById("reg-confirm-password").value;
+  if (password !== confirmPassword) {
+    registerError.textContent = "Passwords do not match";
+    registerError.classList.remove("hidden");
+    return;
+  }
+  const permission = await Notification.requestPermission();
+  if (permission === "granted") {
+    console.log("Notification permission granted");
+    const registration = await navigator.serviceWorker.getRegistration();
+    const token = await getToken2(messaging, {
+      vapidKey: "BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA",
+      serviceWorkerRegistration: registration
+    });
+    console.log("FCM Token:", token);
+    chrome.storage.local.set({ fcmToken: token });
+  } else {
+    console.log("Unable to get permission to notify.");
+  }
+  window.chrome.storage.local.set(
+    {
+      registeredUser: { username, password }
+    },
+    () => {
+      showLoginScreen();
+      registerForm.reset();
+    }
+  );
+});
+showRegisterBtn.addEventListener("click", () => {
+  showRegisterScreen();
+});
+backToLoginBtn.addEventListener("click", () => {
+  showLoginScreen();
+});
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (namespace === "local" && changes.items) {
+    renderMessages();
+  }
 });
 /*! Bundled license information:
 
@@ -3065,8 +3126,7 @@ onBackgroundMessage(messaging, (payload) => {
 @firebase/util/dist/index.esm.js:
 @firebase/util/dist/index.esm.js:
 @firebase/logger/dist/esm/index.esm.js:
-@firebase/messaging/dist/esm/index.sw.esm.js:
-@firebase/messaging/dist/esm/index.sw.esm.js:
+@firebase/messaging/dist/esm/index.esm.js:
   (**
    * @license
    * Copyright 2017 Google LLC
@@ -3185,6 +3245,7 @@ onBackgroundMessage(messaging, (payload) => {
 @firebase/util/dist/index.esm.js:
 firebase/app/dist/esm/index.esm.js:
 @firebase/installations/dist/esm/index.esm.js:
+@firebase/messaging/dist/esm/index.esm.js:
   (**
    * @license
    * Copyright 2020 Google LLC
@@ -3304,7 +3365,7 @@ firebase/app/dist/esm/index.esm.js:
    * limitations under the License.
    *)
 
-@firebase/messaging/dist/esm/index.sw.esm.js:
+@firebase/messaging/dist/esm/index.esm.js:
   (**
    * @license
    * Copyright 2019 Google LLC
@@ -3351,9 +3412,77 @@ firebase/app/dist/esm/index.esm.js:
    * See the License for the specific language governing permissions and
    * limitations under the License.
    *)
+
+@firebase/messaging/dist/esm/index.esm.js:
+  (**
+   * @license
+   * Copyright 2017 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+  (**
+   * @license
+   * Copyright 2019 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+
+@firebase/messaging/dist/esm/index.esm.js:
   (**
    * @license
    * Copyright 2020 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+  (**
+   * @license
+   * Copyright 2019 Google LLC
+   *
+   * Licensed under the Apache License, Version 2.0 (the "License");
+   * you may not use this file except in compliance with the License.
+   * You may obtain a copy of the License at
+   *
+   *   http://www.apache.org/licenses/LICENSE-2.0
+   *
+   * Unless required by applicable law or agreed to in writing, software
+   * distributed under the License is distributed on an "AS IS" BASIS,
+   * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   * See the License for the specific language governing permissions and
+   * limitations under the License.
+   *)
+  (**
+   * @license
+   * Copyright 2017 Google LLC
    *
    * Licensed under the Apache License, Version 2.0 (the "License");
    * you may not use this file except in compliance with the License.

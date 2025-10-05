@@ -66,6 +66,24 @@ const allMessagesTab = document.getElementById("all-tab")
 const newMessagesList = document.getElementById("new-messages-list")
 const allMessagesList = document.getElementById("all-messages-list")
 
+
+import {initializeApp } from "firebase/app";
+import { getMessaging, getToken } from "firebase/messaging";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDv0e1JvUbtNqfT1fa0q0bsSWwhaSfkSRA",
+  authDomain: "linksync-10854.firebaseapp.com",
+  projectId: "linksync-10854",
+  storageBucket: "linksync-10854.firebasestorage.app",
+  messagingSenderId: "861936914311",
+  appId: "1:861936914311:web:0b4162597be16202c28d22",
+  measurementId: "G-H6Q1ZGTJ6V"
+};
+
+const app = initializeApp(firebaseConfig);
+const messaging = getMessaging(app);
+
+
 // Check if user is logged in on load
 window.chrome.storage.local.get(["isLoggedIn"], (result) => {
   if (result.isLoggedIn) {
@@ -196,7 +214,8 @@ function createMessageHTML(item) {
 }
 
 // Register form submission
-registerForm.addEventListener("submit", (e) => {
+registerForm.addEventListener("submit", async (e) => {
+  console.log("Register form submitted");
   e.preventDefault()
   const username = document.getElementById("reg-username").value
   const password = document.getElementById("reg-password").value
@@ -207,6 +226,24 @@ registerForm.addEventListener("submit", (e) => {
     registerError.textContent = "Passwords do not match"
     registerError.classList.remove("hidden")
     return
+  }
+
+  const permission = await Notification.requestPermission();
+  if (permission === "granted") {
+    console.log("Notification permission granted");
+
+    const registration = await navigator.serviceWorker.getRegistration();
+
+    const token = await getToken(messaging, {
+      vapidKey: "BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA",
+      serviceWorkerRegistration: registration
+    });
+
+    console.log("FCM Token:", token);
+    
+    chrome.storage.local.set({ fcmToken: token });
+  } else {
+    console.log("Unable to get permission to notify.");
   }
 
   // Store user credentials

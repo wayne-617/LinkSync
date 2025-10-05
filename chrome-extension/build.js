@@ -1,10 +1,26 @@
-// build.js
-const esbuild = require('esbuild');
+const esbuild = require("esbuild");
 
-esbuild.build({
-  entryPoints: ['background.js'], // your original background.js
-  bundle: true,                       // bundle all imports
-  outfile: 'dist/background.js',      // output file for Chrome
-  format: 'esm',                      // use ES modules
-  minify: false,                      // optional
-}).catch(() => process.exit(1));
+// Bundle background.js (service worker)
+const backgroundBuild = esbuild.build({
+  entryPoints: ["background.js"],
+  bundle: true,
+  outfile: "dist/background.js",
+  format: "esm",       // Chrome MV3 service worker supports ES modules
+  minify: false,
+});
+
+// Bundle popup.js (popup script)
+const popupBuild = esbuild.build({
+  entryPoints: ["popup.js"],
+  bundle: true,
+  outfile: "dist/popup.js",
+  format: "esm",       // ES module for <script type="module">
+  minify: false,
+});
+
+// Run both builds in parallel
+Promise.all([backgroundBuild, popupBuild])
+  .then(() => {
+    console.log("✅ Build complete for background.js and popup.js");
+  })
+  .catch(() => process.exit(1));

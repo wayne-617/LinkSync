@@ -2,7 +2,7 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getMessaging, getToken, onBackgroundMessage } from "firebase/messaging";
+import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
 
 // import { getAnalytics } from "firebase/analytics";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -25,34 +25,6 @@ const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
 console.log("Background script loaded.");
-
-// This is a placeholder for where the FCM listener will go.
-// For now, it does nothing, but the file is a valid service worker.
-async function initializeFCM() {
-  console.log("FCM would be initialized here.");
-  // TODO: Add your Firebase initialization and onBackgroundMessage listener here
-  // when your backend is ready.
-  try {
-    console.log('Requesting FCM...');
-    const token = await getToken(messaging, { vapidKey: 'BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA' });
-    console.log('FCM Token:', token);
-  } catch (error) {
-    console.error('Error getting FCM token:', error);
-  }
-}
-/* chrome.runtime.onMessage.addListener((msg) => {
-  if (msg.type === "initFCM") {
-    initializeFCM();
-  }
-});
-
-async function initializeFCM() {
-  const token = await getToken(messaging, { vapidKey: "BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA" });
-  console.log("FCM Token:", token);
-} */
-
-
-//initializeFCM();
 
 
 onBackgroundMessage(messaging, (payload) => {
