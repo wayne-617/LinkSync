@@ -150,42 +150,49 @@ function showMessagesScreen() {
   renderMessages()
 }
 
-// Render messages
+// Render messages from chrome.storage
 function renderMessages() {
-  const newMessages = mockMessages.filter((msg) => msg.isNew)
-  const allMessages = mockMessages
+  chrome.storage.local.get({ items: [] }, (result) => {
+    const allMessages = result.items;
+    // For now, we'll treat all messages as "new" for simplicity.
+    const newMessages = allMessages;
 
-  // Render new messages
-  if (newMessages.length === 0) {
-    newMessagesList.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">📭</div>
-        <div class="empty-state-text">No new messages</div>
-      </div>
-    `
-  } else {
-    newMessagesList.innerHTML = newMessages.map((msg) => createMessageHTML(msg)).join("")
-  }
+    // Render new messages
+    if (newMessages.length === 0) {
+      newMessagesList.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📭</div>
+          <div class="empty-state-text">No new items</div>
+        </div>
+      `;
+    } else {
+      newMessagesList.innerHTML = newMessages.map((msg) => createMessageHTML(msg)).join("");
+    }
 
-  // Render all messages
-  allMessagesList.innerHTML = allMessages.map((msg) => createMessageHTML(msg)).join("")
+    // Render all messages
+    allMessagesList.innerHTML = allMessages.map((msg) => createMessageHTML(msg)).join("");
+  });
 }
 
-// Create message HTML
-function createMessageHTML(message) {
+// Create message HTML from storage item
+function createMessageHTML(item) {
+  // Use data structure from your backend (textPayload, type, timestamp)
+  const preview = item.type === 'text' ? item.textPayload : `Media item: [${item.type}]`;
+  const time = new Date(item.timestamp).toLocaleString();
+
   return `
-    <div class="message-item ${message.isNew ? "" : "read"}">
+    <div class="message-item">
       <div class="message-header">
         <span class="message-sender">
-          ${message.sender}
-          ${message.isNew ? '<span class="badge-new">NEW</span>' : ""}
+          New Item
+          <span class="badge-new">NEW</span>
         </span>
-        <span class="message-time">${message.time}</span>
+        <span class="message-time">${time}</span>
       </div>
-      <div class="message-subject">${message.subject}</div>
-      <div class="message-preview">${message.preview}</div>
+      <div class="message-subject">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</div>
+      <div class="message-preview">${preview}</div>
     </div>
-  `
+  `;
 }
 
 // Register form submission
@@ -224,3 +231,10 @@ showRegisterBtn.addEventListener("click", () => {
 backToLoginBtn.addEventListener("click", () => {
   showLoginScreen()
 })
+
+// Listen for changes in storage and reload the list
+chrome.storage.onChanged.addListener((changes, namespace) => {
+  if (namespace === 'local' && changes.items) {
+    renderMessages();
+  }
+});

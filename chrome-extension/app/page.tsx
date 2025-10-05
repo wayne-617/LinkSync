@@ -1,7 +1,7 @@
-"use client"
+// "use client"
 
-import  from "../popup"
+// import  from "../popup"
 
-export default function SyntheticV0PageForDeployment() {
-  return < />
-}
+// export default function SyntheticV0PageForDeployment() {
+//   return < />
+// }

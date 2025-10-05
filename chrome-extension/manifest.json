@@ -1,8 +1,12 @@
 {
   "manifest_version": 3,
-  "name": "Messages Extension",
-  "version": "1.0.0",
-  "description": "A Chrome extension for managing messages with login",
+  "name": "LinkSync",
+  "version": "1.0",
+  "description": "Receive content from your iOS device.",
+  "permissions": [
+    "storage",
+    "notifications"
+  ],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -11,10 +15,15 @@
       "128": "icon128.jpg"
     }
   },
-  "permissions": ["storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
   "icons": {
     "16": "icon16.jpg",
     "48": "icon48.jpg",
     "128": "icon128.jpg"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://*.firebaseio.com https://www.googleapis.com;"
   }
 }
