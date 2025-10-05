@@ -1,5 +1,27 @@
 // background.js
 
+// Import the functions you need from the SDKs you need
+import { initializeApp } from './lib/firebase-app.js';
+// import { getAnalytics } from "firebase/analytics";
+// TODO: Add SDKs for Firebase products that you want to use
+// https://firebase.google.com/docs/web/setup#available-libraries
+
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyDv0e1JvUbtNqfT1fa0q0bsSWwhaSfkSRA",
+  authDomain: "linksync-10854.firebaseapp.com",
+  projectId: "linksync-10854",
+  storageBucket: "linksync-10854.firebasestorage.app",
+  messagingSenderId: "861936914311",
+  appId: "1:861936914311:web:0b4162597be16202c28d22",
+  measurementId: "G-H6Q1ZGTJ6V"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const analytics = getAnalytics(app);
+
 console.log("Background script loaded.");
 
 // This is a placeholder for where the FCM listener will go.
