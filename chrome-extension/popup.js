@@ -50,26 +50,10 @@ const mockMessages = [
   },
 ]
 
-// DOM Elements
-const loginScreen = document.getElementById("login-screen")
-const registerScreen = document.getElementById("register-screen")
-const messagesScreen = document.getElementById("messages-screen")
-const loginForm = document.getElementById("login-form")
-const registerForm = document.getElementById("register-form")
-const showRegisterBtn = document.getElementById("show-register-btn")
-const backToLoginBtn = document.getElementById("back-to-login-btn")
-const registerError = document.getElementById("register-error")
-const logoutBtn = document.getElementById("logout-btn")
-const tabButtons = document.querySelectorAll(".tab-btn")
-const newMessagesTab = document.getElementById("new-tab")
-const allMessagesTab = document.getElementById("all-tab")
-const newMessagesList = document.getElementById("new-messages-list")
-const allMessagesList = document.getElementById("all-messages-list")
-
-
-import {initializeApp } from "firebase/app";
+import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
 
+// ---------- Firebase Setup ----------
 const firebaseConfig = {
   apiKey: "AIzaSyDv0e1JvUbtNqfT1fa0q0bsSWwhaSfkSRA",
   authDomain: "linksync-10854.firebaseapp.com",
@@ -77,133 +61,99 @@ const firebaseConfig = {
   storageBucket: "linksync-10854.firebasestorage.app",
   messagingSenderId: "861936914311",
   appId: "1:861936914311:web:0b4162597be16202c28d22",
-  measurementId: "G-H6Q1ZGTJ6V"
+  measurementId: "G-H6Q1ZGTJ6V",
 };
 
 const app = initializeApp(firebaseConfig);
 const messaging = getMessaging(app);
 
+// ---------- Storage Helpers ----------
+function chromeGet(keys) {
+  return new Promise((resolve) => chrome.storage.local.get(keys, resolve));
+}
 
-// Check if user is logged in on load
-window.chrome.storage.local.get(["isLoggedIn"], (result) => {
-  if (result.isLoggedIn) {
-    showMessagesScreen()
-  }
-})
+function chromeSet(data) {
+  return new Promise((resolve) => chrome.storage.local.set(data, resolve));
+}
 
-// Login form submission
-loginForm.addEventListener("submit", (e) => {
-  e.preventDefault()
-  const username = document.getElementById("username").value
-  const password = document.getElementById("password").value
+// ---------- AuthContext-like Object ----------
+const Auth = {
+  user: null,
 
-  // Simple validation (accept any credentials for demo)
-  if (username && password) {
-    window.chrome.storage.local.get(["registeredUser"], (userResult) => {
-      if (
-        userResult.registeredUser &&
-        userResult.registeredUser.username === username &&
-        userResult.registeredUser.password === password
-      ) {
-        window.chrome.storage.local.set({ isLoggedIn: true, username }, () => {
-          showMessagesScreen()
-        })
-      } else {
-        alert("Invalid username or password")
-      }
-    })
-  }
-})
-
-// Logout
-logoutBtn.addEventListener("click", () => {
-  window.chrome.storage.local.set({ isLoggedIn: false }, () => {
-    showLoginScreen()
-  })
-})
-
-// Tab switching
-tabButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const tabName = button.dataset.tab
-
-    // Update active tab button
-    tabButtons.forEach((btn) => btn.classList.remove("active"))
-    button.classList.add("active")
-
-    // Show corresponding tab content
-    if (tabName === "new") {
-      newMessagesTab.classList.remove("hidden")
-      allMessagesTab.classList.add("hidden")
+  async init() {
+    const { isLoggedIn, registeredUser } = await chromeGet(["isLoggedIn", "registeredUser"]);
+    if (isLoggedIn && registeredUser) {
+      this.user = registeredUser;
+      showView("messages-screen");
+      renderMessages();
     } else {
-      newMessagesTab.classList.add("hidden")
-      allMessagesTab.classList.remove("hidden")
+      showView("login-screen");
     }
-  })
-})
+  },
 
-// Show login screen
-function showLoginScreen() {
-  loginScreen.classList.remove("hidden")
-  registerScreen.classList.add("hidden")
-  messagesScreen.classList.add("hidden")
-  loginForm.reset()
-  registerError.classList.add("hidden")
-}
-
-// Show register screen
-function showRegisterScreen() {
-  loginScreen.classList.add("hidden")
-  registerScreen.classList.remove("hidden")
-  messagesScreen.classList.add("hidden")
-  registerForm.reset()
-  registerError.classList.add("hidden")
-}
-
-// Show messages screen
-function showMessagesScreen() {
-  loginScreen.classList.add("hidden")
-  registerScreen.classList.add("hidden")
-  messagesScreen.classList.remove("hidden")
-  renderMessages()
-}
-
-// Render messages from chrome.storage
-function renderMessages() {
-  chrome.storage.local.get({ items: [] }, (result) => {
-    const allMessages = result.items;
-    // For now, we'll treat all messages as "new" for simplicity.
-    const newMessages = allMessages;
-
-    // Render new messages
-    if (newMessages.length === 0) {
-      newMessagesList.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">📭</div>
-          <div class="empty-state-text">No new items</div>
-        </div>
-      `;
+  async login(username, password) {
+    const { registeredUser } = await chromeGet(["registeredUser"]);
+    if (registeredUser && registeredUser.username === username && registeredUser.password === password) {
+      this.user = registeredUser;
+      await chromeSet({ isLoggedIn: true, username });
+      showView("messages-screen");
+      renderMessages();
     } else {
-      newMessagesList.innerHTML = newMessages.map((msg) => createMessageHTML(msg)).join("");
+      alert("Invalid username or password");
     }
+  },
 
-    // Render all messages
-    allMessagesList.innerHTML = allMessages.map((msg) => createMessageHTML(msg)).join("");
+  async logout() {
+    this.user = null;
+    await chromeSet({ isLoggedIn: false });
+    showView("login-screen");
+  },
+
+  async register(username, password) {
+    await chromeSet({ registeredUser: { username, password } });
+    showView("login-screen");
+  },
+};
+
+// ---------- View Management ----------
+function showView(viewId) {
+  document.querySelectorAll(".screen").forEach((screen) => {
+    screen.classList.add("hidden");
   });
+  document.getElementById(viewId).classList.remove("hidden");
 }
 
-// Create message HTML from storage item
+// ---------- Message Rendering ----------
+async function renderMessages() {
+  const { items = [] } = await chromeGet(["items"]);
+  const newMessagesList = document.getElementById("new-messages-list");
+  const allMessagesList = document.getElementById("all-messages-list");
+
+  if (!items.length) {
+    newMessagesList.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">📭</div>
+        <div class="empty-state-text">No new items</div>
+      </div>
+    `;
+    allMessagesList.innerHTML = "";
+    return;
+  }
+
+  const html = items.map(createMessageHTML).join("");
+  newMessagesList.innerHTML = html;
+  allMessagesList.innerHTML = html;
+}
+
 function createMessageHTML(item) {
-  // Use data structure from your backend (textPayload, type, timestamp)
-  const preview = item.type === 'text' ? item.textPayload : `Media item: [${item.type}]`;
+  const preview = item.type === "text" ? item.textPayload : `Media item: [${item.type}]`;
   const time = new Date(item.timestamp).toLocaleString();
 
   return `
     <div class="message-item">
       <div class="message-header">
         <span class="message-sender">
-          New Item
-          <span class="badge-new">NEW</span>
+          New Item <span class="badge-new">NEW</span>
         </span>
         <span class="message-time">${time}</span>
       </div>
@@ -213,65 +163,66 @@ function createMessageHTML(item) {
   `;
 }
 
-// Register form submission
-registerForm.addEventListener("submit", async (e) => {
-  console.log("Register form submitted");
-  e.preventDefault()
-  const username = document.getElementById("reg-username").value
-  const password = document.getElementById("reg-password").value
-  const confirmPassword = document.getElementById("reg-confirm-password").value
+// ---------- Event Listeners ----------
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  await Auth.login(username, password);
+});
 
-  // Validate passwords match
-  if (password !== confirmPassword) {
-    registerError.textContent = "Passwords do not match"
-    registerError.classList.remove("hidden")
-    return
+document.getElementById("register-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("reg-username").value;
+  const password = document.getElementById("reg-password").value;
+  const confirm = document.getElementById("reg-confirm-password").value;
+  const registerError = document.getElementById("register-error");
+
+  if (password !== confirm) {
+    registerError.textContent = "Passwords do not match";
+    registerError.classList.remove("hidden");
+    return;
   }
 
+  registerError.classList.add("hidden");
+
+  // Request FCM permission + get token
   const permission = await Notification.requestPermission();
   if (permission === "granted") {
-    console.log("Notification permission granted");
-
     const registration = await navigator.serviceWorker.getRegistration();
-
     const token = await getToken(messaging, {
       vapidKey: "BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA",
-      serviceWorkerRegistration: registration
+      serviceWorkerRegistration: registration,
     });
-
-    console.log("FCM Token:", token);
-    
-    chrome.storage.local.set({ fcmToken: token });
-  } else {
-    console.log("Unable to get permission to notify.");
+    await chromeSet({ fcmToken: token });
   }
 
-  // Store user credentials
-  window.chrome.storage.local.set(
-    {
-      registeredUser: { username, password },
-    },
-    () => {
-      // Go back to login screen after successful registration
-      showLoginScreen()
-      registerForm.reset()
-    },
-  )
-})
+  await Auth.register(username, password);
+  document.getElementById("register-form").reset();
+});
 
-// Register button click handler
-showRegisterBtn.addEventListener("click", () => {
-  showRegisterScreen()
-})
+document.getElementById("logout-btn").addEventListener("click", () => Auth.logout());
+document.getElementById("show-register-btn").addEventListener("click", () => showView("register-screen"));
+document.getElementById("back-to-login-btn").addEventListener("click", () => showView("login-screen"));
 
-// Back to login button click handler
-backToLoginBtn.addEventListener("click", () => {
-  showLoginScreen()
-})
+// ---------- Tabs ----------
+document.querySelectorAll(".tab-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    const tab = button.dataset.tab;
+    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+    button.classList.add("active");
 
-// Listen for changes in storage and reload the list
+    document.getElementById("new-tab").classList.toggle("hidden", tab !== "new");
+    document.getElementById("all-tab").classList.toggle("hidden", tab === "new");
+  });
+});
+
+// ---------- Storage Change Listener ----------
 chrome.storage.onChanged.addListener((changes, namespace) => {
-  if (namespace === 'local' && changes.items) {
+  if (namespace === "local" && changes.items) {
     renderMessages();
   }
 });
+
+// ---------- Initialize ----------
+Auth.init();

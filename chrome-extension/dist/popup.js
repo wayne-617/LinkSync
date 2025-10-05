@@ -2948,20 +2948,6 @@ async function getToken2(messaging2, options) {
 registerMessagingInWindow();
 
 // popup.js
-var loginScreen = document.getElementById("login-screen");
-var registerScreen = document.getElementById("register-screen");
-var messagesScreen = document.getElementById("messages-screen");
-var loginForm = document.getElementById("login-form");
-var registerForm = document.getElementById("register-form");
-var showRegisterBtn = document.getElementById("show-register-btn");
-var backToLoginBtn = document.getElementById("back-to-login-btn");
-var registerError = document.getElementById("register-error");
-var logoutBtn = document.getElementById("logout-btn");
-var tabButtons = document.querySelectorAll(".tab-btn");
-var newMessagesTab = document.getElementById("new-tab");
-var allMessagesTab = document.getElementById("all-tab");
-var newMessagesList = document.getElementById("new-messages-list");
-var allMessagesList = document.getElementById("all-messages-list");
 var firebaseConfig = {
   apiKey: "AIzaSyDv0e1JvUbtNqfT1fa0q0bsSWwhaSfkSRA",
   authDomain: "linksync-10854.firebaseapp.com",
@@ -2973,82 +2959,68 @@ var firebaseConfig = {
 };
 var app = initializeApp(firebaseConfig);
 var messaging = getMessagingInWindow(app);
-window.chrome.storage.local.get(["isLoggedIn"], (result) => {
-  if (result.isLoggedIn) {
-    showMessagesScreen();
-  }
-});
-loginForm.addEventListener("submit", (e) => {
-  e.preventDefault();
-  const username = document.getElementById("username").value;
-  const password = document.getElementById("password").value;
-  if (username && password) {
-    window.chrome.storage.local.get(["registeredUser"], (userResult) => {
-      if (userResult.registeredUser && userResult.registeredUser.username === username && userResult.registeredUser.password === password) {
-        window.chrome.storage.local.set({ isLoggedIn: true, username }, () => {
-          showMessagesScreen();
-        });
-      } else {
-        alert("Invalid username or password");
-      }
-    });
-  }
-});
-logoutBtn.addEventListener("click", () => {
-  window.chrome.storage.local.set({ isLoggedIn: false }, () => {
-    showLoginScreen();
-  });
-});
-tabButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    const tabName = button.dataset.tab;
-    tabButtons.forEach((btn) => btn.classList.remove("active"));
-    button.classList.add("active");
-    if (tabName === "new") {
-      newMessagesTab.classList.remove("hidden");
-      allMessagesTab.classList.add("hidden");
+function chromeGet(keys) {
+  return new Promise((resolve) => chrome.storage.local.get(keys, resolve));
+}
+function chromeSet(data) {
+  return new Promise((resolve) => chrome.storage.local.set(data, resolve));
+}
+var Auth = {
+  user: null,
+  async init() {
+    const { isLoggedIn, registeredUser } = await chromeGet(["isLoggedIn", "registeredUser"]);
+    if (isLoggedIn && registeredUser) {
+      this.user = registeredUser;
+      showView("messages-screen");
+      renderMessages();
     } else {
-      newMessagesTab.classList.add("hidden");
-      allMessagesTab.classList.remove("hidden");
+      showView("login-screen");
     }
-  });
-});
-function showLoginScreen() {
-  loginScreen.classList.remove("hidden");
-  registerScreen.classList.add("hidden");
-  messagesScreen.classList.add("hidden");
-  loginForm.reset();
-  registerError.classList.add("hidden");
-}
-function showRegisterScreen() {
-  loginScreen.classList.add("hidden");
-  registerScreen.classList.remove("hidden");
-  messagesScreen.classList.add("hidden");
-  registerForm.reset();
-  registerError.classList.add("hidden");
-}
-function showMessagesScreen() {
-  loginScreen.classList.add("hidden");
-  registerScreen.classList.add("hidden");
-  messagesScreen.classList.remove("hidden");
-  renderMessages();
-}
-function renderMessages() {
-  chrome.storage.local.get({ items: [] }, (result) => {
-    const allMessages = result.items;
-    const newMessages = allMessages;
-    if (newMessages.length === 0) {
-      newMessagesList.innerHTML = `
-        <div class="empty-state">
-          <div class="empty-state-icon">\u{1F4ED}</div>
-          <div class="empty-state-text">No new items</div>
-        </div>
-      `;
+  },
+  async login(username, password) {
+    const { registeredUser } = await chromeGet(["registeredUser"]);
+    if (registeredUser && registeredUser.username === username && registeredUser.password === password) {
+      this.user = registeredUser;
+      await chromeSet({ isLoggedIn: true, username });
+      showView("messages-screen");
+      renderMessages();
     } else {
-      newMessagesList.innerHTML = newMessages.map((msg) => createMessageHTML(msg)).join("");
+      alert("Invalid username or password");
     }
-    allMessagesList.innerHTML = allMessages.map((msg) => createMessageHTML(msg)).join("");
+  },
+  async logout() {
+    this.user = null;
+    await chromeSet({ isLoggedIn: false });
+    showView("login-screen");
+  },
+  async register(username, password) {
+    await chromeSet({ registeredUser: { username, password } });
+    showView("login-screen");
+  }
+};
+function showView(viewId) {
+  document.querySelectorAll(".screen").forEach((screen) => {
+    screen.classList.add("hidden");
   });
+  document.getElementById(viewId).classList.remove("hidden");
+}
+async function renderMessages() {
+  const { items = [] } = await chromeGet(["items"]);
+  const newMessagesList = document.getElementById("new-messages-list");
+  const allMessagesList = document.getElementById("all-messages-list");
+  if (!items.length) {
+    newMessagesList.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-state-icon">\u{1F4ED}</div>
+        <div class="empty-state-text">No new items</div>
+      </div>
+    `;
+    allMessagesList.innerHTML = "";
+    return;
+  }
+  const html = items.map(createMessageHTML).join("");
+  newMessagesList.innerHTML = html;
+  allMessagesList.innerHTML = html;
 }
 function createMessageHTML(item) {
   const preview = item.type === "text" ? item.textPayload : `Media item: [${item.type}]`;
@@ -3057,8 +3029,7 @@ function createMessageHTML(item) {
     <div class="message-item">
       <div class="message-header">
         <span class="message-sender">
-          New Item
-          <span class="badge-new">NEW</span>
+          New Item <span class="badge-new">NEW</span>
         </span>
         <span class="message-time">${time}</span>
       </div>
@@ -3067,51 +3038,54 @@ function createMessageHTML(item) {
     </div>
   `;
 }
-registerForm.addEventListener("submit", async (e) => {
-  console.log("Register form submitted");
+document.getElementById("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const username = document.getElementById("username").value;
+  const password = document.getElementById("password").value;
+  await Auth.login(username, password);
+});
+document.getElementById("register-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   const username = document.getElementById("reg-username").value;
   const password = document.getElementById("reg-password").value;
-  const confirmPassword = document.getElementById("reg-confirm-password").value;
-  if (password !== confirmPassword) {
+  const confirm = document.getElementById("reg-confirm-password").value;
+  const registerError = document.getElementById("register-error");
+  if (password !== confirm) {
     registerError.textContent = "Passwords do not match";
     registerError.classList.remove("hidden");
     return;
   }
+  registerError.classList.add("hidden");
   const permission = await Notification.requestPermission();
   if (permission === "granted") {
-    console.log("Notification permission granted");
     const registration = await navigator.serviceWorker.getRegistration();
     const token = await getToken2(messaging, {
       vapidKey: "BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA",
       serviceWorkerRegistration: registration
     });
-    console.log("FCM Token:", token);
-    chrome.storage.local.set({ fcmToken: token });
-  } else {
-    console.log("Unable to get permission to notify.");
+    await chromeSet({ fcmToken: token });
   }
-  window.chrome.storage.local.set(
-    {
-      registeredUser: { username, password }
-    },
-    () => {
-      showLoginScreen();
-      registerForm.reset();
-    }
-  );
+  await Auth.register(username, password);
+  document.getElementById("register-form").reset();
 });
-showRegisterBtn.addEventListener("click", () => {
-  showRegisterScreen();
-});
-backToLoginBtn.addEventListener("click", () => {
-  showLoginScreen();
+document.getElementById("logout-btn").addEventListener("click", () => Auth.logout());
+document.getElementById("show-register-btn").addEventListener("click", () => showView("register-screen"));
+document.getElementById("back-to-login-btn").addEventListener("click", () => showView("login-screen"));
+document.querySelectorAll(".tab-btn").forEach((button) => {
+  button.addEventListener("click", () => {
+    const tab = button.dataset.tab;
+    document.querySelectorAll(".tab-btn").forEach((b) => b.classList.remove("active"));
+    button.classList.add("active");
+    document.getElementById("new-tab").classList.toggle("hidden", tab !== "new");
+    document.getElementById("all-tab").classList.toggle("hidden", tab === "new");
+  });
 });
 chrome.storage.onChanged.addListener((changes, namespace) => {
   if (namespace === "local" && changes.items) {
     renderMessages();
   }
 });
+Auth.init();
 /*! Bundled license information:
 
 @firebase/util/dist/index.esm.js:
