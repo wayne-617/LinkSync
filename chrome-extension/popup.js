@@ -52,8 +52,13 @@ const mockMessages = [
 
 // DOM Elements
 const loginScreen = document.getElementById("login-screen")
+const registerScreen = document.getElementById("register-screen")
 const messagesScreen = document.getElementById("messages-screen")
 const loginForm = document.getElementById("login-form")
+const registerForm = document.getElementById("register-form")
+const showRegisterBtn = document.getElementById("show-register-btn")
+const backToLoginBtn = document.getElementById("back-to-login-btn")
+const registerError = document.getElementById("register-error")
 const logoutBtn = document.getElementById("logout-btn")
 const tabButtons = document.querySelectorAll(".tab-btn")
 const newMessagesTab = document.getElementById("new-tab")
@@ -76,8 +81,18 @@ loginForm.addEventListener("submit", (e) => {
 
   // Simple validation (accept any credentials for demo)
   if (username && password) {
-    window.chrome.storage.local.set({ isLoggedIn: true, username }, () => {
-      showMessagesScreen()
+    window.chrome.storage.local.get(["registeredUser"], (userResult) => {
+      if (
+        userResult.registeredUser &&
+        userResult.registeredUser.username === username &&
+        userResult.registeredUser.password === password
+      ) {
+        window.chrome.storage.local.set({ isLoggedIn: true, username }, () => {
+          showMessagesScreen()
+        })
+      } else {
+        alert("Invalid username or password")
+      }
     })
   }
 })
@@ -112,13 +127,25 @@ tabButtons.forEach((button) => {
 // Show login screen
 function showLoginScreen() {
   loginScreen.classList.remove("hidden")
+  registerScreen.classList.add("hidden")
   messagesScreen.classList.add("hidden")
   loginForm.reset()
+  registerError.classList.add("hidden")
+}
+
+// Show register screen
+function showRegisterScreen() {
+  loginScreen.classList.add("hidden")
+  registerScreen.classList.remove("hidden")
+  messagesScreen.classList.add("hidden")
+  registerForm.reset()
+  registerError.classList.add("hidden")
 }
 
 // Show messages screen
 function showMessagesScreen() {
   loginScreen.classList.add("hidden")
+  registerScreen.classList.add("hidden")
   messagesScreen.classList.remove("hidden")
   renderMessages()
 }
@@ -160,3 +187,40 @@ function createMessageHTML(message) {
     </div>
   `
 }
+
+// Register form submission
+registerForm.addEventListener("submit", (e) => {
+  e.preventDefault()
+  const username = document.getElementById("reg-username").value
+  const password = document.getElementById("reg-password").value
+  const confirmPassword = document.getElementById("reg-confirm-password").value
+
+  // Validate passwords match
+  if (password !== confirmPassword) {
+    registerError.textContent = "Passwords do not match"
+    registerError.classList.remove("hidden")
+    return
+  }
+
+  // Store user credentials
+  window.chrome.storage.local.set(
+    {
+      registeredUser: { username, password },
+    },
+    () => {
+      // Go back to login screen after successful registration
+      showLoginScreen()
+      registerForm.reset()
+    },
+  )
+})
+
+// Register button click handler
+showRegisterBtn.addEventListener("click", () => {
+  showRegisterScreen()
+})
+
+// Back to login button click handler
+backToLoginBtn.addEventListener("click", () => {
+  showLoginScreen()
+})
