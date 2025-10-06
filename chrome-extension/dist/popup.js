@@ -2965,12 +2965,26 @@ function chromeGet(keys) {
 function chromeSet(data) {
   return new Promise((resolve) => chrome.storage.local.set(data, resolve));
 }
+var API_BASE_URL = typeof window !== "undefined" && window.__env?.REACT_APP_API_URL || "http://localhost:3000";
+console.log("Using API URL:", API_BASE_URL);
+async function apiCall(endpoint, body) {
+  const response = await fetch(`${API_BASE_URL}${endpoint}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body)
+  });
+  const data = await response.json();
+  if (!response.ok) {
+    throw new Error(data.message || `Error: ${response.status}`);
+  }
+  return data;
+}
 var Auth = {
   user: null,
   async init() {
-    const { isLoggedIn, registeredUser } = await chromeGet(["isLoggedIn", "registeredUser"]);
-    if (isLoggedIn && registeredUser) {
-      this.user = registeredUser;
+    const { authToken } = await chromeGet(["authToken"]);
+    if (authToken) {
+      this.user = { token: authToken };
       showView("messages-screen");
       renderMessages();
     } else {
@@ -2978,24 +2992,27 @@ var Auth = {
     }
   },
   async login(username, password) {
-    const { registeredUser } = await chromeGet(["registeredUser"]);
-    if (registeredUser && registeredUser.username === username && registeredUser.password === password) {
-      this.user = registeredUser;
-      await chromeSet({ isLoggedIn: true, username });
-      showView("messages-screen");
-      renderMessages();
-    } else {
-      alert("Invalid username or password");
-    }
+    const data = await apiCall("/login", { username, password });
+    const token = data.token || data.idToken || data.accessToken;
+    if (!token) throw new Error("No token returned from API");
+    await chromeSet({ authToken: token });
+    this.user = { token };
+    showView("messages-screen");
+    renderMessages();
   },
   async logout() {
     this.user = null;
-    await chromeSet({ isLoggedIn: false });
+    await chrome.storage.local.remove(["authToken"]);
     showView("login-screen");
   },
-  async register(username, password) {
-    await chromeSet({ registeredUser: { username, password } });
-    showView("login-screen");
+  // MODIFIED: Accepts all required fields for registration
+  async register(username, email, password, fcm_token) {
+    await apiCall("/register", {
+      username,
+      email,
+      password,
+      fcm_token
+    });
   }
 };
 function showView(viewId) {
@@ -3003,6 +3020,19 @@ function showView(viewId) {
     screen.classList.add("hidden");
   });
   document.getElementById(viewId).classList.remove("hidden");
+}
+function displayError(formId, message) {
+  const errorEl = document.getElementById(`${formId}-error`);
+  if (errorEl) {
+    errorEl.textContent = message;
+    errorEl.classList.remove("hidden");
+  }
+}
+function clearError(formId) {
+  const errorEl = document.getElementById(`${formId}-error`);
+  if (errorEl && !errorEl.classList.contains("hidden")) {
+    errorEl.classList.add("hidden");
+  }
 }
 async function renderMessages() {
   const { items = [] } = await chromeGet(["items"]);
@@ -3040,33 +3070,46 @@ function createMessageHTML(item) {
 }
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
+  clearError("login");
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  await Auth.login(username, password);
+  try {
+    await Auth.login(username, password);
+  } catch (error) {
+    displayError("login", error.message);
+  }
 });
 document.getElementById("register-form").addEventListener("submit", async (e) => {
   e.preventDefault();
+  clearError("register");
   const username = document.getElementById("reg-username").value;
+  const email = document.getElementById("reg-email").value;
   const password = document.getElementById("reg-password").value;
   const confirm = document.getElementById("reg-confirm-password").value;
-  const registerError = document.getElementById("register-error");
   if (password !== confirm) {
-    registerError.textContent = "Passwords do not match";
-    registerError.classList.remove("hidden");
+    displayError("register", "Passwords do not match");
     return;
   }
-  registerError.classList.add("hidden");
-  const permission = await Notification.requestPermission();
-  if (permission === "granted") {
+  try {
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") {
+      throw new Error("Notification permission is required.");
+    }
     const registration = await navigator.serviceWorker.getRegistration();
-    const token = await getToken2(messaging, {
+    const fcm_token = await getToken2(messaging, {
       vapidKey: "BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA",
       serviceWorkerRegistration: registration
     });
-    await chromeSet({ fcmToken: token });
+    if (!fcm_token) {
+      throw new Error("Could not retrieve FCM token.");
+    }
+    await Auth.register(username, email, password, fcm_token);
+    alert("\u2705 Registration successful! Please log in.");
+    document.getElementById("register-form").reset();
+    showView("login-screen");
+  } catch (error) {
+    displayError("register", error.message);
   }
-  await Auth.register(username, password);
-  document.getElementById("register-form").reset();
 });
 document.getElementById("logout-btn").addEventListener("click", () => Auth.logout());
 document.getElementById("show-register-btn").addEventListener("click", () => showView("register-screen"));
