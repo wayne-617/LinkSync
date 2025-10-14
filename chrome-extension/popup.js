@@ -2,7 +2,6 @@
 
 import { initializeApp } from "firebase/app";
 import { getMessaging, getToken } from "firebase/messaging";
-import dotenv from "dotenv";
 
 // ---------- Firebase Setup ----------
 const firebaseConfig = {
@@ -15,7 +14,6 @@ const firebaseConfig = {
   measurementId: "G-H6Q1ZGTJ6V",
 };
 
-dotenv.config();
 
 // dotenv is Node-only and can't be used in browser extension bundles.
 // For browser usage, read config from a runtime-global (window.__env) or use a fallback.
@@ -33,7 +31,7 @@ function chromeSet(data) {
 
 // ---------- API Helper ----------
 // Use runtime-injected config (window.__env) if available, otherwise fall back to localhost.
-const API_BASE_URL = (typeof window !== "undefined" && window.__env?.REACT_APP_API_URL) || "http://localhost:3000";
+const API_BASE_URL = process.env.AWS_API_URL;
 console.log("Using API URL:", API_BASE_URL);
 
 async function apiCall(endpoint, body) {

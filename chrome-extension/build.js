@@ -1,4 +1,7 @@
 const esbuild = require("esbuild");
+const dotenv = require("dotenv");
+
+dotenv.config();
 
 // Bundle background.js (service worker)
 const backgroundBuild = esbuild.build({
@@ -15,6 +18,9 @@ const popupBuild = esbuild.build({
   bundle: true,
   outfile: "dist/popup.js",
   format: "esm",       // ES module for <script type="module">
+  define: {
+    "process.env.AWS_API_URL": JSON.stringify(process.env.AWS_API_URL),
+  },
   minify: false,
 });
 
@@ -22,5 +28,6 @@ const popupBuild = esbuild.build({
 Promise.all([backgroundBuild, popupBuild])
   .then(() => {
     console.log("✅ Build complete for background.js and popup.js");
+    console.log("AWS_API_URL:", process.env.AWS_API_URL);
   })
   .catch(() => process.exit(1));
