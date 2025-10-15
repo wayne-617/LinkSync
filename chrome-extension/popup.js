@@ -63,8 +63,8 @@ const Auth = {
     }
   },
 
-  async login(username, password) {
-    const data = await apiCall("/login", { username, password });
+  async login(username, password, fcm_token) {
+    const data = await apiCall("/login", { username, password, fcm_token });
     const { accessToken, idToken, refreshToken } = data;
     if (!accessToken || !idToken || !refreshToken) {
       throw new Error("Missing tokens in response from API");
@@ -172,7 +172,25 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
   try {
-    await Auth.login(username, password);
+    // 1. Get FCM Token first
+    const permission = await Notification.requestPermission();
+    if (permission !== "granted") {
+      throw new Error("Notification permission is required.");
+    }
+
+    const registration = await navigator.serviceWorker.getRegistration();
+    const fcm_token = await getToken(messaging, {
+      vapidKey: "BHZr6p9au9aassV7zioGX2u2R9nQ1e4QYSLrrbZ5gavgrTM5Z1_K4tDgfcEK2U0tng3SnCOVw6BXtDAAk7n-XUA",
+      serviceWorkerRegistration: registration,
+    });
+
+    if (!fcm_token) {
+      throw new Error("Could not retrieve FCM token.");
+    }
+    console.log("FCM Token:", fcm_token);
+    // 2. Call login with all required data
+    await Auth.login(username, password, fcm_token);
+
   } catch (error) {
     displayError("login", error.message);
   }
