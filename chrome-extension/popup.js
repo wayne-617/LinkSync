@@ -32,7 +32,6 @@ function chromeSet(data) {
 // ---------- API Helper ----------
 // Use runtime-injected config (window.__env) if available, otherwise fall back to localhost.
 const API_BASE_URL = process.env.AWS_API_URL;
-console.log("Using API URL:", API_BASE_URL);
 
 async function apiCall(endpoint, body) {
   const response = await fetch(`${API_BASE_URL}${endpoint}`, {
@@ -66,11 +65,17 @@ const Auth = {
 
   async login(username, password) {
     const data = await apiCall("/login", { username, password });
-    const token = data.token || data.idToken || data.accessToken;
-    if (!token) throw new Error("No token returned from API");
+    const { accessToken, idToken, refreshToken } = data;
+    if (!accessToken || !idToken || !refreshToken) {
+      throw new Error("Missing tokens in response from API");
+    }
 
-    await chromeSet({ authToken: token });
-    this.user = { token };
+    await chromeSet({ 
+      authToken: accessToken, 
+      idToken, 
+      refreshToken
+    });
+    this.user = { authToken: accessToken, idToken, refreshToken };
     showView("messages-screen");
     renderMessages();
   },
@@ -78,6 +83,10 @@ const Auth = {
   async logout() {
     this.user = null;
     await chrome.storage.local.remove(["authToken"]);
+    await chrome.storage.local.remove(["idToken"]);
+    await chrome.storage.local.remove(["refreshToken"]);
+
+    this.user = null;
     showView("login-screen");
   },
 

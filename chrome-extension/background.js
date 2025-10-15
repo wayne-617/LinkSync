@@ -26,10 +26,11 @@ const messaging = getMessaging(app);
 
 console.log("Background script loaded.");
 
-
+// replace with event listener push
 onBackgroundMessage(messaging, (payload) => {
   console.log('Message received. ', payload);
 });
+
 
 // This function will fetch data from your backend.
 async function fetchItemFromBackend(itemId) {
