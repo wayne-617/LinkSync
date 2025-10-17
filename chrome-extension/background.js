@@ -2,14 +2,9 @@
 
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getMessaging, onBackgroundMessage } from "firebase/messaging/sw";
-
-// import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+import { getMessaging } from "firebase/messaging/sw";
 
 // Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyDv0e1JvUbtNqfT1fa0q0bsSWwhaSfkSRA",
   authDomain: "linksync-10854.firebaseapp.com",
@@ -26,11 +21,59 @@ const messaging = getMessaging(app);
 
 console.log("Background script loaded.");
 
-// replace with event listener push
-onBackgroundMessage(messaging, (payload) => {
-  console.log('Message received. ', payload);
+// Handle background messages from Firebase
+self.addEventListener('push', (event) => {
+  console.log("Push event received:", event);
+
+  // Safely get payload (works with FCM data-only messages)
+  let payload = {};
+  try {
+    payload = event.data?.json?.() || {};
+  } catch (e) {
+    console.warn("Failed to parse push payload:", e);
+  }
+
+  console.log("Payload:", payload);
+
+  const title = payload.data?.title || "New Notification";
+  const body = payload.data?.body || "You have a new message!";
+  const link = payload.data?.link || null;
+
+  console.log("Notification values:", { title, body, link });
+
+  event.waitUntil(
+    Promise.resolve().then(() => {
+      return self.registration.showNotification(title, {
+        body,
+        data: { link },
+        requireInteraction: false,
+        tag: "linksync-notification"
+      });
+    })
+  );
 });
 
+self.addEventListener("notificationclick", (event) => {
+  console.log("Notification clicked:", event);
+  event.notification.close();
+
+  const link = event.notification.data?.link;
+  console.log("Opening link:", link);
+
+  if (link) {
+    event.waitUntil(
+      clients.matchAll({ type: "window", includeUncontrolled: true })
+        .then((clientList) => {
+          for (let client of clientList) {
+            if (client.url === link && "focus" in client) {
+              return client.focus();
+            }
+          }
+          return clients.openWindow(link);
+        })
+    );
+  }
+});
 
 // This function will fetch data from your backend.
 async function fetchItemFromBackend(itemId) {
