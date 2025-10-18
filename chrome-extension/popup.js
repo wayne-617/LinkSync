@@ -131,39 +131,53 @@ async function renderMessages() {
   const newMessagesList = document.getElementById("new-messages-list");
   const allMessagesList = document.getElementById("all-messages-list");
 
-  if (!items.length) {
-    newMessagesList.innerHTML = `
-      <div class="empty-state">
-        <div class="empty-state-icon">📭</div>
-        <div class="empty-state-text">No new items</div>
-      </div>
-    `;
-    allMessagesList.innerHTML = "";
-    return;
-  }
+  const newItems = items.filter(m => !m.seen);
+  const allItems = items;
 
-  const html = items.map(createMessageHTML).join("");
-  newMessagesList.innerHTML = html;
-  allMessagesList.innerHTML = html;
+  newMessagesList.innerHTML = newItems.length
+    ? newItems.map(createMessageHTML).join("")
+    : `<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No new items</div></div>`;
+
+  allMessagesList.innerHTML = allItems.map(createMessageHTML).join("");
+
+  // Add click handlers after rendering
+  document.querySelectorAll(".message-item").forEach((element) => {
+    element.addEventListener("click", async () => {
+      const id = element.dataset.id;
+      const { items } = await chromeGet(["items"]);
+      const target = items.find(m => m.id === id);
+      if (!target) return;
+
+      // Mark as seen
+      target.seen = true;
+      await chromeSet({ items });
+
+      // Open link
+      if (target.url) {
+        chrome.tabs.create({ url: target.url });
+      }
+
+      // Re-render UI
+      renderMessages();
+    });
+  });
 }
 
 function createMessageHTML(item) {
-  const preview = item.type === "text" ? item.textPayload : `Media item: [${item.type}]`;
   const time = new Date(item.timestamp).toLocaleString();
-
   return `
-    <div class="message-item">
+    <div class="message-item" data-id="${item.id}">
       <div class="message-header">
         <span class="message-sender">
-          New Item <span class="badge-new">NEW</span>
+          ${item.title} ${!item.seen ? '<span class="badge-new">NEW</span>' : ''}
         </span>
         <span class="message-time">${time}</span>
       </div>
-      <div class="message-subject">${item.type.charAt(0).toUpperCase() + item.type.slice(1)}</div>
-      <div class="message-preview">${preview}</div>
+      <div class="message-preview">${item.body}</div>
     </div>
   `;
 }
+
 
 // ---------- Event Listeners ----------
 document.getElementById("login-form").addEventListener("submit", async (e) => {
