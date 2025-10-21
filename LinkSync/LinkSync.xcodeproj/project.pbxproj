@@ -1,0 +1,777 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		52F160F02EA730B6006C9C38 /* LinkSyncShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 52F160E62EA730B6006C9C38 /* LinkSyncShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		52F161232EA73AE0006C9C38 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 52F161222EA73AE0006C9C38 /* AWSCognitoAuthPlugin */; };
+		52F161252EA73AE0006C9C38 /* AWSPluginsCore in Frameworks */ = {isa = PBXBuildFile; productRef = 52F161242EA73AE0006C9C38 /* AWSPluginsCore */; };
+		52F161272EA73AE0006C9C38 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 52F161262EA73AE0006C9C38 /* Amplify */; };
+		57C3848BAF0852C4728DB057 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 1CA79EA8324475EA17A2B115 /* amplifyconfiguration.json */; };
+		68D08735999275B77D8D160C /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = CAC9B5B550649D566759AD12 /* awsconfiguration.json */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		52F160902EA72A34006C9C38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52F1607A2EA72A33006C9C38 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52F160812EA72A33006C9C38;
+			remoteInfo = LinkSync;
+		};
+		52F1609A2EA72A34006C9C38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52F1607A2EA72A33006C9C38 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52F160812EA72A33006C9C38;
+			remoteInfo = LinkSync;
+		};
+		52F160EE2EA730B6006C9C38 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 52F1607A2EA72A33006C9C38 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 52F160E52EA730B6006C9C38;
+			remoteInfo = LinkSyncShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		52F160DB2EA72D18006C9C38 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				52F160F02EA730B6006C9C38 /* LinkSyncShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		1CA79EA8324475EA17A2B115 /* amplifyconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = amplifyconfiguration.json; sourceTree = "<group>"; };
+		52F160822EA72A33006C9C38 /* LinkSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		52F1608F2EA72A34006C9C38 /* LinkSyncTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkSyncTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52F160992EA72A34006C9C38 /* LinkSyncUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkSyncUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		52F160E62EA730B6006C9C38 /* LinkSyncShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LinkSyncShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		CAC9B5B550649D566759AD12 /* awsconfiguration.json */ = {isa = PBXFileReference; explicitFileType = text.json; path = awsconfiguration.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		52F160F12EA730B6006C9C38 /* Exceptions for "LinkSyncShare" folder in "LinkSyncShare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 52F160E52EA730B6006C9C38 /* LinkSyncShare */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		52F160842EA72A33006C9C38 /* LinkSync */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LinkSync;
+			sourceTree = "<group>";
+		};
+		52F160922EA72A34006C9C38 /* LinkSyncTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LinkSyncTests;
+			sourceTree = "<group>";
+		};
+		52F1609C2EA72A34006C9C38 /* LinkSyncUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = LinkSyncUITests;
+			sourceTree = "<group>";
+		};
+		52F160E72EA730B6006C9C38 /* LinkSyncShare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				52F160F12EA730B6006C9C38 /* Exceptions for "LinkSyncShare" folder in "LinkSyncShare" target */,
+			);
+			path = LinkSyncShare;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		52F1607F2EA72A33006C9C38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				52F161272EA73AE0006C9C38 /* Amplify in Frameworks */,
+				52F161252EA73AE0006C9C38 /* AWSPluginsCore in Frameworks */,
+				52F161232EA73AE0006C9C38 /* AWSCognitoAuthPlugin in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F1608C2EA72A34006C9C38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F160962EA72A34006C9C38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F160E32EA730B6006C9C38 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		224323DC4EEA78C9D4B2D9B0 /* AmplifyConfig */ = {
+			isa = PBXGroup;
+			children = (
+				CAC9B5B550649D566759AD12 /* awsconfiguration.json */,
+				1CA79EA8324475EA17A2B115 /* amplifyconfiguration.json */,
+			);
+			name = AmplifyConfig;
+			sourceTree = "<group>";
+		};
+		52F160792EA72A33006C9C38 = {
+			isa = PBXGroup;
+			children = (
+				52F160842EA72A33006C9C38 /* LinkSync */,
+				52F160922EA72A34006C9C38 /* LinkSyncTests */,
+				52F1609C2EA72A34006C9C38 /* LinkSyncUITests */,
+				52F160E72EA730B6006C9C38 /* LinkSyncShare */,
+				52F160832EA72A33006C9C38 /* Products */,
+				224323DC4EEA78C9D4B2D9B0 /* AmplifyConfig */,
+			);
+			sourceTree = "<group>";
+		};
+		52F160832EA72A33006C9C38 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				52F160822EA72A33006C9C38 /* LinkSync.app */,
+				52F1608F2EA72A34006C9C38 /* LinkSyncTests.xctest */,
+				52F160992EA72A34006C9C38 /* LinkSyncUITests.xctest */,
+				52F160E62EA730B6006C9C38 /* LinkSyncShare.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		52F160812EA72A33006C9C38 /* LinkSync */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52F160A32EA72A34006C9C38 /* Build configuration list for PBXNativeTarget "LinkSync" */;
+			buildPhases = (
+				52F1607E2EA72A33006C9C38 /* Sources */,
+				52F1607F2EA72A33006C9C38 /* Frameworks */,
+				52F160802EA72A33006C9C38 /* Resources */,
+				52F160DB2EA72D18006C9C38 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52F160EF2EA730B6006C9C38 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52F160842EA72A33006C9C38 /* LinkSync */,
+			);
+			name = LinkSync;
+			packageProductDependencies = (
+				52F161222EA73AE0006C9C38 /* AWSCognitoAuthPlugin */,
+				52F161242EA73AE0006C9C38 /* AWSPluginsCore */,
+				52F161262EA73AE0006C9C38 /* Amplify */,
+			);
+			productName = LinkSync;
+			productReference = 52F160822EA72A33006C9C38 /* LinkSync.app */;
+			productType = "com.apple.product-type.application";
+		};
+		52F1608E2EA72A34006C9C38 /* LinkSyncTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52F160A62EA72A34006C9C38 /* Build configuration list for PBXNativeTarget "LinkSyncTests" */;
+			buildPhases = (
+				52F1608B2EA72A34006C9C38 /* Sources */,
+				52F1608C2EA72A34006C9C38 /* Frameworks */,
+				52F1608D2EA72A34006C9C38 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52F160912EA72A34006C9C38 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52F160922EA72A34006C9C38 /* LinkSyncTests */,
+			);
+			name = LinkSyncTests;
+			packageProductDependencies = (
+			);
+			productName = LinkSyncTests;
+			productReference = 52F1608F2EA72A34006C9C38 /* LinkSyncTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		52F160982EA72A34006C9C38 /* LinkSyncUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52F160A92EA72A34006C9C38 /* Build configuration list for PBXNativeTarget "LinkSyncUITests" */;
+			buildPhases = (
+				52F160952EA72A34006C9C38 /* Sources */,
+				52F160962EA72A34006C9C38 /* Frameworks */,
+				52F160972EA72A34006C9C38 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				52F1609B2EA72A34006C9C38 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				52F1609C2EA72A34006C9C38 /* LinkSyncUITests */,
+			);
+			name = LinkSyncUITests;
+			packageProductDependencies = (
+			);
+			productName = LinkSyncUITests;
+			productReference = 52F160992EA72A34006C9C38 /* LinkSyncUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		52F160E52EA730B6006C9C38 /* LinkSyncShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 52F160F22EA730B6006C9C38 /* Build configuration list for PBXNativeTarget "LinkSyncShare" */;
+			buildPhases = (
+				52F160E22EA730B6006C9C38 /* Sources */,
+				52F160E32EA730B6006C9C38 /* Frameworks */,
+				52F160E42EA730B6006C9C38 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				52F160E72EA730B6006C9C38 /* LinkSyncShare */,
+			);
+			name = LinkSyncShare;
+			packageProductDependencies = (
+			);
+			productName = LinkSyncShare;
+			productReference = 52F160E62EA730B6006C9C38 /* LinkSyncShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		52F1607A2EA72A33006C9C38 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					52F160812EA72A33006C9C38 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					52F1608E2EA72A34006C9C38 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 52F160812EA72A33006C9C38;
+					};
+					52F160982EA72A34006C9C38 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 52F160812EA72A33006C9C38;
+					};
+					52F160E52EA730B6006C9C38 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+				};
+			};
+			buildConfigurationList = 52F1607D2EA72A33006C9C38 /* Build configuration list for PBXProject "LinkSync" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 52F160792EA72A33006C9C38;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				52F161212EA73AE0006C9C38 /* XCRemoteSwiftPackageReference "amplify-ios" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 52F160832EA72A33006C9C38 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				52F160812EA72A33006C9C38 /* LinkSync */,
+				52F1608E2EA72A34006C9C38 /* LinkSyncTests */,
+				52F160982EA72A34006C9C38 /* LinkSyncUITests */,
+				52F160E52EA730B6006C9C38 /* LinkSyncShare */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		52F160802EA72A33006C9C38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				68D08735999275B77D8D160C /* awsconfiguration.json in Resources */,
+				57C3848BAF0852C4728DB057 /* amplifyconfiguration.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F1608D2EA72A34006C9C38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F160972EA72A34006C9C38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F160E42EA730B6006C9C38 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		52F1607E2EA72A33006C9C38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F1608B2EA72A34006C9C38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F160952EA72A34006C9C38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		52F160E22EA730B6006C9C38 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		52F160912EA72A34006C9C38 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52F160812EA72A33006C9C38 /* LinkSync */;
+			targetProxy = 52F160902EA72A34006C9C38 /* PBXContainerItemProxy */;
+		};
+		52F1609B2EA72A34006C9C38 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52F160812EA72A33006C9C38 /* LinkSync */;
+			targetProxy = 52F1609A2EA72A34006C9C38 /* PBXContainerItemProxy */;
+		};
+		52F160EF2EA730B6006C9C38 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 52F160E52EA730B6006C9C38 /* LinkSyncShare */;
+			targetProxy = 52F160EE2EA730B6006C9C38 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		52F160A12EA72A34006C9C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		52F160A22EA72A34006C9C38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		52F160A42EA72A34006C9C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LinkSync/LinkSync.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		52F160A52EA72A34006C9C38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = LinkSync/LinkSync.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSync;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		52F160A72EA72A34006C9C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSyncTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync";
+			};
+			name = Debug;
+		};
+		52F160A82EA72A34006C9C38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSyncTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync";
+			};
+			name = Release;
+		};
+		52F160AA2EA72A34006C9C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSyncUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LinkSync;
+			};
+			name = Debug;
+		};
+		52F160AB2EA72A34006C9C38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSyncUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = LinkSync;
+			};
+			name = Release;
+		};
+		52F160F32EA730B6006C9C38 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = LinkSyncShare/LinkSyncShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LinkSyncShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LinkSyncShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSync.LinkSyncShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		52F160F42EA730B6006C9C38 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = LinkSyncShare/LinkSyncShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LinkSyncShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LinkSyncShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = wayne617.LinkSync.LinkSyncShare;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		52F1607D2EA72A33006C9C38 /* Build configuration list for PBXProject "LinkSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52F160A12EA72A34006C9C38 /* Debug */,
+				52F160A22EA72A34006C9C38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52F160A32EA72A34006C9C38 /* Build configuration list for PBXNativeTarget "LinkSync" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52F160A42EA72A34006C9C38 /* Debug */,
+				52F160A52EA72A34006C9C38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52F160A62EA72A34006C9C38 /* Build configuration list for PBXNativeTarget "LinkSyncTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52F160A72EA72A34006C9C38 /* Debug */,
+				52F160A82EA72A34006C9C38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52F160A92EA72A34006C9C38 /* Build configuration list for PBXNativeTarget "LinkSyncUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52F160AA2EA72A34006C9C38 /* Debug */,
+				52F160AB2EA72A34006C9C38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		52F160F22EA730B6006C9C38 /* Build configuration list for PBXNativeTarget "LinkSyncShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				52F160F32EA730B6006C9C38 /* Debug */,
+				52F160F42EA730B6006C9C38 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		52F161212EA73AE0006C9C38 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.51.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		52F161222EA73AE0006C9C38 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F161212EA73AE0006C9C38 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		52F161242EA73AE0006C9C38 /* AWSPluginsCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F161212EA73AE0006C9C38 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSPluginsCore;
+		};
+		52F161262EA73AE0006C9C38 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 52F161212EA73AE0006C9C38 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = Amplify;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 52F1607A2EA72A33006C9C38 /* Project object */;
+}
