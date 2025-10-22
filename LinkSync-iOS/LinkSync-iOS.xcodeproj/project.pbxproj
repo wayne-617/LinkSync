@@ -1,0 +1,775 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		527337482EA949F7000D4CC7 /* LinkSyncShare.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 5273373E2EA949F7000D4CC7 /* LinkSyncShare.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		527337632EA94C8B000D4CC7 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 527337622EA94C8B000D4CC7 /* AWSCognitoAuthPlugin */; };
+		527337652EA94C8B000D4CC7 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 527337642EA94C8B000D4CC7 /* Amplify */; };
+		527337672EA95969000D4CC7 /* AWSCognitoAuthPlugin in Frameworks */ = {isa = PBXBuildFile; productRef = 527337662EA95969000D4CC7 /* AWSCognitoAuthPlugin */; };
+		527337692EA95969000D4CC7 /* Amplify in Frameworks */ = {isa = PBXBuildFile; productRef = 527337682EA95969000D4CC7 /* Amplify */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		527337122EA9484C000D4CC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 527336FC2EA9484A000D4CC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 527337032EA9484A000D4CC7;
+			remoteInfo = "LinkSync-iOS";
+		};
+		5273371C2EA9484C000D4CC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 527336FC2EA9484A000D4CC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 527337032EA9484A000D4CC7;
+			remoteInfo = "LinkSync-iOS";
+		};
+		527337462EA949F7000D4CC7 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 527336FC2EA9484A000D4CC7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5273373D2EA949F7000D4CC7;
+			remoteInfo = LinkSyncShare;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5273374D2EA949F7000D4CC7 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				527337482EA949F7000D4CC7 /* LinkSyncShare.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		527337042EA9484A000D4CC7 /* LinkSync-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LinkSync-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		527337112EA9484C000D4CC7 /* LinkSync-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LinkSync-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5273371B2EA9484C000D4CC7 /* LinkSync-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LinkSync-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		5273373E2EA949F7000D4CC7 /* LinkSyncShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LinkSyncShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		527337492EA949F7000D4CC7 /* Exceptions for "LinkSyncShare" folder in "LinkSyncShare" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 5273373D2EA949F7000D4CC7 /* LinkSyncShare */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
+/* Begin PBXFileSystemSynchronizedRootGroup section */
+		527337062EA9484A000D4CC7 /* LinkSync-iOS */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "LinkSync-iOS";
+			sourceTree = "<group>";
+		};
+		527337142EA9484C000D4CC7 /* LinkSync-iOSTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "LinkSync-iOSTests";
+			sourceTree = "<group>";
+		};
+		5273371E2EA9484C000D4CC7 /* LinkSync-iOSUITests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = "LinkSync-iOSUITests";
+			sourceTree = "<group>";
+		};
+		5273373F2EA949F7000D4CC7 /* LinkSyncShare */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				527337492EA949F7000D4CC7 /* Exceptions for "LinkSyncShare" folder in "LinkSyncShare" target */,
+			);
+			path = LinkSyncShare;
+			sourceTree = "<group>";
+		};
+/* End PBXFileSystemSynchronizedRootGroup section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		527337012EA9484A000D4CC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527337632EA94C8B000D4CC7 /* AWSCognitoAuthPlugin in Frameworks */,
+				527337652EA94C8B000D4CC7 /* Amplify in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5273370E2EA9484C000D4CC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527337182EA9484C000D4CC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5273373B2EA949F7000D4CC7 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				527337672EA95969000D4CC7 /* AWSCognitoAuthPlugin in Frameworks */,
+				527337692EA95969000D4CC7 /* Amplify in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		527336FB2EA9484A000D4CC7 = {
+			isa = PBXGroup;
+			children = (
+				527337062EA9484A000D4CC7 /* LinkSync-iOS */,
+				527337142EA9484C000D4CC7 /* LinkSync-iOSTests */,
+				5273371E2EA9484C000D4CC7 /* LinkSync-iOSUITests */,
+				5273373F2EA949F7000D4CC7 /* LinkSyncShare */,
+				527337052EA9484A000D4CC7 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		527337052EA9484A000D4CC7 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				527337042EA9484A000D4CC7 /* LinkSync-iOS.app */,
+				527337112EA9484C000D4CC7 /* LinkSync-iOSTests.xctest */,
+				5273371B2EA9484C000D4CC7 /* LinkSync-iOSUITests.xctest */,
+				5273373E2EA949F7000D4CC7 /* LinkSyncShare.appex */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		527337032EA9484A000D4CC7 /* LinkSync-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 527337252EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOS" */;
+			buildPhases = (
+				527337002EA9484A000D4CC7 /* Sources */,
+				527337012EA9484A000D4CC7 /* Frameworks */,
+				527337022EA9484A000D4CC7 /* Resources */,
+				5273374D2EA949F7000D4CC7 /* Embed Foundation Extensions */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				527337472EA949F7000D4CC7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				527337062EA9484A000D4CC7 /* LinkSync-iOS */,
+			);
+			name = "LinkSync-iOS";
+			packageProductDependencies = (
+				527337622EA94C8B000D4CC7 /* AWSCognitoAuthPlugin */,
+				527337642EA94C8B000D4CC7 /* Amplify */,
+			);
+			productName = "LinkSync-iOS";
+			productReference = 527337042EA9484A000D4CC7 /* LinkSync-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+		527337102EA9484C000D4CC7 /* LinkSync-iOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 527337282EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSTests" */;
+			buildPhases = (
+				5273370D2EA9484C000D4CC7 /* Sources */,
+				5273370E2EA9484C000D4CC7 /* Frameworks */,
+				5273370F2EA9484C000D4CC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				527337132EA9484C000D4CC7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				527337142EA9484C000D4CC7 /* LinkSync-iOSTests */,
+			);
+			name = "LinkSync-iOSTests";
+			packageProductDependencies = (
+			);
+			productName = "LinkSync-iOSTests";
+			productReference = 527337112EA9484C000D4CC7 /* LinkSync-iOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		5273371A2EA9484C000D4CC7 /* LinkSync-iOSUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5273372B2EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSUITests" */;
+			buildPhases = (
+				527337172EA9484C000D4CC7 /* Sources */,
+				527337182EA9484C000D4CC7 /* Frameworks */,
+				527337192EA9484C000D4CC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5273371D2EA9484C000D4CC7 /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				5273371E2EA9484C000D4CC7 /* LinkSync-iOSUITests */,
+			);
+			name = "LinkSync-iOSUITests";
+			packageProductDependencies = (
+			);
+			productName = "LinkSync-iOSUITests";
+			productReference = 5273371B2EA9484C000D4CC7 /* LinkSync-iOSUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+		5273373D2EA949F7000D4CC7 /* LinkSyncShare */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5273374A2EA949F7000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSyncShare" */;
+			buildPhases = (
+				5273373A2EA949F7000D4CC7 /* Sources */,
+				5273373B2EA949F7000D4CC7 /* Frameworks */,
+				5273373C2EA949F7000D4CC7 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			fileSystemSynchronizedGroups = (
+				5273373F2EA949F7000D4CC7 /* LinkSyncShare */,
+			);
+			name = LinkSyncShare;
+			packageProductDependencies = (
+				527337662EA95969000D4CC7 /* AWSCognitoAuthPlugin */,
+				527337682EA95969000D4CC7 /* Amplify */,
+			);
+			productName = LinkSyncShare;
+			productReference = 5273373E2EA949F7000D4CC7 /* LinkSyncShare.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		527336FC2EA9484A000D4CC7 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1630;
+				LastUpgradeCheck = 1630;
+				TargetAttributes = {
+					527337032EA9484A000D4CC7 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+					527337102EA9484C000D4CC7 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 527337032EA9484A000D4CC7;
+					};
+					5273371A2EA9484C000D4CC7 = {
+						CreatedOnToolsVersion = 16.3;
+						TestTargetID = 527337032EA9484A000D4CC7;
+					};
+					5273373D2EA949F7000D4CC7 = {
+						CreatedOnToolsVersion = 16.3;
+					};
+				};
+			};
+			buildConfigurationList = 527336FF2EA9484A000D4CC7 /* Build configuration list for PBXProject "LinkSync-iOS" */;
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 527336FB2EA9484A000D4CC7;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				527337612EA94C8B000D4CC7 /* XCRemoteSwiftPackageReference "amplify-ios" */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = 527337052EA9484A000D4CC7 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				527337032EA9484A000D4CC7 /* LinkSync-iOS */,
+				527337102EA9484C000D4CC7 /* LinkSync-iOSTests */,
+				5273371A2EA9484C000D4CC7 /* LinkSync-iOSUITests */,
+				5273373D2EA949F7000D4CC7 /* LinkSyncShare */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		527337022EA9484A000D4CC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5273370F2EA9484C000D4CC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527337192EA9484C000D4CC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5273373C2EA949F7000D4CC7 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		527337002EA9484A000D4CC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5273370D2EA9484C000D4CC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		527337172EA9484C000D4CC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		5273373A2EA949F7000D4CC7 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		527337132EA9484C000D4CC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 527337032EA9484A000D4CC7 /* LinkSync-iOS */;
+			targetProxy = 527337122EA9484C000D4CC7 /* PBXContainerItemProxy */;
+		};
+		5273371D2EA9484C000D4CC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 527337032EA9484A000D4CC7 /* LinkSync-iOS */;
+			targetProxy = 5273371C2EA9484C000D4CC7 /* PBXContainerItemProxy */;
+		};
+		527337472EA949F7000D4CC7 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5273373D2EA949F7000D4CC7 /* LinkSyncShare */;
+			targetProxy = 527337462EA949F7000D4CC7 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		527337232EA9484C000D4CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		527337242EA9484C000D4CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		527337262EA9484C000D4CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "LinkSync-iOS/LinkSync-iOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		527337272EA9484C000D4CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = "LinkSync-iOS/LinkSync-iOS.entitlements";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		527337292EA9484C000D4CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync-iOS";
+			};
+			name = Debug;
+		};
+		5273372A2EA9484C000D4CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 18.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOSTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync-iOS";
+			};
+			name = Release;
+		};
+		5273372C2EA9484C000D4CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "LinkSync-iOS";
+			};
+			name = Debug;
+		};
+		5273372D2EA9484C000D4CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOSUITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = "LinkSync-iOS";
+			};
+			name = Release;
+		};
+		5273374B2EA949F7000D4CC7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = LinkSyncShare/LinkSyncShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LinkSyncShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LinkSyncShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOS.LinkSyncShare";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		5273374C2EA949F7000D4CC7 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_ENTITLEMENTS = LinkSyncShare/LinkSyncShare.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = VN7MUD2LK5;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = LinkSyncShare/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = LinkSyncShare;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "wayne617.LinkSync-iOS.LinkSyncShare";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		527336FF2EA9484A000D4CC7 /* Build configuration list for PBXProject "LinkSync-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527337232EA9484C000D4CC7 /* Debug */,
+				527337242EA9484C000D4CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		527337252EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527337262EA9484C000D4CC7 /* Debug */,
+				527337272EA9484C000D4CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		527337282EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				527337292EA9484C000D4CC7 /* Debug */,
+				5273372A2EA9484C000D4CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5273372B2EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5273372C2EA9484C000D4CC7 /* Debug */,
+				5273372D2EA9484C000D4CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5273374A2EA949F7000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSyncShare" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5273374B2EA949F7000D4CC7 /* Debug */,
+				5273374C2EA949F7000D4CC7 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		527337612EA94C8B000D4CC7 /* XCRemoteSwiftPackageReference "amplify-ios" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/aws-amplify/amplify-ios";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.51.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		527337622EA94C8B000D4CC7 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 527337612EA94C8B000D4CC7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		527337642EA94C8B000D4CC7 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 527337612EA94C8B000D4CC7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = Amplify;
+		};
+		527337662EA95969000D4CC7 /* AWSCognitoAuthPlugin */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 527337612EA94C8B000D4CC7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = AWSCognitoAuthPlugin;
+		};
+		527337682EA95969000D4CC7 /* Amplify */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 527337612EA94C8B000D4CC7 /* XCRemoteSwiftPackageReference "amplify-ios" */;
+			productName = Amplify;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 527336FC2EA9484A000D4CC7 /* Project object */;
+}
