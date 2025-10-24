@@ -73,9 +73,12 @@ self.addEventListener("notificationclick", (event) => {
   event.notification.close();
 
   const { link, id } = event.notification.data;
-  console.log("Opening link:", link);
+  console.log("Link data:", link);
 
-  const openPromise = link
+  // Check if link is a valid URL
+  const isValidUrl = link && (link.startsWith('http://') || link.startsWith('https://'));
+
+  const openPromise = isValidUrl
     ? clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
         for (let client of clientList) {
           if (client.url === link && "focus" in client) {
@@ -84,7 +87,7 @@ self.addEventListener("notificationclick", (event) => {
         }
         return clients.openWindow(link);
       })
-    : Promise.resolve();
+    : Promise.resolve(); // Do nothing for text
 
   // Mark as seen in chrome.storage.local
   const markSeenPromise = chrome.storage.local.get({ items: [] }).then(({ items }) => {
