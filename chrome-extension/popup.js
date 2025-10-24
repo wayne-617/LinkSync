@@ -210,7 +210,6 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   }
 });
 
-// MODIFIED: Handles new fields and a cleaner success/error flow
 document.getElementById("register-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError("register");
@@ -220,8 +219,21 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   const password = document.getElementById("reg-password").value;
   const confirm = document.getElementById("reg-confirm-password").value;
 
+  // --- Password Match Check ---
   if (password !== confirm) {
     displayError("register", "Passwords do not match");
+    return;
+  }
+
+  // --- Password Strength Check ---
+  const passwordPattern =
+    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+
+  if (!passwordPattern.test(password)) {
+    displayError(
+      "register",
+      "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."
+    );
     return;
   }
 
@@ -254,6 +266,7 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
     displayError("register", error.message);
   }
 });
+
 
 document.getElementById("logout-btn").addEventListener("click", () => Auth.logout());
 document.getElementById("show-register-btn").addEventListener("click", () => showView("register-screen"));
