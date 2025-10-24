@@ -124,6 +124,7 @@ function clearError(formId) {
     errorEl.classList.add("hidden");
   }
 }
+
 // ---------- Banner Rendering ----------
 function showSuccessBanner(message) {
   // Remove any existing banner
@@ -143,6 +144,26 @@ function showSuccessBanner(message) {
     banner.classList.add("hide");
     setTimeout(() => banner.remove(), 300);
   }, 3000);
+}
+
+function showCopyBanner(message) {
+  // Remove any existing banner
+  const existingBanner = document.querySelector(".copy-banner");
+  if (existingBanner) {
+    existingBanner.remove();
+  }
+
+  // Create new banner
+  const banner = document.createElement("div");
+  banner.className = "copy-banner";
+  banner.innerHTML = `<span>📋</span><span>${message}</span>`;
+  document.body.appendChild(banner);
+
+  // Auto-hide after 2 seconds
+  setTimeout(() => {
+    banner.classList.add("hide");
+    setTimeout(() => banner.remove(), 300);
+  }, 2000);
 }
 
 // ---------- Message Rendering ----------
@@ -172,9 +193,23 @@ async function renderMessages() {
       target.seen = true;
       await chromeSet({ items });
 
-      // Open link
+      // Check if URL is a valid link
       if (target.url) {
-        chrome.tabs.create({ url: target.url });
+        const isValidUrl = target.url.startsWith('http://') || target.url.startsWith('https://');
+        
+        if (isValidUrl) {
+          // Open link in new tab
+          chrome.tabs.create({ url: target.url });
+        } else {
+          // Copy text to clipboard
+          try {
+            await navigator.clipboard.writeText(target.url);
+            showCopyBanner("Copied to clipboard!");
+          } catch (error) {
+            console.error("Failed to copy:", error);
+            showCopyBanner("Failed to copy");
+          }
+        }
       }
 
       // Re-render UI
@@ -203,9 +238,19 @@ function createMessageHTML(item) {
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError("login");
+  
+  const form = e.target;
+  const button = form.querySelector("button[type='submit']");
+  const inputs = form.querySelectorAll("input, button");
+  
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
+  
   try {
+    // --- Disable UI + Show Spinner ---
+    button.classList.add("loading");
+    inputs.forEach((el) => (el.disabled = true));
+    
     // 1. Get FCM Token first
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
@@ -227,6 +272,10 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
 
   } catch (error) {
     displayError("login", error.message);
+  } finally {
+    // --- Re-enable UI + Remove Spinner ---
+    button.classList.remove("loading");
+    inputs.forEach((el) => (el.disabled = false));
   }
 });
 
