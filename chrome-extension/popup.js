@@ -124,6 +124,26 @@ function clearError(formId) {
     errorEl.classList.add("hidden");
   }
 }
+// ---------- Banner Rendering ----------
+function showSuccessBanner(message) {
+  // Remove any existing banner
+  const existingBanner = document.querySelector(".success-banner");
+  if (existingBanner) {
+    existingBanner.remove();
+  }
+
+  // Create new banner
+  const banner = document.createElement("div");
+  banner.className = "success-banner";
+  banner.innerHTML = `<span>✓</span><span>${message}</span>`;
+  document.body.appendChild(banner);
+
+  // Auto-hide after 3 seconds
+  setTimeout(() => {
+    banner.classList.add("hide");
+    setTimeout(() => banner.remove(), 300);
+  }, 3000);
+}
 
 // ---------- Message Rendering ----------
 async function renderMessages() {
@@ -210,10 +230,15 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
   }
 });
 
+// Register Form
 document.getElementById("register-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError("register");
 
+  const form = e.target;
+  const button = form.querySelector("button[type='submit']");
+  const inputs = form.querySelectorAll("input, button");
+  
   const username = document.getElementById("reg-username").value;
   const email = document.getElementById("reg-email").value;
   const password = document.getElementById("reg-password").value;
@@ -238,6 +263,10 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   }
 
   try {
+    // --- Disable UI + Show Spinner ---
+    button.classList.add("loading");
+    inputs.forEach((el) => (el.disabled = true));
+
     // 1. Get FCM Token first
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
@@ -257,15 +286,19 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
     // 2. Call register with all required data
     await Auth.register(username, email, password, fcm_token);
 
-    // 3. Handle success
-    alert("✅ Registration successful! Please log in.");
-    document.getElementById("register-form").reset();
+    form.reset();
     showView("login-screen");
+    showSuccessBanner("Registration successful! Please log in.");
   } catch (error) {
     // 4. Handle errors from API or token retrieval
     displayError("register", error.message);
+  } finally {
+    // --- Re-enable UI + Remove Spinner ---
+    button.classList.remove("loading");
+    inputs.forEach((el) => (el.disabled = false));
   }
 });
+
 
 
 document.getElementById("logout-btn").addEventListener("click", () => Auth.logout());
