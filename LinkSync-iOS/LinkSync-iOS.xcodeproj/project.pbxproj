@@ -71,6 +71,8 @@
 			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
 			membershipExceptions = (
 				amplifyconfiguration.json,
+				AmplifyConfiguration.swift,
+				SharedAuthState.swift,
 			);
 			target = 5273373D2EA949F7000D4CC7 /* LinkSyncShare */;
 		};

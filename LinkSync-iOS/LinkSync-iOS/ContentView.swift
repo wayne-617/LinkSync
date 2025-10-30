@@ -7,35 +7,56 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var authManager = AuthManager.shared
-    @State private var isConfigured = false
+    @EnvironmentObject var authManager: AuthManager
     
     var body: some View {
         Group {
-            if isConfigured {
-                if authManager.isAuthenticated {
-                    MainView() // no need to pass authManager
-                } else {
-                    LoginView() // no need to pass authManager
+            if authManager.isLoading {
+                // Loading Screen - shown during initial auth check
+                ZStack {
+                    // Subtle background gradient
+                    LinearGradient(
+                        colors: [Color.accentColor.opacity(0.05), Color.accentColor.opacity(0.02)],
+                        startPoint: .top,
+                        endPoint: .bottom
+                    )
+                    .ignoresSafeArea()
+                    
+                    VStack(spacing: 20) {
+                        // Logo and Branding
+                        VStack(spacing: 12) {
+                            Image(systemName: "link.circle.fill")
+                                .font(.system(size: 64))
+                                .foregroundStyle(
+                                    LinearGradient(
+                                        colors: [Color.accentColor, Color.accentColor.opacity(0.7)],
+                                        startPoint: .topLeading,
+                                        endPoint: .bottomTrailing
+                                    )
+                                )
+                            
+                            Text("linksync")
+                                .font(.system(size: 36, weight: .bold, design: .rounded))
+                                .foregroundColor(.primary)
+                        }
+                        .padding(.bottom, 20)
+                        
+                        // Loading indicator
+                        ProgressView()
+                            .progressViewStyle(CircularProgressViewStyle(tint: .secondary))
+                            .scaleEffect(1.2)
+                    }
                 }
+            } else if authManager.isAuthenticated {
+                MainView()
             } else {
-                // Show loading while configuring Amplify
-                VStack {
-                    ProgressView()
-                    Text("Initializing...")
-                        .padding(.top)
-                }
+                LoginView()
             }
-        }
-        .environmentObject(authManager) // inject singleton into the environment
-        .task {
-            await authManager.configureAmplify()
-            isConfigured = true
-            print("ContentView: isConfigured = \(isConfigured), isAuthenticated = \(authManager.isAuthenticated)")
         }
     }
 }
 
 #Preview {
     ContentView()
+        .environmentObject(AuthManager.shared)
 }

@@ -18,7 +18,7 @@
         },
         "CredentialStore": {
             "Default": {
-                "KeychainAccessGroup": "wayne617.LinkSync-iOS.shared"
+                "KeychainAccessGroup": "group.com.waynelam.linksync"
             }
         }
       }

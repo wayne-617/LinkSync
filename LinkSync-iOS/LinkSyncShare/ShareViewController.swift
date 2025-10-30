@@ -1,38 +1,48 @@
-//
-//  ShareViewController.swift
-//  LinkSyncShare
-//
-//  Corrected to handle Amplify configuration errors and improve error state UI.
-//
-
 import UIKit
 import Amplify
 import AWSCognitoAuthPlugin
+import os.log
 
 class ShareViewController: UIViewController {
     
     private let apiService = APIService.shared
-    private let userDefaults = UserDefaults(suiteName: Config.appGroupIdentifier)
-    private let keychain = Keychain(service: "com.wayne617.linksync", accessGroup: Config.appGroupIdentifier)
+    private let logger = Logger(subsystem: "com.wayne617.linksync", category: "ShareExtension")
     
     // UI Components
     private let containerView = UIView()
     private let spinner = UIActivityIndicatorView(style: .medium)
     private let statusLabel = UILabel()
     private let checkmarkLabel = UILabel()
-    private let errorIconLabel = UILabel() // NEW: UI component for the 'X' icon
+    private let errorIconLabel = UILabel()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        logger.info("🚀 ShareViewController viewDidLoad started")
+        print("🚀 ShareViewController viewDidLoad started")
+        
         view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
         setupUI()
+        
+        // Configure Amplify once when view loads
+        //logger.info("📝 About to configure Amplify")
+        //print("📝 About to configure Amplify")
+        
+        //AmplifyConfiguration.configure()
+        
+        //logger.info("✅ Amplify configuration completed")
+        //print("✅ Amplify configuration completed")
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        logger.info("👀 ShareViewController viewDidAppear")
+        print("👀 ShareViewController viewDidAppear")
+        
         Task {
-            await configureAmplify()
+            //AmplifyConfiguration.configure()
+            AmplifyConfiguration.configure()
             await processSharedContent()
         }
     }
@@ -55,7 +65,7 @@ class ShareViewController: UIViewController {
         statusLabel.numberOfLines = 0
         statusLabel.font = UIFont.systemFont(ofSize: 16, weight: .medium)
         statusLabel.textColor = .label
-        statusLabel.text = "Initializing Share..."
+        statusLabel.text = "Sending..."
         
         // Checkmark label (hidden initially)
         checkmarkLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -65,11 +75,11 @@ class ShareViewController: UIViewController {
         checkmarkLabel.textColor = .systemGreen
         checkmarkLabel.alpha = 0
         
-        // Error icon label (NEW: hidden initially)
+        // Error icon label (hidden initially)
         errorIconLabel.translatesAutoresizingMaskIntoConstraints = false
         errorIconLabel.textAlignment = .center
-        errorIconLabel.font = UIFont.systemFont(ofSize: 36) // EDITED: Reduced font size from 48 to 36
-        errorIconLabel.text = "❌" // Using the X emoji for a clear failure signal
+        errorIconLabel.font = UIFont.systemFont(ofSize: 36)
+        errorIconLabel.text = "✕"
         errorIconLabel.textColor = .systemRed
         errorIconLabel.alpha = 0
         
@@ -77,7 +87,7 @@ class ShareViewController: UIViewController {
         containerView.addSubview(spinner)
         containerView.addSubview(statusLabel)
         containerView.addSubview(checkmarkLabel)
-        containerView.addSubview(errorIconLabel) // Add the new error icon
+        containerView.addSubview(errorIconLabel)
         
         NSLayoutConstraint.activate([
             // Container centered
@@ -86,13 +96,13 @@ class ShareViewController: UIViewController {
             containerView.widthAnchor.constraint(equalToConstant: 200),
             containerView.heightAnchor.constraint(equalToConstant: 120),
             
-            // Spinner position (same as the error icon position)
+            // Spinner position
             spinner.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             spinner.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
             
-            // Error icon position (aligned with the spinner)
+            // Error icon position (aligned with spinner)
             errorIconLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            errorIconLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 30),
+            errorIconLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 25),
             
             // Status label position below the icon/spinner area
             statusLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -108,113 +118,129 @@ class ShareViewController: UIViewController {
         spinner.startAnimating()
     }
     
-    // MARK: - Amplify Configuration
-    
-    private func configureAmplify() async {
-        do {
-            try Amplify.add(plugin: AWSCognitoAuthPlugin())
-            try Amplify.configure()
-            print("✅ Amplify configured in share extension")
-        } catch {
-            let errorDescription = error.localizedDescription.lowercased()
-            
-            // Safely ignore "already configured" errors
-            if errorDescription.contains("already configured") || errorDescription.contains("cannot be added after") {	
-                print("⚠️ Amplify was already configured in this process. Proceeding.")
-            } else {
-                print("❌ Failed to configure Amplify: \(error)")
-                // If configuration fails for a real reason, show a fatal error
-                await showError("Fatal configuration error.")
-            }
-        }
-    }
-    
     // MARK: - Process Shared Content
     
     private func processSharedContent() async {
-        await MainActor.run {
-            statusLabel.text = "Checking account status..."
-        }
+        logger.info("🔄 processSharedContent started")
+        print("🔄 processSharedContent started")
         
-        // 1. Check for local user ID (App Group)
-        guard let userId = userDefaults?.string(forKey: Config.userIdKey) else {
-            await showError("Please sign in to the main app first")
+        guard SharedAuthState.isAuthenticated() else {
+            logger.warning("❌ Not authenticated per shared state")
+            print("❌ Not authenticated per shared state")
+            await showError("Not signed in.\nPlease open the app first.")
             return
         }
         
-        // 2. Validate session using Amplify
-        await MainActor.run {
-            statusLabel.text = "Validating session..."
-        }
+        // Add a small delay to ensure Amplify is fully initialized
+        try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
         
+        // 1️⃣ Validate Amplify session and get user ID
+        let userId: String
         do {
+            logger.info("🔍 About to fetch auth session")
+            print("🔍 About to fetch auth session")
+            
+            // Check if session is valid
             let session = try await Amplify.Auth.fetchAuthSession()
             
+            logger.info("📱 Share Extension - Session isSignedIn: \(session.isSignedIn)")
+            print("📱 Share Extension - Session isSignedIn: \(session.isSignedIn)")
+            
             guard session.isSignedIn else {
-                await showError("Session expired. Please sign in to the main app.")
+                logger.warning("❌ Share Extension - Not signed in")
+                print("❌ Share Extension - Not signed in")
+                await showError("Not signed in.\nPlease open the app first.")
                 return
             }
             
-            print("✅ User authenticated with valid session")
+            logger.info("✅ Share Extension - Valid session confirmed")
+            print("✅ Share Extension - Valid session confirmed")
+            
+            // Get user ID
+            logger.info("🔍 About to get user ID")
+            print("🔍 About to get user ID")
+            
+            guard let id = await getUserId() else {
+                logger.error("❌ Could not retrieve user ID")
+                print("❌ Could not retrieve user ID")
+                await showError("Authentication error")
+                return
+            }
+            
+            userId = id
+            logger.info("✅ Share extension has userId: \(userId)")
+            print("✅ Share extension has userId: \(userId)")
             
         } catch {
-            print("❌ Auth session error: \(error)")
-            await showError("Session check failed. Please sign in to the main app.")
+            logger.error("❌ Auth check failed: \(error.localizedDescription)")
+            print("❌ Auth check failed: \(error)")
+            await showError("Not signed in.\nPlease open the app first.")
             return
         }
         
-        // 3. Extract content
-        await MainActor.run {
-            statusLabel.text = "Extracting content..."
-        }
+        // 2️⃣ Extract shared content (text or URL)
+        logger.info("📝 Extracting shared content")
+        print("📝 Extracting shared content")
         
         guard let content = await extractSharedContent() else {
+            logger.warning("❌ No content to share")
+            print("❌ No content to share")
             await showError("No content to share")
             return
         }
         
+        logger.info("✅ Extracted content: \(content)")
         print("✅ Extracted content: \(content)")
         
-        // 4. Upload content
-        await MainActor.run {
-            statusLabel.text = "Sending link..."
-        }
-        
+        // 3️⃣ Upload message using your API service
         do {
-            _ = try await apiService.uploadMessage(userId: userId, content: content)
+            logger.info("📤 Uploading message")
+            print("📤 Uploading message")
+            
+            try await apiService.uploadMessage(userId: userId, content: content)
+            
+            logger.info("✅ Upload successful")
+            print("✅ Upload successful")
+            
             await showSuccess()
         } catch {
+            logger.error("❌ Upload error: \(error.localizedDescription)")
             print("❌ Upload error: \(error)")
-            await showError("Upload failed. Try again later.")
+            await showError("Failed to send content")
         }
     }
     
     private func extractSharedContent() async -> String? {
-        // ... (Extraction logic remains the same) ...
         guard let extensionContext = extensionContext,
               let inputItems = extensionContext.inputItems as? [NSExtensionItem] else {
+            logger.warning("No extension context or input items")
+            print("No extension context or input items")
             return nil
         }
         
         for item in inputItems {
             if let attachments = item.attachments {
                 for attachment in attachments {
+                    // 1️⃣ Try text first
                     if attachment.hasItemConformingToTypeIdentifier("public.text") {
                         do {
                             if let content = try await attachment.loadItem(forTypeIdentifier: "public.text") as? String {
                                 return content
                             }
                         } catch {
+                            logger.error("Failed to load text content: \(error.localizedDescription)")
                             print("❌ Failed to load text content: \(error)")
                         }
                     }
                     
+                    // 2️⃣ Try URL next
                     if attachment.hasItemConformingToTypeIdentifier("public.url") {
                         do {
                             if let url = try await attachment.loadItem(forTypeIdentifier: "public.url") as? URL {
                                 return url.absoluteString
                             }
                         } catch {
+                            logger.error("Failed to load URL content: \(error.localizedDescription)")
                             print("❌ Failed to load URL content: \(error)")
                         }
                     }
@@ -225,6 +251,19 @@ class ShareViewController: UIViewController {
         return nil
     }
     
+    private func getUserId() async -> String? {
+        do {
+            let user = try await Amplify.Auth.getCurrentUser()
+            logger.info("✅ Got user from Amplify: \(user.userId)")
+            print("✅ Got user from Amplify: \(user.userId)")
+            return user.userId
+        } catch {
+            logger.error("❌ Failed to get user ID: \(error.localizedDescription)")
+            print("❌ Failed to get user ID: \(error)")
+            return nil
+        }
+    }
+    
     // MARK: - UI Feedback
     
     private func showSuccess() async {
@@ -232,7 +271,7 @@ class ShareViewController: UIViewController {
             // Hide spinner and error icon
             spinner.stopAnimating()
             spinner.alpha = 0
-            errorIconLabel.alpha = 0 // Ensure error icon is hidden
+            errorIconLabel.alpha = 0
             statusLabel.alpha = 0
             
             // Show checkmark with animation
@@ -255,20 +294,20 @@ class ShareViewController: UIViewController {
     
     private func showError(_ message: String) async {
         await MainActor.run {
-            // 1. Hide spinner and show error icon
+            // Hide spinner and checkmark, show error icon
             spinner.stopAnimating()
             spinner.alpha = 0
-            checkmarkLabel.alpha = 0 // Ensure checkmark is hidden
-            errorIconLabel.alpha = 1 // Show the 'X' icon
+            checkmarkLabel.alpha = 0
+            errorIconLabel.alpha = 1
             
-            // 2. Update status text
+            // Update status text
             statusLabel.text = message
             statusLabel.textColor = .systemRed
             statusLabel.alpha = 1
         }
         
         // Wait and dismiss
-        try? await Task.sleep(nanoseconds: 1_500_000_000) // 1.5 seconds
+        try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
         await MainActor.run {
             self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
         }

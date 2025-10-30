@@ -65,9 +65,6 @@ struct LoginView: View {
                                         RoundedRectangle(cornerRadius: 12)
                                             .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                     )
-                                    .onChange(of: username) { _ in
-                                        authManager.clearError()
-                                    }
                                     .disabled(authManager.isLoading)
                                     .opacity(authManager.isLoading ? 0.6 : 1.0)
                             }
@@ -88,12 +85,27 @@ struct LoginView: View {
                                         RoundedRectangle(cornerRadius: 12)
                                             .stroke(Color.gray.opacity(0.2), lineWidth: 1)
                                     )
-                                    .onChange(of: password) { _ in
-                                        authManager.clearError()
-                                    }
                                     .disabled(authManager.isLoading)
                                     .opacity(authManager.isLoading ? 0.6 : 1.0)
                             }
+                        }
+                        
+                        // Error message display
+                        if let errorMessage = authManager.errorMessage {
+                            HStack(spacing: 8) {
+                                Image(systemName: "exclamationmark.triangle.fill")
+                                    .foregroundColor(.red)
+                                    .font(.system(size: 14))
+                                
+                                Text(errorMessage)
+                                    .font(.subheadline)
+                                    .foregroundColor(.red)
+                                
+                                Spacer()
+                            }
+                            .padding(12)
+                            .background(Color.red.opacity(0.1))
+                            .cornerRadius(8)
                         }
                         
                         // Login button
@@ -102,11 +114,6 @@ struct LoginView: View {
                             Task {
                                 await authManager.signIn(username: username, password: password)
                                 print("LoginView: Sign in completed, isAuthenticated: \(authManager.isAuthenticated)")
-                                
-                                // Show alert if there's an error
-                                if authManager.errorMessage != nil {
-                                    showingErrorAlert = true
-                                }
                             }
                         }) {
                             HStack(spacing: 8) {
@@ -164,13 +171,6 @@ struct LoginView: View {
         }
         .sheet(isPresented: $showingRegistrationModal) {
             RegistrationModalView()
-        }
-        .alert("Login Error", isPresented: $showingErrorAlert, presenting: authManager.errorMessage) { _ in
-            Button("OK", role: .cancel) {
-                authManager.clearError()
-            }
-        } message: { errorMessage in
-            Text(errorMessage)
         }
     }
 }

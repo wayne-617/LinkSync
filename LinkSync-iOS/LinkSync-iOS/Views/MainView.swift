@@ -14,7 +14,7 @@ struct MainView: View {
     @State private var isUploading = false
     @State private var showingProfileMenu = false
     @State private var showingErrorAlert = false
-    @State private var showingTipsModal = false // State is correctly defined
+    @State private var showingTipsModal = false
     @State private var errorMessage = ""
     @State private var uploadSuccess = false
     
@@ -30,10 +30,9 @@ struct MainView: View {
                 .ignoresSafeArea()
                 
                 VStack(spacing: 0) {
-                    // *** FIX: ADD SPACER HERE TO MATCH LOGINVIEW ***
                     Spacer()
                     
-                    // Header with logo and branding (matching login screen)
+                    // Header with logo and branding
                     VStack(spacing: 12) {
                         Image(systemName: "link.circle.fill")
                             .font(.system(size: 64))
@@ -53,8 +52,6 @@ struct MainView: View {
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
-                    // *** FIX: REMOVE .padding(.top, 40) - Spacer handles vertical position ***
-                    // .padding(.top, 40) <-- REMOVED
                     .padding(.bottom, 40)
                     
                     // Main content card
@@ -159,7 +156,7 @@ struct MainView: View {
                     
                     // Tips button
                     Button(action: {
-                        showingTipsModal = true // This sets the state to true
+                        showingTipsModal = true
                     }) {
                         HStack(spacing: 6) {
                             Image(systemName: "lightbulb.fill")
@@ -209,39 +206,39 @@ struct MainView: View {
                         await authManager.signOut()
                     }
                 } label: {
-                    HStack {
-                        if authManager.isLoading {
-                            ProgressView()
-                            Text("Signing Out...")
-                        } else {
-                            Text("Sign Out")
-                        }
+                    if authManager.isLoading {
+                        Label("Signing Out...", systemImage: "arrow.clockwise")
+                    } else {
+                        Text("Sign Out")
                     }
                 }
                 Button("Cancel", role: .cancel) { }
             }
-        }
-        // FIX APPLIED HERE: Add the sheet modifier to present the modal
-        .sheet(isPresented: $showingTipsModal) {
-            TipsModalView()
+            .sheet(isPresented: $showingTipsModal) {
+                TipsModalView()
+            }
         }
     }
     
     private func uploadMessage() {
-        guard let userId = authManager.getCurrentUserId() else {
-            errorMessage = "User not authenticated"
-            showingErrorAlert = true
-            return
-        }
-        
         let trimmedText = messageText.trimmingCharacters(in: .whitespacesAndNewlines)
         guard !trimmedText.isEmpty else { return }
         
         isUploading = true
         
         Task {
+            // Get userId asynchronously
+            guard let userId = await authManager.getUserId() else {
+                await MainActor.run {
+                    isUploading = false
+                    errorMessage = "User not authenticated. Please sign in again."
+                    showingErrorAlert = true
+                }
+                return
+            }
+            
             do {
-                _ = try await apiService.uploadMessage(userId: userId, content: trimmedText)
+                try await apiService.uploadMessage(userId: userId, content: trimmedText)
                 await MainActor.run {
                     isUploading = false
                     uploadSuccess = true
@@ -321,7 +318,6 @@ struct TipsModalView: View {
                 Button(action: {
                     dismiss()
                 }) {
-
                     Text("Got it")
                         .fontWeight(.semibold)
                         .frame(maxWidth: .infinity)
@@ -345,10 +341,7 @@ struct TipsModalView: View {
     }
 }
 
-
-
 struct TipCard: View {
-
     let icon: String
     let title: String
     let description: String
@@ -379,7 +372,6 @@ struct TipCard: View {
         .cornerRadius(12)
     }
 }
-
 
 #Preview {
     MainView()
