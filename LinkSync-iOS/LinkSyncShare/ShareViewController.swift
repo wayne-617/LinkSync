@@ -174,7 +174,7 @@ class ShareViewController: UIViewController {
         } catch {
             logger.error("❌ Auth check failed: \(error.localizedDescription)")
             print("❌ Auth check failed: \(error)")
-            await showError("Not signed in.\nPlease open the app first.")
+            await showError("Please sign into the app first.")
             return
         }
         
