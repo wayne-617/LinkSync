@@ -3,64 +3,142 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Messages Extension</title>
+  <title>LinkSync</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
   <!-- Login Screen -->
   <div id="login-screen" class="screen">
     <div class="login-container">
-      <h1>Welcome</h1>
-      <p class="subtitle">Sign in to view your messages</p>
-      <form id="login-form">
-        <div class="form-group">
-          <label for="username">Username</label>
-          <input type="text" id="username" placeholder="Enter username" required>
+      <!-- App Branding -->
+      <div class="app-branding">
+        <div class="logo-container">
+          <img src="linksynclogo.png" alt="LinkSync" class="logo">
         </div>
-        <div class="form-group">
-          <label for="password">Password</label>
-          <input type="password" id="password" placeholder="Enter password" required>
-        </div>
-        <button type="submit" class="btn-primary">Sign In</button>
-      </form>
-      <button id="show-register-btn" class="btn-secondary">Register</button>
-      <p class="demo-hint">Demo: Use any username/password</p>
+        <div class="app-name">linksync</div>
+        <div class="app-subtitle">Connect to your computer</div>
+      </div>
+      
+      <!-- Login Card -->
+      <div class="login-card">
+        <form id="login-form">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input 
+              type="text" 
+              id="username" 
+              placeholder="Enter your username" 
+              autocomplete="username"
+              required
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input 
+              type="password" 
+              id="password" 
+              placeholder="Enter your password"
+              autocomplete="current-password"
+              required
+            >
+          </div>
+          
+          <div id="login-error" class="error-message hidden"></div>
+          
+          <button type="submit" class="btn-primary">
+            <span>Login</span>
+            <span>→</span>
+          </button>
+        </form>
+      </div>
+      
+      <!-- Register Link -->
+      <div class="register-link">
+        <span>New user? </span>
+        <span id="show-register-btn">How to register</span>
+      </div>
     </div>
   </div>
 
   <!-- Register Screen -->
   <div id="register-screen" class="screen hidden">
     <div class="login-container">
-      <h1>Create Account</h1>
-      <p class="subtitle">Register to get started</p>
-      <form id="register-form">
-        <div class="form-group">
-          <label for="reg-username">Username</label>
-          <input type="text" id="reg-username" placeholder="Choose a username" required>
-        </div>
-        <div class="form-group">
-          <label for="reg-email">Email</label>
-          <input type="text" id="reg-email" placeholder="Enter your email" required>
-        </div>
-        <div class="form-group">
-          <label for="reg-password">Password</label>
-          <input type="password" id="reg-password" placeholder="Choose a password" required>
-        </div>
-        <div class="form-group">
-          <label for="reg-confirm-password">Confirm Password</label>
-          <input type="password" id="reg-confirm-password" placeholder="Confirm your password" required>
-        </div>
-        <div id="register-error" class="error-message hidden"></div>
-        <button type="submit" class="btn-primary">Register</button>
-      </form>
-      <button id="back-to-login-btn" class="btn-secondary">Back to Login</button>
+      <!-- App Branding -->
+      <div class="app-branding">
+        <div class="app-name">Create Account</div>
+      </div>
+      
+      <!-- Register Card -->
+      <div class="login-card">
+        <form id="register-form">
+          <div class="form-group">
+            <label for="reg-username">Username</label>
+            <input 
+              type="text" 
+              id="reg-username" 
+              placeholder="Choose a username"
+              autocomplete="username"
+              required
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="reg-email">Email</label>
+            <input 
+              type="email" 
+              id="reg-email" 
+              placeholder="Enter your email"
+              autocomplete="email"
+              required
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="reg-password">Password</label>
+            <input 
+              type="password" 
+              id="reg-password" 
+              placeholder="Choose a password"
+              autocomplete="new-password"
+              required
+            >
+          </div>
+          
+          <div class="form-group">
+            <label for="reg-confirm-password">Confirm Password</label>
+            <input 
+              type="password" 
+              id="reg-confirm-password" 
+              placeholder="Confirm your password"
+              autocomplete="new-password"
+              required
+            >
+          </div>
+          
+          <div id="register-error" class="error-message hidden"></div>
+          
+          <button type="submit" class="btn-primary">
+            <span>Register</span>
+            <span>→</span>
+          </button>
+        </form>
+      </div>
+      
+      <!-- Back to Login -->
+      <button id="back-to-login-btn" class="btn-secondary">
+        Back to Login
+      </button>
     </div>
   </div>
 
   <!-- Messages Screen -->
   <div id="messages-screen" class="screen hidden">
     <div class="header">
-      <h1>Messages</h1>
+      <h1>
+        <img src="linksynclogo.png" alt="LinkSync" class="header-logo">
+        Messages
+      </h1>
       <div class="header-actions">
         <button id="action-btn" class="btn-action">Mark All Read</button>
         <button id="logout-btn" class="btn-logout">Logout</button>
@@ -74,7 +152,7 @@
 
     <div class="tab-content">
       <!-- New Messages Tab -->
-      <div id="new-tab" class="tab-pane active">
+      <div id="new-tab" class="tab-pane">
         <div id="new-messages-list" class="messages-list"></div>
       </div>
 

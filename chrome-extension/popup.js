@@ -71,9 +71,9 @@ const Auth = {
       throw new Error("Missing tokens in response from API");
     }
 
-    await chromeSet({ 
-      authToken: accessToken, 
-      idToken, 
+    await chromeSet({
+      authToken: accessToken,
+      idToken,
       refreshToken
     });
     this.user = { authToken: accessToken, idToken, refreshToken };
@@ -172,7 +172,7 @@ function showCopyBanner(message) {
 function updateActionButton() {
   const actionBtn = document.getElementById("action-btn");
   const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
-  
+
   if (activeTab === "new") {
     actionBtn.textContent = "Mark All Read";
     actionBtn.className = "btn-action";
@@ -185,7 +185,7 @@ function updateActionButton() {
 async function handleActionButton() {
   const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
   const { items = [] } = await chromeGet(["items"]);
-  
+
   if (activeTab === "new") {
     // Mark all as read
     const updatedItems = items.map(item => ({ ...item, seen: true }));
@@ -196,7 +196,7 @@ async function handleActionButton() {
     await chromeSet({ items: [] });
     showSuccessBanner("All messages cleared");
   }
-  
+
   renderMessages();
 }
 
@@ -231,20 +231,16 @@ async function renderMessages() {
 
       // Check if URL is a valid link
       if (target.url) {
-        const isValidUrl = target.url.startsWith('http://') || target.url.startsWith('https://');
-        
-        if (isValidUrl) {
-          // Open link in new tab
-          chrome.tabs.create({ url: target.url });
-        } else {
-          // Copy text to clipboard
-          try {
-            await navigator.clipboard.writeText(target.url);
-            showCopyBanner("Copied to clipboard!");
-          } catch (error) {
-            console.error("Failed to copy:", error);
-            showCopyBanner("Failed to copy");
-          }
+        // Open link in new tab
+        chrome.tabs.create({ url: target.url });
+      } else {
+        // Copy text to clipboard
+        try {
+          await navigator.clipboard.writeText(target.body);
+          showCopyBanner("Copied to clipboard!");
+        } catch (error) {
+          console.error("Failed to copy:", error);
+          showCopyBanner("Failed to copy");
         }
       }
 
@@ -256,15 +252,43 @@ async function renderMessages() {
 
 function createMessageHTML(item) {
   const time = new Date(item.timestamp).toLocaleString();
-  return `
-    <div class="message-item" data-id="${item.id}">
+  const isNew = !item.seen ? '<span class="badge-new">NEW</span>' : '';
+  let contentHtml = "";
+  // Custom HTML structure for the URL item
+  if (item.type === 'url') {
+    const urlHostname = new URL(item.url).hostname;
+    contentHtml = `
+        <div class="message-header">
+          <span class="message-sender">
+            <span style="font-weight: bold;">${item.title || 'Shared Link'}</span> ${isNew}
+          </span>
+          <span class="message-time">${time}</span>
+        </div>
+        <div class="message-preview" style="margin-top: 5px; color: #3b82f6;">
+          <span style="display: block; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; max-width: 90%;">
+            ${item.url}
+          </span>
+          <span style="display: block; font-size: 0.75em; color: #9ca3af;">
+            (${urlHostname})
+          </span>
+        </div>
+    `;
+  } else {
+    // Original HTML structure for generic messages
+    // ADDED inline style to ensure text wraps and breaks long words
+    contentHtml = `
       <div class="message-header">
         <span class="message-sender">
           ${item.title} ${!item.seen ? '<span class="badge-new">NEW</span>' : ''}
         </span>
         <span class="message-time">${time}</span>
       </div>
-      <div class="message-preview">${item.body}</div>
+      <div class="message-preview" style="word-wrap: break-word; overflow-wrap: break-word;">${item.body}</div>
+    `;
+  }
+  return `
+    <div class="message-item" data-id="${item.id}">
+      ${contentHtml}
     </div>
   `;
 }
@@ -274,19 +298,19 @@ function createMessageHTML(item) {
 document.getElementById("login-form").addEventListener("submit", async (e) => {
   e.preventDefault();
   clearError("login");
-  
+
   const form = e.target;
   const button = form.querySelector("button[type='submit']");
   const inputs = form.querySelectorAll("input, button");
-  
+
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
-  
+
   try {
     // --- Disable UI + Show Spinner ---
     button.classList.add("loading");
     inputs.forEach((el) => (el.disabled = true));
-    
+
     // 1. Get FCM Token first
     const permission = await Notification.requestPermission();
     if (permission !== "granted") {
@@ -323,7 +347,7 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   const form = e.target;
   const button = form.querySelector("button[type='submit']");
   const inputs = form.querySelectorAll("input, button");
-  
+
   const username = document.getElementById("reg-username").value;
   const email = document.getElementById("reg-email").value;
   const password = document.getElementById("reg-password").value;
@@ -402,7 +426,7 @@ document.querySelectorAll(".tab-btn").forEach((button) => {
 
     document.getElementById("new-tab").classList.toggle("hidden", tab !== "new");
     document.getElementById("all-tab").classList.toggle("hidden", tab === "new");
-    
+
     // Update action button text/style when tab changes
     updateActionButton();
   });

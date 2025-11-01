@@ -38,8 +38,9 @@ self.addEventListener("push", (event) => {
   const title = payload.data?.title || "New Notification";
   const body = payload.data?.body || "You have a new message!";
   const link = payload.data?.link || null;
-  const timestamp = new Date().toISOString();
-  const id = Date.now().toString(); // Track ID for seen state
+  const timestamp = payload.data?.timestamp || new Date().toISOString();
+  const id = timestamp; // Track ID for seen state
+  const type = payload.data?.type || null;
 
   console.log("Notification values:", { title, body, link, id });
 
@@ -50,7 +51,7 @@ self.addEventListener("push", (event) => {
         title,
         body,
         url: link,
-        type: "link",
+        type,
         timestamp,
         seen: false,
       };
@@ -76,9 +77,9 @@ self.addEventListener("notificationclick", (event) => {
   console.log("Link data:", link);
 
   // Check if link is a valid URL
-  const isValidUrl = link && (link.startsWith('http://') || link.startsWith('https://'));
+  //const isValidUrl = link && (link.startsWith('http://') || link.startsWith('https://'));
 
-  const openPromise = isValidUrl
+  const openPromise = link
     ? clients.matchAll({ type: "window", includeUncontrolled: true }).then((clientList) => {
         for (let client of clientList) {
           if (client.url === link && "focus" in client) {

@@ -6,42 +6,88 @@
 
 body {
   width: 400px;
-  min-height: 500px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: #f5f5f5;
+  height: 600px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, rgba(0, 93, 244, 0.05) 0%, rgba(0, 93, 244, 0.02) 100%);
   color: #333;
+  overflow: hidden;
+}
+
+:root {
+  --accent-color: #005df4;
+  --accent-color-light: rgba(0, 93, 244, 0.8);
+  --accent-color-bg: rgba(0, 93, 244, 0.15);
+  --bg-primary: #ffffff;
+  --bg-secondary: #f5f7fa;
+  --bg-tertiary: #e8ecf1;
+  --text-primary: #1a1a1a;
+  --text-secondary: #666666;
+  --border-color: rgba(0, 0, 0, 0.1);
+  --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .screen {
   width: 100%;
-  min-height: 500px;
+  height: 600px;
+  display: flex;
+  flex-direction: column;
 }
 
 .hidden {
   display: none !important;
 }
 
-/* Login Screen */
+/* ========== LOGIN & REGISTER SCREENS ========== */
 .login-container {
-  padding: 40px 30px;
-  background: white;
-  min-height: 500px;
+  padding: 32px 28px;
+  background: transparent;
+  height: 600px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-.login-container h1 {
-  font-size: 28px;
-  font-weight: 600;
-  margin-bottom: 8px;
-  color: #1a1a1a;
+/* App Branding */
+.app-branding {
+  text-align: center;
+  margin-bottom: 32px;
 }
 
-.subtitle {
-  color: #666;
-  margin-bottom: 32px;
+.logo-container {
+  /* margin-bottom: 12px; */
+}
+
+.logo {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-color));
+  padding: 12px;
+}
+
+.app-name {
+  font-size: 36px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui;
+}
+
+.app-subtitle {
+  color: var(--text-secondary);
   font-size: 14px;
+  font-weight: 400;
+}
+
+/* Login Card */
+.login-card {
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 28px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
 }
 
 .form-group {
@@ -51,266 +97,126 @@ body {
 .form-group label {
   display: block;
   margin-bottom: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  color: #333;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
 }
 
 .form-group input {
   width: 100%;
-  padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 8px;
+  padding: 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
   font-size: 14px;
-  transition: border-color 0.2s;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
 }
 
 .form-group input:focus {
   outline: none;
-  border-color: #4f46e5;
+  border-color: rgba(0, 93, 244, 0.3);
+  box-shadow: 0 0 0 3px rgba(0, 93, 244, 0.05);
 }
 
+.form-group input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Buttons */
 .btn-primary {
   width: 100%;
-  padding: 12px;
-  background: #4f46e5;
+  padding: 16px;
+  background: linear-gradient(90deg, var(--accent-color) 0%, var(--accent-color-light) 100%);
   color: white;
   border: none;
-  border-radius: 8px;
-  font-size: 14px;
+  border-radius: 12px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 8px;
+  box-shadow: 0 4px 12px rgba(0, 93, 244, 0.2);
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
 }
 
-.btn-primary:hover {
-  background: #4338ca;
+.btn-primary:hover:not(:disabled) {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 16px rgba(0, 93, 244, 0.3);
 }
 
-.demo-hint {
-  margin-top: 16px;
-  text-align: center;
-  font-size: 12px;
-  color: #999;
+.btn-primary:active:not(:disabled) {
+  transform: translateY(0);
+}
+
+.btn-primary:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 .btn-secondary {
   width: 100%;
   padding: 12px;
   background: transparent;
-  color: #4f46e5;
-  border: 1px solid #4f46e5;
+  color: var(--accent-color);
+  border: none;
   border-radius: 8px;
   font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 12px;
+  transition: all 0.2s ease;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
 }
 
 .btn-secondary:hover {
-  background: #f5f5ff;
+  background: rgba(0, 93, 244, 0.05);
+}
+
+.register-link {
+  text-align: center;
+  font-size: 14px;
+  margin-top: 16px;
+}
+
+.register-link span:first-child {
+  color: var(--text-secondary);
+}
+
+.register-link span:last-child {
+  color: var(--accent-color);
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .error-message {
-  padding: 10px;
-  background: #fee;
-  color: #c33;
-  border-radius: 6px;
-  font-size: 13px;
-  margin-bottom: 16px;
-  text-align: center;
-}
-
-/* Messages Screen */
-.header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
-  padding: 20px;
-  background: white;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.header h1 {
-  font-size: 20px;
-  font-weight: 600;
-  color: #1a1a1a;
-}
-
-.header-actions {
-  display: flex;
   gap: 8px;
-}
-
-.btn-action {
-  padding: 8px 16px;
-  background: #4f46e5;
-  color: white;
-  border: none;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-action:hover {
-  background: #4338ca;
-}
-
-.btn-action.clear {
-  background: #dc2626;
-}
-
-.btn-action.clear:hover {
-  background: #b91c1c;
-}
-
-.btn-logout {
-  padding: 8px 16px;
-  background: transparent;
-  color: #666;
-  border: 1px solid #ddd;
-  border-radius: 6px;
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.btn-logout:hover {
-  background: #f5f5f5;
-  color: #333;
-}
-
-/* Tabs */
-.tabs {
-  display: flex;
-  background: white;
-  border-bottom: 1px solid #e5e5e5;
-}
-
-.tab-btn {
-  flex: 1;
-  padding: 14px;
-  background: transparent;
-  border: none;
-  border-bottom: 2px solid transparent;
-  font-size: 14px;
-  font-weight: 500;
-  color: #666;
-  cursor: pointer;
-  transition: all 0.2s;
-}
-
-.tab-btn:hover {
-  color: #333;
-  background: #f9f9f9;
-}
-
-.tab-btn.active {
-  color: #4f46e5;
-  border-bottom-color: #4f46e5;
-}
-
-/* Tab Content */
-.tab-content {
-  background: white;
-  min-height: 400px;
-}
-
-.tab-pane {
-  padding: 16px;
-}
-
-/* Messages List */
-.messages-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
-
-.message-item {
-  padding: 16px;
-  background: #f9f9f9;
+  padding: 12px;
+  background: rgba(220, 38, 38, 0.1);
+  color: #dc2626;
   border-radius: 8px;
-  border-left: 3px solid #4f46e5;
-  transition: background 0.2s;
-  cursor: pointer;
-}
-
-.message-item:hover {
-  background: #f5f5f5;
-}
-
-.message-item.read {
-  border-left-color: #ddd;
-  opacity: 0.7;
-}
-
-.message-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 8px;
-}
-
-.message-sender {
-  font-weight: 600;
-  font-size: 14px;
-  color: #1a1a1a;
-}
-
-.message-time {
-  font-size: 12px;
-  color: #999;
-}
-
-.message-subject {
   font-size: 13px;
-  font-weight: 500;
-  color: #333;
-  margin-bottom: 4px;
-}
-
-.message-preview {
-  font-size: 13px;
-  color: #666;
-  line-height: 1.4;
-}
-
-.badge-new {
-  display: inline-block;
-  padding: 2px 8px;
-  background: #4f46e5;
-  color: white;
-  border-radius: 12px;
-  font-size: 11px;
-  font-weight: 600;
-  margin-left: 8px;
-}
-
-.empty-state {
-  text-align: center;
-  padding: 60px 20px;
-  color: #999;
-}
-
-.empty-state-icon {
-  font-size: 48px;
   margin-bottom: 16px;
 }
 
-.empty-state-text {
+.error-message::before {
+  content: "⚠️";
   font-size: 14px;
 }
 
-/* ---------- Loading Spinner ---------- */
+/* Loading Spinner */
 .btn-primary.loading {
   position: relative;
-  opacity: 0.8;
-  pointer-events: none;
   color: transparent;
+  pointer-events: none;
 }
 
 .btn-primary.loading::after {
@@ -333,27 +239,253 @@ body {
   }
 }
 
-/* ---------- Success Banner ---------- */
-.success-banner {
+/* ========== MESSAGES SCREEN ========== */
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.header h1 {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui;
+}
+
+.header-logo {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+}
+
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+}
+
+.btn-action:hover {
+  background: var(--bg-secondary);
+  border-color: var(--accent-color);
+  color: var(--accent-color);
+}
+
+/* .btn-action.clear {
+  background: #dc2626;
+} */
+
+.btn-action.clear:hover {
+  background: var(--bg-secondary);
+  border-color: #b91c1c;
+  color: #b91c1c;
+}
+
+.btn-logout {
+  padding: 8px 16px;
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+}
+
+.btn-logout:hover {
+  background: var(--bg-secondary);
+  border-color: #b91c1c;
+  color: #b91c1c;
+}
+
+/* Tabs */
+.tabs {
+  display: flex;
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  flex-shrink: 0;
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+}
+
+.tab-btn:hover {
+  color: var(--text-primary);
+  background: rgba(0, 93, 244, 0.03);
+}
+
+.tab-btn.active {
+  color: var(--accent-color);
+  border-bottom-color: var(--accent-color);
+}
+
+/* Tab Content */
+.tab-content {
+  background: var(--bg-primary);
+  flex: 1;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
+.tab-pane {
+  padding: 16px;
+  overflow-y: auto;
+  height: 100%;
+}
+
+/* Messages List */
+.messages-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.message-item {
+  padding: 16px;
+  background: var(--bg-secondary);
+  border-radius: 12px;
+  border-left: 3px solid var(--accent-color);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.message-item:hover {
+  background: var(--bg-tertiary);
+  transform: translateX(2px);
+  box-shadow: var(--shadow-sm);
+}
+
+.message-item.read {
+  border-left-color: #ddd;
+  opacity: 0.75;
+}
+
+.message-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.message-sender {
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--text-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+}
+
+.message-time {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}
+
+.message-preview {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  word-break: break-word;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+}
+
+.badge-new {
+  display: inline-block;
+  padding: 3px 8px;
+  background: var(--accent-color);
+  color: white;
+  border-radius: 10px;
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 80px 20px;
+  color: var(--text-secondary);
+}
+
+.empty-state-icon {
+  font-size: 48px;
+  margin-bottom: 16px;
+  opacity: 0.5;
+}
+
+.empty-state-text {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ========== SUCCESS & COPY BANNERS ========== */
+.success-banner,
+.copy-banner {
   position: fixed;
   top: 20px;
   left: 50%;
   transform: translateX(-50%);
-  background: #10b981;
-  color: white;
-  padding: 16px 24px;
-  border-radius: 8px;
+  padding: 14px 20px;
+  border-radius: 12px;
   font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  font-weight: 600;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
   z-index: 1000;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 10px;
   animation: slideDown 0.3s ease-out;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
 }
 
-.success-banner.hide {
+.success-banner {
+  background: #10b981;
+  color: white;
+}
+
+.copy-banner {
+  background: var(--accent-color);
+  color: white;
+}
+
+.success-banner.hide,
+.copy-banner.hide {
   animation: slideUp 0.3s ease-out forwards;
 }
 
@@ -379,26 +511,20 @@ body {
   }
 }
 
-/* ---------- Copy Banner ---------- */
-.copy-banner {
-  position: fixed;
-  top: 20px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: #3b82f6;
-  color: white;
-  padding: 16px 24px;
-  border-radius: 8px;
-  font-size: 14px;
-  font-weight: 500;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  animation: slideDown 0.3s ease-out;
+/* ========== SCROLLBAR STYLING ========== */
+.tab-pane::-webkit-scrollbar {
+  width: 6px;
 }
 
-.copy-banner.hide {
-  animation: slideUp 0.3s ease-out forwards;
+.tab-pane::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.tab-pane::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 3px;
+}
+
+.tab-pane::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.3);
 }
