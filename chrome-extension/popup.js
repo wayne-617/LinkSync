@@ -43,8 +43,8 @@ async function apiCall(endpoint, body) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.message || `Error: ${response.status}`);
-  }
+    throw new Error(data.error || data.message || `Error: ${response.status}`);
+  }
   return data;
 }
 
@@ -326,7 +326,6 @@ document.getElementById("login-form").addEventListener("submit", async (e) => {
     if (!fcm_token) {
       throw new Error("Could not retrieve FCM token.");
     }
-    console.log("FCM Token:", fcm_token);
     // 2. Call login with all required data
     await Auth.login(username, password, fcm_token);
 

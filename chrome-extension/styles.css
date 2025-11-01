@@ -51,19 +51,13 @@ body {
 /* App Branding */
 .app-branding {
   text-align: center;
-  margin-bottom: 32px;
-}
-
-.logo-container {
-  /* margin-bottom: 12px; */
+  margin-bottom: 24px;
 }
 
 .logo {
   width: 64px;
   height: 64px;
   border-radius: 16px;
-  background: linear-gradient(135deg, var(--accent-color), var(--accent-color));
-  padding: 12px;
 }
 
 .app-name {
@@ -79,6 +73,64 @@ body {
   color: var(--text-secondary);
   font-size: 14px;
   font-weight: 400;
+}
+
+/* Register Card */
+.reg-title {
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 4px;
+  letter-spacing: -0.5px;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", system-ui;
+}
+
+.reg-title-box {
+  text-align: center;
+  margin-bottom: 12px;
+}
+
+.reg-card {
+  background: var(--bg-secondary);
+  border-radius: 20px;
+  padding: 21px;
+  box-shadow: var(--shadow-md);
+  margin-bottom: 20px;
+}
+
+.reg-form-group {
+  margin-bottom: 10px;
+}
+
+.reg-form-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.reg-form-group input {
+  width: 100%;
+  padding: 14px;
+  border: 1.5px solid var(--border-color);
+  border-radius: 12px;
+  font-size: 14px;
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui;
+}
+
+.reg-form-group input:focus {
+  outline: none;
+  border-color: rgba(0, 93, 244, 0.3);
+  box-shadow: 0 0 0 3px rgba(0, 93, 244, 0.05);
+}
+
+.reg-form-group input:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
 }
 
 /* Login Card */
@@ -446,7 +498,6 @@ body {
 .empty-state-icon {
   font-size: 48px;
   margin-bottom: 16px;
-  opacity: 0.5;
 }
 
 .empty-state-text {

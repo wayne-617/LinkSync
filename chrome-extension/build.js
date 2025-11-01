@@ -28,6 +28,6 @@ const popupBuild = esbuild.build({
 Promise.all([backgroundBuild, popupBuild])
   .then(() => {
     console.log("✅ Build complete for background.js and popup.js");
-    console.log("AWS_API_URL:", process.env.AWS_API_URL);
+    //console.log("AWS_API_URL:", process.env.AWS_API_URL);
   })
   .catch(() => process.exit(1));
