@@ -138,6 +138,35 @@ body {
   color: #1a1a1a;
 }
 
+.header-actions {
+  display: flex;
+  gap: 8px;
+}
+
+.btn-action {
+  padding: 8px 16px;
+  background: #4f46e5;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-action:hover {
+  background: #4338ca;
+}
+
+.btn-action.clear {
+  background: #dc2626;
+}
+
+.btn-action.clear:hover {
+  background: #b91c1c;
+}
+
 .btn-logout {
   padding: 8px 16px;
   background: transparent;
@@ -207,6 +236,7 @@ body {
   border-radius: 8px;
   border-left: 3px solid #4f46e5;
   transition: background 0.2s;
+  cursor: pointer;
 }
 
 .message-item:hover {

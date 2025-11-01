@@ -58,6 +58,7 @@ const Auth = {
       this.user = { token: authToken };
       showView("messages-screen");
       renderMessages();
+      updateActionButton(); // Initialize button state
     } else {
       showView("login-screen");
     }
@@ -78,6 +79,7 @@ const Auth = {
     this.user = { authToken: accessToken, idToken, refreshToken };
     showView("messages-screen");
     renderMessages();
+    updateActionButton(); // Initialize button state
   },
 
   async logout() {
@@ -166,6 +168,38 @@ function showCopyBanner(message) {
   }, 2000);
 }
 
+// ---------- Action Button Management ----------
+function updateActionButton() {
+  const actionBtn = document.getElementById("action-btn");
+  const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
+  
+  if (activeTab === "new") {
+    actionBtn.textContent = "Mark All Read";
+    actionBtn.className = "btn-action";
+  } else {
+    actionBtn.textContent = "Clear All";
+    actionBtn.className = "btn-action clear";
+  }
+}
+
+async function handleActionButton() {
+  const activeTab = document.querySelector(".tab-btn.active").dataset.tab;
+  const { items = [] } = await chromeGet(["items"]);
+  
+  if (activeTab === "new") {
+    // Mark all as read
+    const updatedItems = items.map(item => ({ ...item, seen: true }));
+    await chromeSet({ items: updatedItems });
+    showSuccessBanner("All messages marked as read");
+  } else {
+    // Clear all messages
+    await chromeSet({ items: [] });
+    showSuccessBanner("All messages cleared");
+  }
+  
+  renderMessages();
+}
+
 // ---------- Message Rendering ----------
 async function renderMessages() {
   const { items = [] } = await chromeGet(["items"]);
@@ -179,7 +213,9 @@ async function renderMessages() {
     ? newItems.map(createMessageHTML).join("")
     : `<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No new items</div></div>`;
 
-  allMessagesList.innerHTML = allItems.map(createMessageHTML).join("");
+  allMessagesList.innerHTML = allItems.length
+    ? allItems.map(createMessageHTML).join("")
+    : `<div class="empty-state"><div class="empty-state-icon">📭</div><div class="empty-state-text">No messages</div></div>`;
 
   // Add click handlers after rendering
   document.querySelectorAll(".message-item").forEach((element) => {
@@ -354,6 +390,9 @@ document.getElementById("logout-btn").addEventListener("click", () => Auth.logou
 document.getElementById("show-register-btn").addEventListener("click", () => showView("register-screen"));
 document.getElementById("back-to-login-btn").addEventListener("click", () => showView("login-screen"));
 
+// Action Button (Mark All Read / Clear All)
+document.getElementById("action-btn").addEventListener("click", handleActionButton);
+
 // ---------- Tabs ----------
 document.querySelectorAll(".tab-btn").forEach((button) => {
   button.addEventListener("click", () => {
@@ -363,6 +402,9 @@ document.querySelectorAll(".tab-btn").forEach((button) => {
 
     document.getElementById("new-tab").classList.toggle("hidden", tab !== "new");
     document.getElementById("all-tab").classList.toggle("hidden", tab === "new");
+    
+    // Update action button text/style when tab changes
+    updateActionButton();
   });
 });
 
