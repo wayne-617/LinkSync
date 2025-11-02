@@ -15,6 +15,8 @@ class ShareViewController: UIViewController {
     private let checkmarkLabel = UILabel()
     private let errorIconLabel = UILabel()
     
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -43,6 +45,7 @@ class ShareViewController: UIViewController {
         Task {
             //AmplifyConfiguration.configure()
             AmplifyConfiguration.configure()
+            //try? await Task.sleep(nanoseconds: 900_000_000)
             await processSharedContent()
         }
     }
@@ -127,12 +130,12 @@ class ShareViewController: UIViewController {
         guard SharedAuthState.isAuthenticated() else {
             logger.warning("❌ Not authenticated per shared state")
             print("❌ Not authenticated per shared state")
-            await showError("Not signed in.\nPlease open the app first.")
+            await showError("Not signed in. Please sign in on the app")
             return
         }
         
         // Add a small delay to ensure Amplify is fully initialized
-        try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
+        //try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
         
         // 1️⃣ Validate Amplify session and get user ID
         let userId: String
@@ -141,7 +144,7 @@ class ShareViewController: UIViewController {
             print("🔍 About to fetch auth session")
             
             // Check if session is valid
-            let session = try await Amplify.Auth.fetchAuthSession()
+            let session = try await Amplify.Auth.fetchAuthSession(options: .init(forceRefresh: true))
             
             logger.info("📱 Share Extension - Session isSignedIn: \(session.isSignedIn)")
             print("📱 Share Extension - Session isSignedIn: \(session.isSignedIn)")
@@ -149,7 +152,7 @@ class ShareViewController: UIViewController {
             guard session.isSignedIn else {
                 logger.warning("❌ Share Extension - Not signed in")
                 print("❌ Share Extension - Not signed in")
-                await showError("Not signed in.\nPlease open the app first.")
+                await showError("Please close and reopen this app")
                 return
             }
             
@@ -164,6 +167,13 @@ class ShareViewController: UIViewController {
                 logger.error("❌ Could not retrieve user ID")
                 print("❌ Could not retrieve user ID")
                 await showError("Authentication error")
+                return
+            }
+            
+            if id != SharedAuthState.getUserId() {
+                logger.error("❌ Account changed. Please reload this app")
+                print("❌ Account changed. Please reload this app")
+                await showError("Account changed. Please reload this app")
                 return
             }
             

@@ -19,7 +19,7 @@
                BlueprintIdentifier = "5273373D2EA949F7000D4CC7"
                BuildableName = "LinkSyncShare.appex"
                BlueprintName = "LinkSyncShare"
-               ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+               ReferencedContainer = "container:LinkSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
          <BuildActionEntry
@@ -31,9 +31,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "527337032EA9484A000D4CC7"
-               BuildableName = "LinkSync-iOS.app"
-               BlueprintName = "LinkSync-iOS"
-               ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+               BuildableName = "LinkSync.app"
+               BlueprintName = "LinkSync"
+               ReferencedContainer = "container:LinkSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -58,17 +58,17 @@
       allowLocationSimulation = "YES"
       launchAutomaticallySubstyle = "2">
       <RemoteRunnable
-         runnableDebuggingMode = "1"
+         runnableDebuggingMode = "0"
          BundleIdentifier = "com.apple.mobilesafari"
-         RemotePath = "/Library/Developer/CoreSimulator/Volumes/iOS_22E238/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS 18.4.simruntime/Contents/Resources/RuntimeRoot/Applications/MobileSafari.app">
+         RemotePath = "/Applications/MobileSafari.app">
       </RemoteRunnable>
       <MacroExpansion>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "527337032EA9484A000D4CC7"
-            BuildableName = "LinkSync-iOS.app"
-            BlueprintName = "LinkSync-iOS"
-            ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+            BuildableName = "LinkSync.app"
+            BlueprintName = "LinkSync"
+            ReferencedContainer = "container:LinkSync.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
    </LaunchAction>
@@ -85,9 +85,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "527337032EA9484A000D4CC7"
-            BuildableName = "LinkSync-iOS.app"
-            BlueprintName = "LinkSync-iOS"
-            ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+            BuildableName = "LinkSync.app"
+            BlueprintName = "LinkSync"
+            ReferencedContainer = "container:LinkSync.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

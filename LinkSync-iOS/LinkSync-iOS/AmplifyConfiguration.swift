@@ -12,22 +12,25 @@ enum AmplifyConfiguration {
     private static var isConfigured = false
     private static let lock = NSLock()
     
-    static func configure() {
+    static func configure() -> Bool {
         lock.lock()
         defer { lock.unlock() }
         
-        guard !isConfigured else {
+        if isConfigured {
             print("ℹ️ Amplify already configured")
-            return
+            return true
         }
         
         do {
+
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
             try Amplify.configure()
             print("✅ Amplify configured successfully")
             isConfigured = true
+            return true
         } catch {
             print("❌ Failed to configure Amplify: \(error)")
+            return false
         }
     }
 }

@@ -11,37 +11,63 @@ final class AuthManager: ObservableObject {
     private let logger = Logger(subsystem: "com.yourapp.linksync", category: "Auth")
 
     @Published var isAuthenticated: Bool = false
-    @Published var isLoading: Bool = false
+    @Published var isLoading: Bool = true
     @Published var errorMessage: String? = nil
 
     private init() {
+        AmplifyConfiguration.configure()
         Task {
-            AmplifyConfiguration.configure()
+            //AmplifyConfiguration.configure()
             await checkAuthSession()
         }
+    }
+    
+    func initializeAuth() async {
+        // 1. Ensure Amplify is configured FIRST
+        //AmplifyConfiguration.configure()
+        
+        // 2. Then, check the session.
+        await checkAuthSession()
+        
+        // 3. Set up listeners or refresh logic here if needed.
     }
 
     // MARK: - Sign In
     func signIn(username: String, password: String) async {
         isLoading = true
         errorMessage = nil
+        
+        let options = AuthSignOutRequest.Options(globalSignOut: true)
+        let signout_result = await Amplify.Auth.signOut(options: options)
+        
+        logger.info("✅ Sign out completed with result type: \(String(describing: type(of: signout_result)))")
+        print("✅ Sign out completed - tokens should be cleared")
+        
         do {
+            //try await Amplify.Auth.signIn(username: username, password: password)
+            // Use global sign out to invalidate tokens on the server
+            
+            
             let result = try await Amplify.Auth.signIn(username: username, password: password)
+            
             if result.isSignedIn {
                 logger.info("✅ Sign-in successful")
                 print("✅ Sign-in successful")
                 isAuthenticated = true
                 
                 SharedAuthState.setAuthenticated(true)
+                SharedAuthState.setAuthTimestamp(Date().timeIntervalSince1970)
                 
                 // Verify we can get the user
                 if let userId = await getUserId() {
                     logger.info("✅ Verified userId after sign in: \(userId)")
                     print("✅ Verified userId after sign in: \(userId)")
+                    SharedAuthState.setUserId(userId)
                 } else {
                     logger.warning("⚠️ Could not get userId immediately after sign in")
                     print("⚠️ Could not get userId immediately after sign in")
                 }
+                
                 
                 // Verify session
                 let session = try await Amplify.Auth.fetchAuthSession()

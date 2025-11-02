@@ -53,9 +53,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		527337042EA9484A000D4CC7 /* LinkSync-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "LinkSync-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		527337112EA9484C000D4CC7 /* LinkSync-iOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LinkSync-iOSTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		5273371B2EA9484C000D4CC7 /* LinkSync-iOSUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "LinkSync-iOSUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		527337042EA9484A000D4CC7 /* LinkSync.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LinkSync.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		527337112EA9484C000D4CC7 /* LinkSyncTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkSyncTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		5273371B2EA9484C000D4CC7 /* LinkSyncUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LinkSyncUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5273373E2EA949F7000D4CC7 /* LinkSyncShare.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = LinkSyncShare.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -157,9 +157,9 @@
 		527337052EA9484A000D4CC7 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				527337042EA9484A000D4CC7 /* LinkSync-iOS.app */,
-				527337112EA9484C000D4CC7 /* LinkSync-iOSTests.xctest */,
-				5273371B2EA9484C000D4CC7 /* LinkSync-iOSUITests.xctest */,
+				527337042EA9484A000D4CC7 /* LinkSync.app */,
+				527337112EA9484C000D4CC7 /* LinkSyncTests.xctest */,
+				5273371B2EA9484C000D4CC7 /* LinkSyncUITests.xctest */,
 				5273373E2EA949F7000D4CC7 /* LinkSyncShare.appex */,
 			);
 			name = Products;
@@ -168,9 +168,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		527337032EA9484A000D4CC7 /* LinkSync-iOS */ = {
+		527337032EA9484A000D4CC7 /* LinkSync */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 527337252EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOS" */;
+			buildConfigurationList = 527337252EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync" */;
 			buildPhases = (
 				527337002EA9484A000D4CC7 /* Sources */,
 				527337012EA9484A000D4CC7 /* Frameworks */,
@@ -185,18 +185,18 @@
 			fileSystemSynchronizedGroups = (
 				527337062EA9484A000D4CC7 /* LinkSync-iOS */,
 			);
-			name = "LinkSync-iOS";
+			name = LinkSync;
 			packageProductDependencies = (
 				527337622EA94C8B000D4CC7 /* AWSCognitoAuthPlugin */,
 				527337642EA94C8B000D4CC7 /* Amplify */,
 			);
 			productName = "LinkSync-iOS";
-			productReference = 527337042EA9484A000D4CC7 /* LinkSync-iOS.app */;
+			productReference = 527337042EA9484A000D4CC7 /* LinkSync.app */;
 			productType = "com.apple.product-type.application";
 		};
-		527337102EA9484C000D4CC7 /* LinkSync-iOSTests */ = {
+		527337102EA9484C000D4CC7 /* LinkSyncTests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 527337282EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSTests" */;
+			buildConfigurationList = 527337282EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSyncTests" */;
 			buildPhases = (
 				5273370D2EA9484C000D4CC7 /* Sources */,
 				5273370E2EA9484C000D4CC7 /* Frameworks */,
@@ -210,16 +210,16 @@
 			fileSystemSynchronizedGroups = (
 				527337142EA9484C000D4CC7 /* LinkSync-iOSTests */,
 			);
-			name = "LinkSync-iOSTests";
+			name = LinkSyncTests;
 			packageProductDependencies = (
 			);
 			productName = "LinkSync-iOSTests";
-			productReference = 527337112EA9484C000D4CC7 /* LinkSync-iOSTests.xctest */;
+			productReference = 527337112EA9484C000D4CC7 /* LinkSyncTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
-		5273371A2EA9484C000D4CC7 /* LinkSync-iOSUITests */ = {
+		5273371A2EA9484C000D4CC7 /* LinkSyncUITests */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = 5273372B2EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSUITests" */;
+			buildConfigurationList = 5273372B2EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSyncUITests" */;
 			buildPhases = (
 				527337172EA9484C000D4CC7 /* Sources */,
 				527337182EA9484C000D4CC7 /* Frameworks */,
@@ -233,11 +233,11 @@
 			fileSystemSynchronizedGroups = (
 				5273371E2EA9484C000D4CC7 /* LinkSync-iOSUITests */,
 			);
-			name = "LinkSync-iOSUITests";
+			name = LinkSyncUITests;
 			packageProductDependencies = (
 			);
 			productName = "LinkSync-iOSUITests";
-			productReference = 5273371B2EA9484C000D4CC7 /* LinkSync-iOSUITests.xctest */;
+			productReference = 5273371B2EA9484C000D4CC7 /* LinkSyncUITests.xctest */;
 			productType = "com.apple.product-type.bundle.ui-testing";
 		};
 		5273373D2EA949F7000D4CC7 /* LinkSyncShare */ = {
@@ -290,7 +290,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 527336FF2EA9484A000D4CC7 /* Build configuration list for PBXProject "LinkSync-iOS" */;
+			buildConfigurationList = 527336FF2EA9484A000D4CC7 /* Build configuration list for PBXProject "LinkSync" */;
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -307,9 +307,9 @@
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (
-				527337032EA9484A000D4CC7 /* LinkSync-iOS */,
-				527337102EA9484C000D4CC7 /* LinkSync-iOSTests */,
-				5273371A2EA9484C000D4CC7 /* LinkSync-iOSUITests */,
+				527337032EA9484A000D4CC7 /* LinkSync */,
+				527337102EA9484C000D4CC7 /* LinkSyncTests */,
+				5273371A2EA9484C000D4CC7 /* LinkSyncUITests */,
 				5273373D2EA949F7000D4CC7 /* LinkSyncShare */,
 			);
 		};
@@ -380,12 +380,12 @@
 /* Begin PBXTargetDependency section */
 		527337132EA9484C000D4CC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 527337032EA9484A000D4CC7 /* LinkSync-iOS */;
+			target = 527337032EA9484A000D4CC7 /* LinkSync */;
 			targetProxy = 527337122EA9484C000D4CC7 /* PBXContainerItemProxy */;
 		};
 		5273371D2EA9484C000D4CC7 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
-			target = 527337032EA9484A000D4CC7 /* LinkSync-iOS */;
+			target = 527337032EA9484A000D4CC7 /* LinkSync */;
 			targetProxy = 5273371C2EA9484C000D4CC7 /* PBXContainerItemProxy */;
 		};
 		527337472EA949F7000D4CC7 /* PBXTargetDependency */ = {
@@ -592,7 +592,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync-iOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync";
 			};
 			name = Debug;
 		};
@@ -611,7 +611,7 @@
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync-iOS.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync-iOS";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/LinkSync.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/LinkSync";
 			};
 			name = Release;
 		};
@@ -710,7 +710,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		527336FF2EA9484A000D4CC7 /* Build configuration list for PBXProject "LinkSync-iOS" */ = {
+		527336FF2EA9484A000D4CC7 /* Build configuration list for PBXProject "LinkSync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				527337232EA9484C000D4CC7 /* Debug */,
@@ -719,7 +719,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		527337252EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOS" */ = {
+		527337252EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				527337262EA9484C000D4CC7 /* Debug */,
@@ -728,7 +728,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		527337282EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSTests" */ = {
+		527337282EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSyncTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				527337292EA9484C000D4CC7 /* Debug */,
@@ -737,7 +737,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		5273372B2EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSync-iOSUITests" */ = {
+		5273372B2EA9484C000D4CC7 /* Build configuration list for PBXNativeTarget "LinkSyncUITests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				5273372C2EA9484C000D4CC7 /* Debug */,

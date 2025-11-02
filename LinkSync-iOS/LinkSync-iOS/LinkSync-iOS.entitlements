@@ -8,8 +8,7 @@
 	</array>
 	<key>keychain-access-groups</key>
 	<array>
-		<string>$(AppIdentifierPrefix)wayne617.LinkSync-iOS.shared</string>
-		<string>group.com.waynelam.linksync</string>
+		<string>$(AppIdentifierPrefix)group.com.waynelam.linksync</string>
 	</array>
 </dict>
 </plist>

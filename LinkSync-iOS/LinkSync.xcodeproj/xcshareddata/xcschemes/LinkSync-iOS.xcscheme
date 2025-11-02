@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "527337032EA9484A000D4CC7"
-               BuildableName = "LinkSync-iOS.app"
-               BlueprintName = "LinkSync-iOS"
-               ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+               BuildableName = "LinkSync.app"
+               BlueprintName = "LinkSync"
+               ReferencedContainer = "container:LinkSync.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -36,9 +36,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "527337102EA9484C000D4CC7"
-               BuildableName = "LinkSync-iOSTests.xctest"
-               BlueprintName = "LinkSync-iOSTests"
-               ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+               BuildableName = "LinkSyncTests.xctest"
+               BlueprintName = "LinkSyncTests"
+               ReferencedContainer = "container:LinkSync.xcodeproj">
             </BuildableReference>
          </TestableReference>
          <TestableReference
@@ -47,9 +47,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "5273371A2EA9484C000D4CC7"
-               BuildableName = "LinkSync-iOSUITests.xctest"
-               BlueprintName = "LinkSync-iOSUITests"
-               ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+               BuildableName = "LinkSyncUITests.xctest"
+               BlueprintName = "LinkSyncUITests"
+               ReferencedContainer = "container:LinkSync.xcodeproj">
             </BuildableReference>
          </TestableReference>
       </Testables>
@@ -69,9 +69,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "527337032EA9484A000D4CC7"
-            BuildableName = "LinkSync-iOS.app"
-            BlueprintName = "LinkSync-iOS"
-            ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+            BuildableName = "LinkSync.app"
+            BlueprintName = "LinkSync"
+            ReferencedContainer = "container:LinkSync.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -86,9 +86,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "527337032EA9484A000D4CC7"
-            BuildableName = "LinkSync-iOS.app"
-            BlueprintName = "LinkSync-iOS"
-            ReferencedContainer = "container:LinkSync-iOS.xcodeproj">
+            BuildableName = "LinkSync.app"
+            BlueprintName = "LinkSync"
+            ReferencedContainer = "container:LinkSync.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>
