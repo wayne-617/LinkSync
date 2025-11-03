@@ -29,153 +29,164 @@ struct MainView: View {
                 )
                 .ignoresSafeArea()
                 
-                VStack(spacing: 0) {
-                    Spacer()
-                    
-                    // Header with logo and branding
-                    VStack(spacing: 12) {
-                        Image(systemName: "link.circle.fill")
-                            .font(.system(size: 64))
-                            .foregroundStyle(
-                                LinearGradient(
-                                    colors: [Color.accentColor, Color.accentColor.opacity(0.7)],
-                                    startPoint: .topLeading,
-                                    endPoint: .bottomTrailing
-                                )
-                            )
-                        
-                        Text("linksync")
-                            .font(.system(size: 36, weight: .bold, design: .rounded))
-                            .foregroundColor(.primary)
-                        
-                        Text("Send to your computer")
-                            .font(.subheadline)
-                            .foregroundColor(.secondary)
-                    }
-                    .padding(.bottom, 40)
-                    
-                    // Main content card
-                    VStack(spacing: 20) {
-                        // Text input area
-                        VStack(alignment: .leading, spacing: 10) {
-                            HStack {
-                                Image(systemName: "text.alignleft")
-                                    .foregroundColor(.accentColor)
-                                    .font(.system(size: 14))
+                // --- FIX: Use GeometryReader and ScrollView for Keyboard Avoidance & Centering ---
+                GeometryReader { geometry in
+                    ScrollView(.vertical, showsIndicators: false) {
+                        VStack(spacing: 0) {
+                            // Spacer 1: Pushes content down for centering, but collapses when keyboard is active
+                            Spacer()
+                            
+                            // Header with logo and branding
+                            VStack(spacing: 12) {
+                                Image(systemName: "link.circle.fill")
+                                    .font(.system(size: 64))
+                                    .foregroundStyle(
+                                        LinearGradient(
+                                            colors: [Color.accentColor, Color.accentColor.opacity(0.7)],
+                                            startPoint: .topLeading,
+                                            endPoint: .bottomTrailing
+                                        )
+                                    )
                                 
-                                Text("Text or URL")
-                                    .font(.subheadline)
-                                    .fontWeight(.semibold)
+                                Text("linksync")
+                                    .font(.system(size: 36, weight: .bold, design: .rounded))
                                     .foregroundColor(.primary)
                                 
-                                Spacer()
-                                
-                                if !messageText.isEmpty {
-                                    Button(action: {
-                                        withAnimation {
-                                            messageText = ""
-                                        }
-                                    }) {
-                                        Image(systemName: "xmark.circle.fill")
-                                            .foregroundColor(.secondary)
-                                            .font(.system(size: 18))
-                                    }
-                                }
+                                Text("Send to your computer")
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
                             }
+                            .padding(.bottom, 40)
                             
-                            TextField("Paste a link or type a message...", text: $messageText, axis: .vertical)
-                                .lineLimit(1...10)
-                                .padding(12)
-                                .background(Color(.systemBackground))
-                                .cornerRadius(12)
-                                .overlay(
-                                    RoundedRectangle(cornerRadius: 12)
-                                        .stroke(
-                                            messageText.isEmpty ? Color.gray.opacity(0.2) : Color.accentColor.opacity(0.3),
-                                            lineWidth: 1.5
-                                        )
-                                )
-                                .autocapitalization(.none)
-                                .disableAutocorrection(true)
-                        }
-                        
-                        // Upload button
-                        Button(action: uploadMessage) {
-                            HStack(spacing: 10) {
-                                if isUploading {
-                                    ProgressView()
-                                        .progressViewStyle(CircularProgressViewStyle(tint: .white))
-                                    Text("Uploading...")
-                                } else if uploadSuccess {
-                                    Image(systemName: "checkmark.circle.fill")
-                                        .font(.system(size: 20))
-                                    Text("Sent!")
-                                        .fontWeight(.semibold)
-                                } else {
-                                    Image(systemName: "arrow.up.circle.fill")
-                                        .font(.system(size: 20))
-                                    Text("Send to Computer")
-                                        .fontWeight(.semibold)
-                                }
-                            }
-                            .frame(maxWidth: .infinity)
-                            .frame(height: 56)
-                            .background(
-                                Group {
-                                    if uploadSuccess {
-                                        Color.green
-                                    } else if messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
-                                        Color.gray.opacity(0.3)
-                                    } else {
-                                        LinearGradient(
-                                            colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
-                                            startPoint: .leading,
-                                            endPoint: .trailing
-                                        )
+                            // Main content card
+                            VStack(spacing: 20) {
+                                // Text input area
+                                VStack(alignment: .leading, spacing: 10) {
+                                    HStack {
+                                        Image(systemName: "text.alignleft")
+                                            .foregroundColor(.accentColor)
+                                            .font(.system(size: 14))
+                                        
+                                        Text("Text or URL")
+                                            .font(.subheadline)
+                                            .fontWeight(.semibold)
+                                            .foregroundColor(.primary)
+                                        
+                                        Spacer()
+                                        
+                                        if !messageText.isEmpty {
+                                            Button(action: {
+                                                withAnimation {
+                                                    messageText = ""
+                                                }
+                                            }) {
+                                                Image(systemName: "xmark.circle.fill")
+                                                    .foregroundColor(.secondary)
+                                                    .font(.system(size: 18))
+                                            }
+                                        }
                                     }
+                                    
+                                    TextField("Paste a link or type a message...", text: $messageText, axis: .vertical)
+                                        .lineLimit(10)
+                                        .padding(12)
+                                        .background(Color(.systemBackground))
+                                        .cornerRadius(12)
+                                        .overlay(
+                                            RoundedRectangle(cornerRadius: 12)
+                                                .stroke(
+                                                    messageText.isEmpty ? Color.gray.opacity(0.2) : Color.accentColor.opacity(0.3),
+                                                    lineWidth: 1.5
+                                                )
+                                        )
+                                        .autocapitalization(.none)
+                                        .disableAutocorrection(true)
                                 }
-                            )
-                            .foregroundColor(.white)
-                            .cornerRadius(14)
-                            .shadow(
-                                color: uploadSuccess ? Color.green.opacity(0.3) : (messageText.isEmpty ? .clear : Color.accentColor.opacity(0.3)),
-                                radius: 8,
-                                x: 0,
-                                y: 4
-                            )
+                                
+                                // Upload button
+                                Button(action: uploadMessage) {
+                                    HStack(spacing: 10) {
+                                        if isUploading {
+                                            ProgressView()
+                                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                            Text("Uploading...")
+                                        } else if uploadSuccess {
+                                            Image(systemName: "checkmark.circle.fill")
+                                                .font(.system(size: 20))
+                                            Text("Sent!")
+                                                .fontWeight(.semibold)
+                                        } else {
+                                            Image(systemName: "arrow.up.circle.fill")
+                                                .font(.system(size: 20))
+                                            Text("Send to Computer")
+                                                .fontWeight(.semibold)
+                                        }
+                                    }
+                                    .frame(maxWidth: .infinity)
+                                    .frame(height: 56)
+                                    .background(
+                                        Group {
+                                            if uploadSuccess {
+                                                Color.green
+                                            } else if messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+                                                Color.gray.opacity(0.3)
+                                            } else {
+                                                LinearGradient(
+                                                    colors: [Color.accentColor, Color.accentColor.opacity(0.8)],
+                                                    startPoint: .leading,
+                                                    endPoint: .trailing
+                                                )
+                                            }
+                                        }
+                                    )
+                                    .foregroundColor(.white)
+                                    .cornerRadius(14)
+                                    .shadow(
+                                        color: uploadSuccess ? Color.green.opacity(0.3) : (messageText.isEmpty ? .clear : Color.accentColor.opacity(0.3)),
+                                        radius: 8,
+                                        x: 0,
+                                        y: 4
+                                    )
+                                }
+                                .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isUploading || uploadSuccess)
+                                .animation(.easeInOut(duration: 0.2), value: messageText.isEmpty)
+                                .animation(.easeInOut(duration: 0.3), value: uploadSuccess)
+                            }
+                            .padding(24)
+                            .background(Color(.secondarySystemBackground))
+                            .cornerRadius(20)
+                            .shadow(color: Color.black.opacity(0.06), radius: 15, x: 0, y: 5)
+                            .padding(.horizontal, 20)
+                            
+                            // Tips button
+                            Button(action: {
+                                showingTipsModal = true
+                            }) {
+                                HStack(spacing: 6) {
+                                    Image(systemName: "lightbulb.fill")
+                                        .font(.system(size: 14))
+                                        .foregroundColor(.yellow)
+                                    Text("Quick Tips")
+                                        .font(.subheadline)
+                                        .fontWeight(.medium)
+                                        .foregroundColor(.accentColor)
+                                }
+                                .padding(.vertical, 12)
+                                .padding(.horizontal, 20)
+                                .background(Color(.tertiarySystemBackground))
+                                .cornerRadius(20)
+                            }
+                            .padding(.top, 24)
+                            
+                            // Spacer 2: Pushes content up for centering, but collapses when keyboard is active
+                            Spacer()
                         }
-                        .disabled(messageText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || isUploading || uploadSuccess)
-                        .animation(.easeInOut(duration: 0.2), value: messageText.isEmpty)
-                        .animation(.easeInOut(duration: 0.3), value: uploadSuccess)
+                        // This makes the VStack take up at least the full screen height,
+                        // enabling the internal Spacers to center the content initially.
+                        .frame(minHeight: geometry.size.height)
                     }
-                    .padding(24)
-                    .background(Color(.secondarySystemBackground))
-                    .cornerRadius(20)
-                    .shadow(color: Color.black.opacity(0.06), radius: 15, x: 0, y: 5)
-                    .padding(.horizontal, 20)
-                    
-                    // Tips button
-                    Button(action: {
-                        showingTipsModal = true
-                    }) {
-                        HStack(spacing: 6) {
-                            Image(systemName: "lightbulb.fill")
-                                .font(.system(size: 14))
-                                .foregroundColor(.yellow)
-                            Text("Quick Tips")
-                                .font(.subheadline)
-                                .fontWeight(.medium)
-                                .foregroundColor(.accentColor)
-                        }
-                        .padding(.vertical, 12)
-                        .padding(.horizontal, 20)
-                        .background(Color(.tertiarySystemBackground))
-                        .cornerRadius(20)
-                    }
-                    .padding(.top, 24)
-                    
-                    Spacer()
                 }
+                // --- END FIX ---
             }
             .navigationBarTitleDisplayMode(.inline)
             .toolbar {

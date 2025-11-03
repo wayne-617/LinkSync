@@ -14,8 +14,16 @@ class ShareViewController: UIViewController {
     private let statusLabel = UILabel()
     private let checkmarkLabel = UILabel()
     private let errorIconLabel = UILabel()
+    private let infoIconLabel = UILabel()
     
-    
+    private let AUTH_INSTRUCTION_MESSAGE = """
+        
+        1. Swipe up and close all apps
+        
+        2. Open LinkSync and sign in again
+        
+        Done! Your Share Extension is now enabled and ready
+        """
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,7 +31,8 @@ class ShareViewController: UIViewController {
         logger.info("🚀 ShareViewController viewDidLoad started")
         print("🚀 ShareViewController viewDidLoad started")
         
-        view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        //view.backgroundColor = UIColor.black.withAlphaComponent(0.4)
+        view.backgroundColor = .clear
         setupUI()
         
         // Configure Amplify once when view loads
@@ -43,9 +52,7 @@ class ShareViewController: UIViewController {
         print("👀 ShareViewController viewDidAppear")
         
         Task {
-            //AmplifyConfiguration.configure()
             AmplifyConfiguration.configure()
-            //try? await Task.sleep(nanoseconds: 900_000_000)
             await processSharedContent()
         }
     }
@@ -86,11 +93,20 @@ class ShareViewController: UIViewController {
         errorIconLabel.textColor = .systemRed
         errorIconLabel.alpha = 0
         
+        // Info icon label (hidden initially)
+        /*infoIconLabel.translatesAutoresizingMaskIntoConstraints = false
+        infoIconLabel.textAlignment = .center
+        infoIconLabel.font = UIFont.systemFont(ofSize: 36)
+        infoIconLabel.text = "ⓘ"
+        infoIconLabel.textColor = .systemBlue
+        infoIconLabel.alpha = 0*/
+        
         view.addSubview(containerView)
         containerView.addSubview(spinner)
         containerView.addSubview(statusLabel)
         containerView.addSubview(checkmarkLabel)
         containerView.addSubview(errorIconLabel)
+        //containerView.addSubview(infoIconLabel)
         
         NSLayoutConstraint.activate([
             // Container centered
@@ -106,6 +122,10 @@ class ShareViewController: UIViewController {
             // Error icon position (aligned with spinner)
             errorIconLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             errorIconLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 25),
+            
+            // Info icon position (aligned with spinner)
+            //infoIconLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
+            //infoIconLabel.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20),
             
             // Status label position below the icon/spinner area
             statusLabel.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -124,40 +144,29 @@ class ShareViewController: UIViewController {
     // MARK: - Process Shared Content
     
     private func processSharedContent() async {
-        logger.info("🔄 processSharedContent started")
-        print("🔄 processSharedContent started")
-        
-        guard SharedAuthState.isAuthenticated() else {
-            logger.warning("❌ Not authenticated per shared state")
-            print("❌ Not authenticated per shared state")
-            await showError("Not signed in. Please sign in on the app")
-            return
-        }
-        
-        // Add a small delay to ensure Amplify is fully initialized
-        //try? await Task.sleep(nanoseconds: 200_000_000) // 0.2 seconds
         
         // 1️⃣ Validate Amplify session and get user ID
         let userId: String
         do {
-            logger.info("🔍 About to fetch auth session")
-            print("🔍 About to fetch auth session")
             
             // Check if session is valid
             let session = try await Amplify.Auth.fetchAuthSession(options: .init(forceRefresh: true))
             
-            logger.info("📱 Share Extension - Session isSignedIn: \(session.isSignedIn)")
-            print("📱 Share Extension - Session isSignedIn: \(session.isSignedIn)")
-            
             guard session.isSignedIn else {
-                logger.warning("❌ Share Extension - Not signed in")
-                print("❌ Share Extension - Not signed in")
-                await showError("Please close and reopen this app")
+                logger.warning("Need to set up Share Extension")
+                await showInfo(AUTH_INSTRUCTION_MESSAGE)
                 return
             }
             
             logger.info("✅ Share Extension - Valid session confirmed")
             print("✅ Share Extension - Valid session confirmed")
+            
+            guard SharedAuthState.isAuthenticated() else {
+                logger.warning("❌ Not authenticated per shared state")
+                print("❌ Not authenticated per shared state")
+                await showError("Not signed in. Please sign in on the app")
+                return
+            }
             
             // Get user ID
             logger.info("🔍 About to get user ID")
@@ -283,6 +292,7 @@ class ShareViewController: UIViewController {
             spinner.alpha = 0
             errorIconLabel.alpha = 0
             statusLabel.alpha = 0
+            infoIconLabel.alpha = 0
             
             // Show checkmark with animation
             UIView.animate(withDuration: 0.3) {
@@ -308,6 +318,7 @@ class ShareViewController: UIViewController {
             spinner.stopAnimating()
             spinner.alpha = 0
             checkmarkLabel.alpha = 0
+            infoIconLabel.alpha = 0
             errorIconLabel.alpha = 1
             
             // Update status text
@@ -322,4 +333,56 @@ class ShareViewController: UIViewController {
             self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
         }
     }
+    
+    /*private func showInfo(_ message: String) async {
+        await MainActor.run {
+            // Hide spinner and checkmark, show error icon
+            spinner.stopAnimating()
+            spinner.alpha = 0
+            checkmarkLabel.alpha = 0
+            errorIconLabel.alpha = 0
+            infoIconLabel.alpha = 1
+            
+            // Update status text
+            statusLabel.text = message
+            statusLabel.textColor = .systemBlue
+            statusLabel.alpha = 1
+        }
+        
+        // Wait and dismiss
+        try? await Task.sleep(nanoseconds: 2_000_000_000) // 2 seconds
+        await MainActor.run {
+            self.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+        }
+    }*/
+    private func showInfo(_ message: String) async {
+            await MainActor.run {
+                // Stop the custom spinner and hide custom UI, which is still on screen
+                //spinner.stopAnimating()
+                //self.containerView.alpha = 0
+                //self.view.backgroundColor = .clear // Make the background transparent to only show the alert
+                
+                // 1. Create the alert controller
+                let alertController = UIAlertController(
+                    title: "Enable LinkSync Share",
+                    message: message,
+                    preferredStyle: .alert
+                )
+
+                // 2. Define the action for the "OK" button
+                let okAction = UIAlertAction(title: "OK", style: .default) { [weak self] _ in
+                    // 3. Dismiss the entire share extension when OK is pressed
+                    self?.extensionContext?.completeRequest(returningItems: [], completionHandler: nil)
+                }
+
+                // 4. Add the action to the controller
+                alertController.addAction(okAction)
+
+                // 5. Present the alert
+                self.present(alertController, animated: true, completion: nil)
+                spinner.stopAnimating()
+                self.containerView.alpha = 0
+            }
+            // Manual dismissal with Task.sleep is removed, as the alert action handles it.
+        }
 }
