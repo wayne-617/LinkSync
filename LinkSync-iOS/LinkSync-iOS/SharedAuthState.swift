@@ -16,13 +16,11 @@ class SharedAuthState {
         guard let defaults = UserDefaults(suiteName: suiteName) else { return }
         defaults.set(value, forKey: isAuthenticatedKey)
         defaults.synchronize()
-        print("📝 Shared state: Set authenticated = \(value)")
     }
     
     static func isAuthenticated() -> Bool {
         guard let defaults = UserDefaults(suiteName: suiteName) else { return false }
         let value = defaults.bool(forKey: isAuthenticatedKey)
-        print("📖 Shared state: Read authenticated = \(value)")
         return value
     }
     
@@ -30,7 +28,6 @@ class SharedAuthState {
         guard let defaults = UserDefaults(suiteName: suiteName) else { return }
         defaults.set(value, forKey: userId)
         defaults.synchronize()
-        print("📝 Shared state: Set userId = \(value)")
     }
     
     static func getUserId() -> String? {
@@ -44,7 +41,6 @@ class SharedAuthState {
         guard let defaults = UserDefaults(suiteName: suiteName) else { return }
         defaults.set(value, forKey: authTimestampKey)
         defaults.synchronize()
-        print("📝 Shared state: Set authTimestamp = \(value)")
     }
     
     static func getAuthTimestamp() -> TimeInterval {

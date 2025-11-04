@@ -158,8 +158,6 @@ class ShareViewController: UIViewController {
                 return
             }
             
-            logger.info("✅ Share Extension - Valid session confirmed")
-            print("✅ Share Extension - Valid session confirmed")
             
             guard SharedAuthState.isAuthenticated() else {
                 logger.warning("❌ Not authenticated per shared state")
@@ -169,9 +167,6 @@ class ShareViewController: UIViewController {
             }
             
             // Get user ID
-            logger.info("🔍 About to get user ID")
-            print("🔍 About to get user ID")
-            
             guard let id = await getUserId() else {
                 logger.error("❌ Could not retrieve user ID")
                 print("❌ Could not retrieve user ID")
@@ -187,8 +182,6 @@ class ShareViewController: UIViewController {
             }
             
             userId = id
-            logger.info("✅ Share extension has userId: \(userId)")
-            print("✅ Share extension has userId: \(userId)")
             
         } catch {
             logger.error("❌ Auth check failed: \(error.localizedDescription)")
@@ -198,8 +191,6 @@ class ShareViewController: UIViewController {
         }
         
         // 2️⃣ Extract shared content (text or URL)
-        logger.info("📝 Extracting shared content")
-        print("📝 Extracting shared content")
         
         guard let content = await extractSharedContent() else {
             logger.warning("❌ No content to share")
@@ -208,18 +199,18 @@ class ShareViewController: UIViewController {
             return
         }
         
-        logger.info("✅ Extracted content: \(content)")
-        print("✅ Extracted content: \(content)")
+        //logger.info("✅ Extracted content: \(content)")
+        //print("✅ Extracted content: \(content)")
         
         // 3️⃣ Upload message using your API service
         do {
-            logger.info("📤 Uploading message")
-            print("📤 Uploading message")
+            //logger.info("📤 Uploading message")
+            //print("📤 Uploading message")
             
             try await apiService.uploadMessage(userId: userId, content: content)
             
-            logger.info("✅ Upload successful")
-            print("✅ Upload successful")
+            //logger.info("✅ Upload successful")
+            //print("✅ Upload successful")
             
             await showSuccess()
         } catch {
@@ -273,8 +264,6 @@ class ShareViewController: UIViewController {
     private func getUserId() async -> String? {
         do {
             let user = try await Amplify.Auth.getCurrentUser()
-            logger.info("✅ Got user from Amplify: \(user.userId)")
-            print("✅ Got user from Amplify: \(user.userId)")
             return user.userId
         } catch {
             logger.error("❌ Failed to get user ID: \(error.localizedDescription)")
@@ -383,6 +372,5 @@ class ShareViewController: UIViewController {
                 spinner.stopAnimating()
                 self.containerView.alpha = 0
             }
-            // Manual dismissal with Task.sleep is removed, as the alert action handles it.
         }
 }

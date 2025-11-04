@@ -299,14 +299,8 @@ struct TipsModalView: View {
                 VStack(spacing: 20) {
                     TipCard(
                         icon: "link",
-                        title: "Share Links Instantly",
-                        description: "Paste any URL and it will open automatically on your computer"
-                    )
-                    
-                    TipCard(
-                        icon: "doc.text",
-                        title: "Transfer Text Quickly",
-                        description: "Share notes, passwords, or any text snippet between devices"
+                        title: "Upload Instantly",
+                        description: "Share URLs, notes, or any text snippet to your computer"
                     )
 
                     TipCard(
@@ -316,9 +310,15 @@ struct TipsModalView: View {
                     )
 
                     TipCard(
-                        icon: "bolt.fill",
-                        title: "Lightning Fast",
-                        description: "Your content syncs in real-time with no delays"
+                        icon: "heart",
+                        title: "Pin For Quick Access",
+                        description: "In the Share Sheet apps tap\n'More' → 'Edit' → ⊕ LinkSync"
+                    )
+                    
+                    TipCard(
+                        icon: "star",
+                        title: "Love LinkSync? Rate Us!",
+                        description: "Leave a review and share your feedback"
                     )
                 }
                 .padding(.horizontal, 24)

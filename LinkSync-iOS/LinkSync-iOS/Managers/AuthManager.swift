@@ -37,12 +37,6 @@ final class AuthManager: ObservableObject {
         isLoading = true
         errorMessage = nil
         
-        let options = AuthSignOutRequest.Options(globalSignOut: true)
-        let signout_result = await Amplify.Auth.signOut(options: options)
-        
-        logger.info("✅ Sign out completed with result type: \(String(describing: type(of: signout_result)))")
-        print("✅ Sign out completed - tokens should be cleared")
-        
         do {
             //try await Amplify.Auth.signIn(username: username, password: password)
             // Use global sign out to invalidate tokens on the server
@@ -60,8 +54,6 @@ final class AuthManager: ObservableObject {
                 
                 // Verify we can get the user
                 if let userId = await getUserId() {
-                    logger.info("✅ Verified userId after sign in: \(userId)")
-                    print("✅ Verified userId after sign in: \(userId)")
                     SharedAuthState.setUserId(userId)
                 } else {
                     logger.warning("⚠️ Could not get userId immediately after sign in")
@@ -71,8 +63,6 @@ final class AuthManager: ObservableObject {
                 
                 // Verify session
                 let session = try await Amplify.Auth.fetchAuthSession()
-                logger.info("✅ Session after sign in - isSignedIn: \(session.isSignedIn)")
-                print("✅ Session after sign in - isSignedIn: \(session.isSignedIn)")
             } else {
                 logger.warning("⚠️ Sign-in not complete (MFA or confirmation required)")
                 print("⚠️ Sign-in not complete (MFA or confirmation required)")
@@ -96,9 +86,6 @@ final class AuthManager: ObservableObject {
         let options = AuthSignOutRequest.Options(globalSignOut: true)
         let result = await Amplify.Auth.signOut(options: options)
         
-        logger.info("✅ Sign out completed with result type: \(String(describing: type(of: result)))")
-        print("✅ Sign out completed - tokens should be cleared")
-        
         SharedAuthState.setAuthenticated(false)
         
         // Always set to not authenticated after sign out
@@ -114,8 +101,6 @@ final class AuthManager: ObservableObject {
             logger.info("🔍 Auth session check - isSignedIn: \(session.isSignedIn)")
             print("🔍 Auth session check - isSignedIn: \(session.isSignedIn)")
             if session.isSignedIn {
-                logger.info("✅ Session valid")
-                print("✅ Session valid")
                 isAuthenticated = true
                 
                 // Also verify we can get user
@@ -140,12 +125,12 @@ final class AuthManager: ObservableObject {
     func getUserId() async -> String? {
         do {
             let user = try await Amplify.Auth.getCurrentUser()
-            logger.info("✅ Retrieved user ID: \(user.userId)")
-            print("✅ Retrieved user ID: \(user.userId)")
+            //logger.info("✅ Retrieved user ID: \(user.userId)")
+            //print("✅ Retrieved user ID: \(user.userId)")
             return user.userId
         } catch {
-            logger.error("❌ Failed to get user ID: \(error.localizedDescription)")
-            print("❌ Failed to get user ID: \(error)")
+            //logger.error("❌ Failed to get user ID: \(error.localizedDescription)")
+            //print("❌ Failed to get user ID: \(error)")
             return nil
         }
     }
