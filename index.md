@@ -2,14 +2,14 @@
 
 **Effective Date:** November 1, 2025
 
-LinkSync is a Chrome extension that allows users to save, share, and organize links through the iOS LinkSync app. Your privacy is important to us. This Privacy Policy explains what data we collect, how it is used, and your rights as a user.
+LinkSync is an application that allows users to save, share, and organize links through the iOS LinkSync app to the LinkSync Chrome Extension. Your privacy is important to us. This Privacy Policy explains what data we collect, how it is used, and your rights as a user.
 
 ---
 
 ## 1. Information We Collect
 
 - **Link Data:** URL, title, and timestamp of links you save through the extension.  
-- **Authentication Data:** Your iOS LinkSync account credentials are handled securely via AWS Cognito. No passwords are stored in the Chrome extension.
+- **Authentication Data:** Your iOS LinkSync account credentials are handled securely via AWS Cognito. No passwords are stored in the iOS App or Chrome extension.
 
 ---
 
