@@ -43,8 +43,8 @@ async function apiCall(endpoint, body) {
   const data = await response.json();
 
   if (!response.ok) {
-    throw new Error(data.error || data.message || `Error: ${response.status}`);
-  }
+    throw new Error(data.error || data.message || `Error: ${response.status}`);
+  }
   return data;
 }
 
@@ -260,7 +260,7 @@ function createMessageHTML(item) {
     contentHtml = `
         <div class="message-header">
           <span class="message-sender">
-            <span style="font-weight: bold;">${item.title || 'Shared Link'}</span> ${isNew}
+            ${item.title} ${!item.seen ? '<span class="badge-new">NEW</span>' : ''}
           </span>
           <span class="message-time">${time}</span>
         </div>
