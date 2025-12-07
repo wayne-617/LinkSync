@@ -141,11 +141,11 @@ function showSuccessBanner(message) {
   banner.innerHTML = `<span>✓</span><span>${message}</span>`;
   document.body.appendChild(banner);
 
-  // Auto-hide after 3 seconds
+  // Auto-hide after 1 second
   setTimeout(() => {
     banner.classList.add("hide");
     setTimeout(() => banner.remove(), 300);
-  }, 3000);
+  }, 1000);
 }
 
 function showCopyBanner(message) {
@@ -206,8 +206,27 @@ async function renderMessages() {
   const newMessagesList = document.getElementById("new-messages-list");
   const allMessagesList = document.getElementById("all-messages-list");
 
-  const newItems = items.filter(m => !m.seen);
+  const newItems = items.filter((m) => !m.seen);
   const allItems = items;
+
+  // If there are no messages at all, show a QR code pointing to the app store
+  // so users can download the mobile app and start sending messages.
+  const qrHtml = `
+    <div class="empty-state" style="text-align:center; padding: 24px;">
+      <div class="qr-container" style="display:inline-block;">
+        <img src="qr.png" alt="Download the app" style="width:160px; height:160px; display:block; margin: 0 auto 12px;" />
+        <div class="empty-state-text">Start sending messages through the LinkSync app</div>
+        <div class="empty-state-text">Scan the QR code to download on iOS</div>
+      </div>
+    </div>
+  `;
+
+  if (!items || items.length === 0) {
+    newMessagesList.innerHTML = qrHtml;
+    allMessagesList.innerHTML = qrHtml;
+    // Non-clickable QR only — users can scan with their phones.
+    return;
+  }
 
   newMessagesList.innerHTML = newItems.length
     ? newItems.map(createMessageHTML).join("")
@@ -359,14 +378,11 @@ document.getElementById("register-form").addEventListener("submit", async (e) =>
   }
 
   // --- Password Strength Check ---
-  const passwordPattern =
-    /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/;
+  // Require only a minimum length of 8 characters
+  const passwordPattern = /^.{8,}$/;
 
   if (!passwordPattern.test(password)) {
-    displayError(
-      "register",
-      "Password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."
-    );
+    displayError("register", "Password must be at least 8 characters long");
     return;
   }
 
